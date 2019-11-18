@@ -951,7 +951,7 @@ IndxFKName=%REFR%_FK
 IndxThreshold=
 ColnFKName=%.3:PARENT%_%COLUMN%
 ColnFKNameUse=No</a:ModelOptionsText>
-<a:RepositoryFilename>D:\Files\WorkTable\项目\MucMuc\Model_UML\时序图\ZSR\AddSong.oom</a:RepositoryFilename>
+<a:RepositoryFilename>D:\Files\Projects\Git_projects\MucMucMusic\Model_UML\SequenceDiagram\ZSR\AddSong.oom</a:RepositoryFilename>
 <c:ObjectLanguage>
 <o:Shortcut Id="o3">
 <a:ObjectID>129AAAC5-E076-4D73-9FC9-D633B2C77012</a:ObjectID>
@@ -1485,9 +1485,10 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 </o:MessageSymbol>
 <o:MessageSymbol Id="o17">
 <a:CreationDate>1573526409</a:CreationDate>
-<a:ModificationDate>1573833126</a:ModificationDate>
+<a:ModificationDate>1574080374</a:ModificationDate>
 <a:CenterTextOffset>(2001, 499)</a:CenterTextOffset>
-<a:Rect>((-31171,7369), (-18870,9464))</a:Rect>
+<a:CenterTextWidth>11775</a:CenterTextWidth>
+<a:Rect>((-31171,7369), (-17220,9464))</a:Rect>
 <a:ListOfPoints>((-30771,8069),(-20646,8069))</a:ListOfPoints>
 <a:ArrowStyle>8</a:ArrowStyle>
 <a:LineColor>12615808</a:LineColor>
