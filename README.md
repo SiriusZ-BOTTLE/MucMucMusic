@@ -25,15 +25,18 @@
 - 一个音乐发现与探索平台
 
 ## 目录结构
-1. **Document**   
+1. **DevelopmentKit**  
+    <font color="red">开发工具包</font>
+
+2. **Document**   
     文档目录.各类杂项文档存放于此.
 
-2. **Model**  
+3. **Model**  
     模型文件目录.  
     当前文件:  
     - ER图
 
-3. **Model_UML**  
+4. **Model_UML**  
     UML模型目录.  
     当前文件:  
     - 类图
