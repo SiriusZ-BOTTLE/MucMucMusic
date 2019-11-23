@@ -4,11 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model ID="{FF4657AA-D9D2-4014-A9C7-A8AD4BF5E60D}" Loaded="No" Name="AddSong" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="AddSong.oom"/>
-		<Model Expanded="Yes" ID="{1A2A782F-534C-4494-B889-BAE4AFCA5043}" Loaded="No" Name="BanUser" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="BanUser.oom"/>
-		<Model Expanded="Yes" ID="{09F15B33-6AD2-4C14-9A60-3C5DD1BFEB54}" Loaded="No" Name="RemoveSong" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="RemoveSong.oom"/>
-		<Model Expanded="Yes" ID="{B00A4EF7-55E7-482E-A55D-D68538878867}" Name="RemoveUser" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="RemoveUser.oom"/>
-		<Model Expanded="Yes" ID="{489297FC-1AA1-4378-B9FC-04558738854C}" Name="UpdateSongInfo" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="UpdateSongInfo.oom"/>
+		<Model Expanded="Yes" ID="{3D9B544B-EEC5-4FB3-84A7-76007EB142B8}" Name="MucMuc" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="../../../Model/MucMuc.cdm"/>
+		<Model Expanded="Yes" ID="{ED924764-FA13-4DD6-BB98-E85F5993E3F5}" Name="MucMuc" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="../../../Model/MucMuc.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
