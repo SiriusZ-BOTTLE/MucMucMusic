@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/zhuye"
+        android:title="首页" />
+
+    <item
+        android:id="@+id/navigation_found"
+        android:icon="@drawable/faxian"
+        android:title="发现" />
+
+    <item
+        android:id="@+id/navigation_music"
+        android:icon="@drawable/yinyue"
+        android:title="音乐" />
+
+    <item
+        android:id="@+id/navigation_forum"
+        android:icon="@drawable/luntan"
+        android:title="安利墙" />
+
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/zhanghao"
+        android:title="账号"/>
+</menu>
