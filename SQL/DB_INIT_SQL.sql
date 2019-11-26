@@ -1,14 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/23 21:41:22                          */
+/* Created on:     2019/11/26 11:17:22                          */
 /*==============================================================*/
 
 
-drop table if exists Admin;
-
 drop table if exists Comment;
-
-drop table if exists CommentsSetion;
 
 drop table if exists Contain;
 
@@ -25,18 +21,6 @@ drop table if exists SongList;
 drop table if exists Tag;
 
 drop table if exists User;
-
-/*==============================================================*/
-/* Table: Admin                                                 */
-/*==============================================================*/
-create table Admin
-(
-   ID_Admin             varchar(24) not null,
-   Password_Admin       varchar(16),
-   Level_Admin          char(1)
-);
-
-alter table Admin comment '管理员(舍弃)';
 
 /*==============================================================*/
 /* Table: Comment                                               */
@@ -56,17 +40,6 @@ create table Comment
 );
 
 alter table Comment comment '评论区';
-
-/*==============================================================*/
-/* Table: CommentsSetion                                        */
-/*==============================================================*/
-create table CommentsSetion
-(
-   ID_CS                int not null,
-   primary key (ID_CS)
-);
-
-alter table CommentsSetion comment '评论区';
 
 /*==============================================================*/
 /* Table: Contain                                               */
@@ -125,6 +98,7 @@ create table Song
    Name_Song            varchar(90),
    Singer               varchar(30),
    Date_Release         date,
+   Content_Song         VBIN,
    primary key (ID_Song)
 );
 
