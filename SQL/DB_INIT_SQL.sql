@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/26 11:45:43                          */
+/* Created on:     2019/11/27 15:58:00                          */
 /*==============================================================*/
 
 
@@ -85,7 +85,8 @@ alter table Map_S_T comment '映射-歌曲和标签';
 /*==============================================================*/
 create table Record_CommentsSquare
 (
-   ID_Comment           int
+   ID_Comment           int not null,
+   primary key (ID_Comment)
 );
 
 alter table Record_CommentsSquare comment '评论广场的评论记录';
@@ -99,7 +100,7 @@ create table Song
    Name_Song            varchar(90),
    Singer               varchar(30),
    Date_Release         date,
-   Content_Song         varchar(100),
+   Content_Song         VBIN,
    primary key (ID_Song)
 );
 
