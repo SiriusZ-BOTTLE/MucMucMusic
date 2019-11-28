@@ -4466,8 +4466,9 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 </c:Object>
 </o:ReferenceSymbol>
 <o:ReferenceSymbol Id="o16">
-<a:Rect>((-33432,-21101), (-16305,-17838))</a:Rect>
-<a:ListOfPoints>((-16305,-17838),(-16305,-20876),(-33432,-20876))</a:ListOfPoints>
+<a:ModificationDate>1574841470</a:ModificationDate>
+<a:Rect>((-33432,-21101), (-14365,-17838))</a:Rect>
+<a:ListOfPoints>((-14365,-17838),(-14365,-20876),(-33432,-20876))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
 <a:LineColor>11184640</a:LineColor>
@@ -4724,8 +4725,9 @@ LABL 0 新宋体,8,N</a:FontList>
 </c:Object>
 </o:TableSymbol>
 <o:TableSymbol Id="o17">
+<a:ModificationDate>1574841470</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-20104,-19454), (-11630,-15454))</a:Rect>
+<a:Rect>((-20104,-19454), (-7302,-15454))</a:Rect>
 <a:AutoAdjustToText>0</a:AutoAdjustToText>
 <a:LineColor>11184640</a:LineColor>
 <a:FillColor>16777136</a:FillColor>
@@ -4743,6 +4745,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:BrushStyle>6</a:BrushStyle>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:GradientEndColor>16777215</a:GradientEndColor>
+<a:ManuallyResized>1</a:ManuallyResized>
 <c:Object>
 <o:Table Ref="o39"/>
 </c:Object>

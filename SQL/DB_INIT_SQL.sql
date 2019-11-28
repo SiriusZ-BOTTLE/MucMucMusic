@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/27 15:58:00                          */
+/* Created on:     2019/11/28 11:33:05                          */
 /*==============================================================*/
 
 
@@ -31,11 +31,11 @@ create table Comment_Muc
    ID_Song              int,
    ID_User              varchar(24),
    ID_Reply             int,
-   Content              varchar(1500),
-   Time_Release         datetime,
-   Likes                int,
-   Dislikes             int,
-   Score                int,
+   Content              varchar(1500) not null,
+   Time_Release         datetime not null,
+   Likes                int not null,
+   Dislikes             int not null,
+   Score                int not null,
    primary key (ID_Comment)
 );
 
@@ -48,8 +48,8 @@ create table Lyrics
 (
    ID_Lyrics            int not null,
    ID_Song              int,
-   Content              varchar(1500),
-   Flag_Pure            bool,
+   Content              varchar(1500) not null,
+   Flag_Pure            bool not null,
    primary key (ID_Lyrics)
 );
 
@@ -97,10 +97,10 @@ alter table Record_CommentsSquare comment '评论广场的评论记录';
 create table Song
 (
    ID_Song              int not null,
-   Name_Song            varchar(90),
+   Name_Song            varchar(90) not null,
    Singer               varchar(30),
    Date_Release         date,
-   Content_Song         VBIN,
+   URL_Song             varchar(100),
    primary key (ID_Song)
 );
 
@@ -113,8 +113,8 @@ create table SongList
 (
    ID_SL                int not null,
    ID_User              varchar(24),
-   Name_SL              varchar(90),
-   Date_SL              date,
+   Name_SL              varchar(90) not null,
+   Date_SL              date not null,
    Description_SL       varchar(900),
    primary key (ID_SL)
 );
@@ -127,7 +127,7 @@ alter table SongList comment '歌单';
 create table Tag
 (
    ID_Tag               int not null,
-   Name_Tag             varchar(45),
+   Name_Tag             varchar(45) not null,
    primary key (ID_Tag)
 );
 
@@ -139,13 +139,13 @@ alter table Tag comment '标签';
 create table User_Muc
 (
    ID_User              varchar(24) not null,
-   Password_User        varchar(16),
+   Password_User        varchar(16) not null,
    Nickname_User        varchar(30),
    Icon_User            longblob,
    Idiograph_User       varchar(150),
-   Gender_User          char(1),
-   Level_User           char(1),
-   State_User           char(1),
+   Gender_User          char(1) not null,
+   Level_User           char(1) not null,
+   State_User           char(1) not null,
    primary key (ID_User)
 );
 
