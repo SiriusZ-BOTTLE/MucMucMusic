@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/28 11:33:05                          */
+/* Created on:     2019/11/28 20:01:41                          */
 /*==============================================================*/
 
 
@@ -31,11 +31,11 @@ create table Comment_Muc
    ID_Song              int,
    ID_User              varchar(24),
    ID_Reply             int,
-   Content              varchar(1500) not null,
-   Time_Release         datetime not null,
-   Likes                int not null,
-   Dislikes             int not null,
-   Score                int not null,
+   ReleaseTime_Comment  datetime not null,
+   Content_Comment      varchar(1500) not null,
+   Likes_Comment        int not null,
+   Dislikes_Comment     int not null,
+   Score_Comment        int not null,
    primary key (ID_Comment)
 );
 
@@ -48,8 +48,8 @@ create table Lyrics
 (
    ID_Lyrics            int not null,
    ID_Song              int,
-   Content              varchar(1500) not null,
-   Flag_Pure            bool not null,
+   Content_Lyrics       varchar(1500) not null,
+   Flag_Pure_Lyrics     bool not null,
    primary key (ID_Lyrics)
 );
 
@@ -98,9 +98,9 @@ create table Song
 (
    ID_Song              int not null,
    Name_Song            varchar(90) not null,
-   Singer               varchar(30),
-   Date_Release         date,
-   URL_Song             varchar(100),
+   Singer_Song          varchar(30),
+   ReleaseDate_Song     date,
+   FileURL_Song         varchar(200),
    primary key (ID_Song)
 );
 
@@ -141,7 +141,7 @@ create table User_Muc
    ID_User              varchar(24) not null,
    Password_User        varchar(16) not null,
    Nickname_User        varchar(30),
-   Icon_User            longblob,
+   IconFileURL_User     varchar(200),
    Idiograph_User       varchar(150),
    Gender_User          char(1) not null,
    Level_User           char(1) not null,
