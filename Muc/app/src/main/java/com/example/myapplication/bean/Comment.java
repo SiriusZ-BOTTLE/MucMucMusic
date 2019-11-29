@@ -12,6 +12,7 @@ public class Comment {
         this.author_name = name;
         this.music = muc;
     }
+
     public String getDetails(){
         return details;
     }

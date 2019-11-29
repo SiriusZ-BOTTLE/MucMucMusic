@@ -100,13 +100,13 @@ public class HomeFragment extends Fragment {
     }
     private void initMusicList(){
         for(int i=0;i<3;i++){
-            MusicList three = new MusicList("南山南",R.drawable.nanshannan);
+            MusicList three = new MusicList("南山南",R.drawable.nanshannan,100,"马頔");
             musicList.add(three);
-            MusicList one = new MusicList("消愁",R.drawable.xiaochou);
+            MusicList one = new MusicList("消愁",R.drawable.xiaochou,100,"毛不易");
             musicList.add(one);
-            MusicList two = new MusicList("南山南",R.drawable.nanshannan);
+            MusicList two = new MusicList("南山南",R.drawable.nanshannan,100,"假数据");
             musicList.add(two);
-            MusicList one1 = new MusicList("消愁",R.drawable.xiaochou);
+            MusicList one1 = new MusicList("消愁",R.drawable.xiaochou,100,"假数据");
             musicList.add(one1);
         }
     }

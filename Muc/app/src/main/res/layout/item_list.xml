@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:text="歌单名"
+        app:layout_constraintLeft_toRightOf="@id/list_image"
+        app:layout_constraintTop_toTopOf="@id/list_image"/>
+    <TextView
+        android:id="@+id/list_size"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="12dp"
+        android:text="歌曲数"
+        app:layout_constraintLeft_toRightOf="@id/list_image"
+        app:layout_constraintBottom_toBottomOf="@id/list_image"/>
+
+    <TextView
+        android:id="@+id/list_by"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="12dp"
+        android:text="by"
+        app:layout_constraintLeft_toRightOf="@id/list_size"
+        app:layout_constraintBottom_toBottomOf="@id/list_image"/>
+
+    <TextView
+        android:id="@+id/list_author"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="12dp"
+        android:text="作者"
+        app:layout_constraintLeft_toRightOf="@id/list_by"
+        app:layout_constraintBottom_toBottomOf="@id/list_image"/>
+
+    <ImageView
+        android:id="@+id/tv_item_menu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:background="@drawable/youcecaidan"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/list_by"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

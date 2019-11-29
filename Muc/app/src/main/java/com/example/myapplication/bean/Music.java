@@ -8,6 +8,7 @@ public class Music{
         this.name = name;
         this.imageId = Id;
     }
+
     public String getName(){
         return name;
     }

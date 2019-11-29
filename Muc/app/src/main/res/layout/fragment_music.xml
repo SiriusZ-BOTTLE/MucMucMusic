@@ -2,7 +2,86 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/beijing">
+    <include layout="@layout/title"
+        android:id="@+id/title"
+        />
+    <include layout="@layout/recent_play"
+        android:id="@+id/recent_play"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        />
 
+    <TextView
+        android:id="@+id/list_item_name1"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:text="我创建的歌单"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/recent_play"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_menu1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:background="@drawable/youcecaidan"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/list_item_name1"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/My_create_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorwhite"
+        app:layout_constraintTop_toBottomOf="@id/list_item_name1"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/list_item_name2"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:text="我收藏的歌单"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/My_create_recycler"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_menu12"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:background="@drawable/youcecaidan"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/list_item_name2"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/My_collect_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorwhite"
+        app:layout_constraintTop_toBottomOf="@id/list_item_name2"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

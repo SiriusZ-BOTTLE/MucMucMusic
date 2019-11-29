@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_music"
-        android:name="com.example.myapplication.ui.music.NotificationsFragment"
+        android:name="com.example.myapplication.ui.music.MusicFragment"
         android:label="Music"
         tools:layout="@layout/fragment_music" />
 

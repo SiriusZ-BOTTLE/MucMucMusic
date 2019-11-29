@@ -38,7 +38,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view_music"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="550dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -48,7 +48,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_musiclist"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="550dp"/>
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
