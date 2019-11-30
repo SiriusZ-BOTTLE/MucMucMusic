@@ -37,13 +37,13 @@ public class ForumFragment extends Fragment {
     }
 
     private void initMusic(){
-        Music three = new Music("南山南",R.drawable.nanshannan);
+        Music three = new Music("南山南",R.drawable.nanshannan,"数据");
         musiclist.add(three);
-        Music one = new Music("消愁",R.drawable.xiaochou);
+        Music one = new Music("消愁",R.drawable.xiaochou,"数据");
         musiclist.add(one);
-        Music two = new Music("论坛",R.drawable.luntan);
+        Music two = new Music("论坛",R.drawable.luntan,"数据");
         musiclist.add(two);
-        Music one1 = new Music("发现",R.drawable.faxian);
+        Music one1 = new Music("发现",R.drawable.faxian,"数据");
         musiclist.add(one1);
 
     }

@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.music;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,13 @@ public class MusicFragment extends Fragment {
         recyclerView1.setLayoutManager(layoutManager1);
         ListAdapter adapter1 = new ListAdapter(musicLists1);
         recyclerView1.setAdapter(adapter1);
+        adapter1.OnRecycleItemClickListener(new ListAdapter.OnRecycleItemClickListener() {
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                Intent intent=new Intent(getActivity(),SonglistActivity.class);
+                startActivity(intent);
+            }
+        });
 
         initList2();
         RecyclerView recyclerView2 = (RecyclerView) root.findViewById(R.id.My_collect_recycler);
@@ -51,6 +59,13 @@ public class MusicFragment extends Fragment {
         recyclerView2.setLayoutManager(layoutManager2);
         ListAdapter adapter2 = new ListAdapter(musicLists2);
         recyclerView2.setAdapter(adapter2);
+        adapter2.OnRecycleItemClickListener(new ListAdapter.OnRecycleItemClickListener() {
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                Intent intent=new Intent(getActivity(),SonglistActivity.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
     private void initList1(){

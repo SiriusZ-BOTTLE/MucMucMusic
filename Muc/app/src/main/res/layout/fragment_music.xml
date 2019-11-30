@@ -78,10 +78,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/My_collect_recycler"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorwhite"
         app:layout_constraintTop_toBottomOf="@id/list_item_name2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

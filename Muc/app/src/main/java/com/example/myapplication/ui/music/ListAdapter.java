@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.music;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.bean.MusicList;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<MusicList> mMusicList;
+    private ListAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
+
     static class  ViewHolder extends RecyclerView.ViewHolder{
         ImageView musiclistImage;
         TextView musiclistName;
@@ -41,14 +44,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent ,false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.musicView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                MusicList musiclist = mMusicList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+musiclist.getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
         holder.musiclistImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,16 +64,31 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, final int position){
         MusicList musiclist = mMusicList.get(position);
         holder.musiclistImage.setImageResource(musiclist.getImageID());
         holder.musiclistName.setText(musiclist.getName());
         holder.musiclistSize.setText(String.valueOf(musiclist.getSize()));
         holder.musiclistAuthor.setText(musiclist.getAuthor());
+        holder.musicView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onRecycleItemClickListener!=null)
+                    onRecycleItemClickListener.OnRecycleItemClickListener(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount(){
         return mMusicList.size();
+    }
+
+    public  void  OnRecycleItemClickListener(ListAdapter.OnRecycleItemClickListener v){
+        onRecycleItemClickListener = v;
+    }
+
+    public interface OnRecycleItemClickListener{
+        void OnRecycleItemClickListener(int position);
     }
 }
