@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Theme_red">
+        <item name="theme_color">@color/colorRed</item>
+        <item name="popupwindow_bg">@drawable/popupwindow_bg_red</item>
+        <item name="dialogactivity_bg">@drawable/dialogactivity_bg_red</item>
+        <item name="btn_submit_bg">@drawable/btn_submit_bg_red</item>
+        <item name="seekbar_progress_bg">@drawable/seekbar_progress_bg_red</item>
+        <item name="play_image">@mipmap/play_red</item>
+        <item name="next_image">@mipmap/next_red</item>
+        <item name="front_image">@mipmap/front_red</item>
+        <item name="thumb_image">@mipmap/seekbar_thumb_red</item>
+        <item name="indicate_image">@mipmap/play_small_red</item>
+    </style>
 </resources>

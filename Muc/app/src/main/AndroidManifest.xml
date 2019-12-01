@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.music.SonglistActivity"></activity>
+        <activity android:name=".ui.music.play.ListplayActivity"></activity>
+        <activity android:name=".ui.home.LoginActivity"></activity>
+        <activity android:name=".ui.home.SignActivity"></activity>
     </application>
 
 </manifest>

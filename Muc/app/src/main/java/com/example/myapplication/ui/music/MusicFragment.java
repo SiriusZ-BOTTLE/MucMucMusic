@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,11 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.bean.MusicList;
-import com.example.myapplication.ui.forum.CommentAdapter;
+import com.example.myapplication.ui.music.play.ListplayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,14 @@ public class MusicFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"you clicked recent_play",Toast.LENGTH_SHORT).show();
+            }
+        });
+        ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListplayActivity.class);
+                startActivity(intent);
             }
         });
         initList1();
