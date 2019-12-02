@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map_SL_S {
-    private Integer ID_SL;
-    private Integer ID_Song;
+    private Integer id_SL;
+    private Integer id_Song;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_SL);
-        list.add(ID_Song);
+        list.add(id_SL);
+        list.add(id_Song);
         return list;
     }
 
@@ -22,10 +22,10 @@ public class Map_SL_S {
     {
         List<Object> list=new ArrayList<Object>();
 
-        if(ID_SL!=null)
-            list.add(ID_SL);
-        if(ID_Song!=null)
-            list.add(ID_Song);
+        if(id_SL!=null)
+            list.add(id_SL);
+        if(id_Song!=null)
+            list.add(id_Song);
 
 
         return list;
@@ -35,23 +35,24 @@ public class Map_SL_S {
     public Object[] objectArray()
     {
         Object[] array=new Object[2];
-        array[0]=ID_SL;
-        array[1]=ID_Song;
+        array[0]=id_SL;
+        array[1]=id_Song;
         return array;
     }
-    public Integer getID_SL() {
-        return ID_SL;
+
+    public Integer getId_SL() {
+        return id_SL;
     }
 
-    public void setID_SL(Integer ID_SL) {
-        this.ID_SL = ID_SL;
+    public void setId_SL(Integer id_SL) {
+        this.id_SL = id_SL;
     }
 
-    public Integer getID_Song() {
-        return ID_Song;
+    public Integer getId_Song() {
+        return id_Song;
     }
 
-    public void setID_Song(Integer ID_Song) {
-        this.ID_Song = ID_Song;
+    public void setId_Song(Integer id_Song) {
+        this.id_Song = id_Song;
     }
 }

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Record_CommentsSquare {
-    private Integer ID_Comment;
+    private Integer id_Comment;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_Comment);
+        list.add(id_Comment);
         return list;
     }
 
@@ -20,8 +20,8 @@ public class Record_CommentsSquare {
     {
         List<Object> list=new ArrayList<Object>();
 
-        if(ID_Comment!=null)
-            list.add(ID_Comment);
+        if(id_Comment!=null)
+            list.add(id_Comment);
 
 
         return list;
@@ -31,15 +31,15 @@ public class Record_CommentsSquare {
     public Object[] objectArray()
     {
         Object[] array=new Object[1];
-        array[0]=ID_Comment;
+        array[0]=id_Comment;
         return array;
     }
 
-    public Integer getID_Comment() {
-        return ID_Comment;
+    public Integer getId_Comment() {
+        return id_Comment;
     }
 
-    public void setID_Comment(Integer ID_Comment) {
-        this.ID_Comment = ID_Comment;
+    public void setId_Comment(Integer id_Comment) {
+        this.id_Comment = id_Comment;
     }
 }

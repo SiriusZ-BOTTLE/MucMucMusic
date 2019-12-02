@@ -25,7 +25,7 @@ public class Service_User implements Interface_User_service {
 
         ResultEntity resultEntity=new ResultEntity();
 
-        if(user.getID_User()==null)
+        if(user.getId_User()==null)
         {
             resultEntity.setInfo_error("<ERROR> ID_User is NULL");
             return resultEntity;
