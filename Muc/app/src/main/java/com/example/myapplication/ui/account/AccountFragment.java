@@ -35,35 +35,35 @@ public class AccountFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         Button btn1 = root.findViewById(R.id.xiugai);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"you clicked xiugai",Toast.LENGTH_SHORT).show();
 
             }
         });
-        ImageView image_head = (ImageView) root.findViewById(R.id.h_head);
+        ImageView image_head = (ImageView) root.findViewById(R.id.h_head); //绑定用户头像控件
         image_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"更换头像",Toast.LENGTH_SHORT).show();
             }
         });
-        Button btn2 = root.findViewById(R.id.shezhi);
+        Button btn2 = root.findViewById(R.id.shezhi);//设置
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"you clicked shezhi",Toast.LENGTH_SHORT).show();
             }
         });
-        Button btn3 = root.findViewById(R.id.concerning);
+        Button btn3 = root.findViewById(R.id.concerning);//关于
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"you clicked concern",Toast.LENGTH_SHORT).show();
             }
         });
-        Button btn4 = root.findViewById(R.id.exit);
+        Button btn4 = root.findViewById(R.id.exit); //退出当前用户
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

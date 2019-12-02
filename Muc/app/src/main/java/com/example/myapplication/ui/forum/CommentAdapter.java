@@ -14,7 +14,7 @@ import com.example.myapplication.bean.Comment;
 
 import java.util.List;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{ //评论（安利墙）适配器
     private List<Comment> mCommentList;
 
 
@@ -49,7 +49,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         final CommentAdapter.ViewHolder holder = new CommentAdapter.ViewHolder(view);
         holder.commentView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // 点击评论 将评论所属歌曲加载到播放歌曲链表（List<song>） 并播放
                 int position = holder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
                 Toast.makeText(v.getContext(),"you clicked view "+comment.getMusic().getName(),Toast.LENGTH_SHORT).show();
@@ -57,7 +57,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         });
         holder.commentDianzan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {// 评论点赞数量+1
                 int position = holder.getAdapterPosition();
                 Comment comment = mCommentList.get(position);
                 Toast.makeText(v.getContext(),"you clicked Dianzan+1",Toast.LENGTH_SHORT).show();
