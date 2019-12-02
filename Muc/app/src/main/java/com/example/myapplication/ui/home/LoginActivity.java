@@ -44,17 +44,21 @@ public class LoginActivity extends AppCompatActivity {
                 new Thread(new Runnable(){
                     @Override
                     public void run() {
-                        String Url="http://47.97.202.142:8082/user/login";
-                        JSONObject object=new JSONObject();
+
                         String userid = UserId.getText().toString();
                         String password = Password.getText().toString();
                         User user=new User();
-                        user.setID_User(userid);
+                        user.setId_User(userid);
                         user.setPassword_User(password);
                         String body= JSON.toJSONString(user);
+//                        Looper.prepare();
+//                        Toast.makeText(LoginActivity.this,body, Toast.LENGTH_SHORT).show();
+//                        Looper.loop();
+//                        System.out.println(body);
                         String res=new String();
                         res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/login",body,"UTF-8");
                         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+//                        System.out.println(res);
                         try{
                             if(result.getState()==true){
                                 Intent it = new Intent();
@@ -69,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                                 Looper.loop();
                             }
                             else{
-                                Looper.prepare();
-                                Toast.makeText(LoginActivity.this,result.getState()+" res:"+res, Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+//                                Looper.prepare();
+//                                Toast.makeText(LoginActivity.this,result.getState()+" res:"+res, Toast.LENGTH_SHORT).show();
+//                                Looper.loop();
                             }
                         }catch(Exception e){
                             Looper.prepare();
@@ -92,5 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+    }
+
+    public static void main(String [] args)
+    {
+
     }
 }

@@ -5,29 +5,29 @@ import java.util.Date;
 import java.util.List;
 
 public class S_SL {
-    private Integer ID_Song;
-    private String Name_Song;
+    private Integer id_Song;
+    private String name_Song;
     private String Singer;
-    private Date Date_Release;
-    private Integer ID_SL;
-    private String ID_User;
-    private String Name_SL;
-    private Date Date_SL;
-    private String Description_SL;
+    private Date date_Release;
+    private Integer id_SL;
+    private String id_User;
+    private String name_SL;
+    private Date date_SL;
+    private String description_SL;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_Song);
-        list.add(Name_Song);
+        list.add(id_Song);
+        list.add(name_Song);
         list.add(Singer);
-        list.add(Date_Release);
-        list.add(ID_SL);
-        list.add(ID_User);
-        list.add(Name_SL);
-        list.add(Date_SL);
-        list.add(Description_SL);
+        list.add(date_Release);
+        list.add(id_SL);
+        list.add(id_User);
+        list.add(name_SL);
+        list.add(date_SL);
+        list.add(description_SL);
         return list;
     }
 
@@ -39,22 +39,22 @@ public class S_SL {
 
 //        if(ID_Song!=null)
 //            list.add(ID_Song);
-        if(Name_Song!=null)
-            list.add(Name_Song);
+        if(name_Song!=null)
+            list.add(name_Song);
         if(Singer!=null)
             list.add(Singer);
-        if(Date_Release!=null)
-            list.add(Date_Release);
+        if(date_Release!=null)
+            list.add(date_Release);
 //        if(ID_SL!=null)
 //            list.add(ID_SL);
-        if(ID_User!=null)
-            list.add(ID_User);
-        if(Name_SL!=null)
-            list.add(Name_SL);
-        if(Date_SL!=null)
-            list.add(Date_SL);
-        if(Description_SL!=null)
-            list.add(Description_SL);
+        if(id_User!=null)
+            list.add(id_User);
+        if(name_SL!=null)
+            list.add(name_SL);
+        if(date_SL!=null)
+            list.add(date_SL);
+        if(description_SL!=null)
+            list.add(description_SL);
         return list;
     }
 
@@ -62,34 +62,33 @@ public class S_SL {
     public Object[] objectArray()
     {
         Object[] array=new Object[9];
-        array[0]=ID_Song;
-        array[1]=Name_Song;
+        array[0]=id_Song;
+        array[1]=name_Song;
         array[2]=Singer;
-        array[3]=Date_Release;
-        array[4]=ID_SL;
-        array[5]=ID_User;
-        array[6]=Name_SL;
-        array[7]=Date_SL;
-        array[8]=Description_SL;
+        array[3]=date_Release;
+        array[4]=id_SL;
+        array[5]=id_User;
+        array[6]=name_SL;
+        array[7]=date_SL;
+        array[8]=description_SL;
         return array;
     }
 
 
-
-    public Integer getID_Song() {
-        return ID_Song;
+    public Integer getId_Song() {
+        return id_Song;
     }
 
-    public void setID_Song(Integer ID_Song) {
-        this.ID_Song = ID_Song;
+    public void setId_Song(Integer id_Song) {
+        this.id_Song = id_Song;
     }
 
     public String getName_Song() {
-        return Name_Song;
+        return name_Song;
     }
 
     public void setName_Song(String name_Song) {
-        Name_Song = name_Song;
+        this.name_Song = name_Song;
     }
 
     public String getSinger() {
@@ -101,50 +100,50 @@ public class S_SL {
     }
 
     public Date getDate_Release() {
-        return Date_Release;
+        return date_Release;
     }
 
     public void setDate_Release(Date date_Release) {
-        Date_Release = date_Release;
+        this.date_Release = date_Release;
     }
 
-    public Integer getID_SL() {
-        return ID_SL;
+    public Integer getId_SL() {
+        return id_SL;
     }
 
-    public void setID_SL(Integer ID_SL) {
-        this.ID_SL = ID_SL;
+    public void setId_SL(Integer id_SL) {
+        this.id_SL = id_SL;
     }
 
-    public String getID_User() {
-        return ID_User;
+    public String getId_User() {
+        return id_User;
     }
 
-    public void setID_User(String ID_User) {
-        this.ID_User = ID_User;
+    public void setId_User(String id_User) {
+        this.id_User = id_User;
     }
 
     public String getName_SL() {
-        return Name_SL;
+        return name_SL;
     }
 
     public void setName_SL(String name_SL) {
-        Name_SL = name_SL;
+        this.name_SL = name_SL;
     }
 
     public Date getDate_SL() {
-        return Date_SL;
+        return date_SL;
     }
 
     public void setDate_SL(Date date_SL) {
-        Date_SL = date_SL;
+        this.date_SL = date_SL;
     }
 
     public String getDescription_SL() {
-        return Description_SL;
+        return description_SL;
     }
 
     public void setDescription_SL(String description_SL) {
-        Description_SL = description_SL;
+        this.description_SL = description_SL;
     }
 }

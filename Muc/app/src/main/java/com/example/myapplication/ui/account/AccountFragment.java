@@ -28,10 +28,8 @@ import java.util.List;
 public class AccountFragment extends Fragment {
     private AccountViewModel accountViewModel1;
     public static List<Activity> activityList = new LinkedList();
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        accountViewModel1 =
-                ViewModelProviders.of(this).get(AccountViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        accountViewModel1 = ViewModelProviders.of(this).get(AccountViewModel.class);
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         Button btn1 = root.findViewById(R.id.xiugai);

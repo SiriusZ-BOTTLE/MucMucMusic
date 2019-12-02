@@ -5,21 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 public class Song {
-    private Integer ID_Song;
-    private String Name_Song;
-    private String Singer_Song;
-    private Date ReleaseDate_Song;
-    private String FileURL_Song;
+    private Integer id_Song;
+    private String name_Song;
+    private String singer_Song;
+    private Date releaseDate_Song;
+    private String fileURL_Song;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_Song);
-        list.add(Name_Song);
-        list.add(Singer_Song);
-        list.add(ReleaseDate_Song);
-        list.add(FileURL_Song);
+        list.add(id_Song);
+        list.add(name_Song);
+        list.add(singer_Song);
+        list.add(releaseDate_Song);
+        list.add(fileURL_Song);
         return list;
     }
 
@@ -31,14 +31,14 @@ public class Song {
 
 //        if(ID_Song!=null)
 //            list.add(ID_Song);
-        if(Name_Song!=null)
-            list.add(Name_Song);
-        if (Singer_Song!=null)
-            list.add(Singer_Song);
-        if (ReleaseDate_Song!=null)
-            list.add(ReleaseDate_Song);
-        if (FileURL_Song!=null)
-            list.add(FileURL_Song);
+        if(name_Song!=null)
+            list.add(name_Song);
+        if (singer_Song!=null)
+            list.add(singer_Song);
+        if (releaseDate_Song!=null)
+            list.add(releaseDate_Song);
+        if (fileURL_Song!=null)
+            list.add(fileURL_Song);
 
 
         return list;
@@ -48,51 +48,51 @@ public class Song {
     public Object[] objectArray()
     {
         Object[] array=new Object[5];
-        array[0]=ID_Song;
-        array[1]=Name_Song;
-        array[2]=Singer_Song;
-        array[3]=ReleaseDate_Song;
-        array[4]=FileURL_Song;
+        array[0]=id_Song;
+        array[1]=name_Song;
+        array[2]=singer_Song;
+        array[3]=releaseDate_Song;
+        array[4]=fileURL_Song;
         return array;
     }
 
-    public Integer getID_Song() {
-        return ID_Song;
+    public Integer getId_Song() {
+        return id_Song;
     }
 
-    public void setID_Song(Integer ID_Song) {
-        this.ID_Song = ID_Song;
+    public void setId_Song(Integer id_Song) {
+        this.id_Song = id_Song;
     }
 
     public String getName_Song() {
-        return Name_Song;
+        return name_Song;
     }
 
     public void setName_Song(String name_Song) {
-        Name_Song = name_Song;
+        this.name_Song = name_Song;
     }
 
     public String getSinger_Song() {
-        return Singer_Song;
+        return singer_Song;
     }
 
     public void setSinger_Song(String singer_Song) {
-        Singer_Song = singer_Song;
+        this.singer_Song = singer_Song;
     }
 
     public Date getReleaseDate_Song() {
-        return ReleaseDate_Song;
+        return releaseDate_Song;
     }
 
     public void setReleaseDate_Song(Date releaseDate_Song) {
-        ReleaseDate_Song = releaseDate_Song;
+        this.releaseDate_Song = releaseDate_Song;
     }
 
     public String getFileURL_Song() {
-        return FileURL_Song;
+        return fileURL_Song;
     }
 
     public void setFileURL_Song(String fileURL_Song) {
-        FileURL_Song = fileURL_Song;
+        this.fileURL_Song = fileURL_Song;
     }
 }

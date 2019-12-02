@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lyrics {
-    private Integer ID_Lyrics;
-    private Integer ID_Song;
-    private String Content_Lyrics;
-    private Boolean Flag_Pure_Lyrics;
+    private Integer id_Lyrics;
+    private Integer id_Song;
+    private String content_Lyrics;
+    private Boolean flag_Pure_Lyrics;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_Lyrics);
-        list.add(ID_Song);
-        list.add(Content_Lyrics);
-        list.add(Flag_Pure_Lyrics);
+        list.add(id_Lyrics);
+        list.add(id_Song);
+        list.add(content_Lyrics);
+        list.add(flag_Pure_Lyrics);
         return list;
     }
 
@@ -28,12 +28,12 @@ public class Lyrics {
 
 //        if(ID_Lyrics!=null)
 //            list.add(ID_Lyrics);
-        if(ID_Song!=null)
-            list.add(ID_Song);
-        if (Content_Lyrics!=null)
-            list.add(Content_Lyrics);
-        if (Flag_Pure_Lyrics!=null)
-            list.add(Flag_Pure_Lyrics);
+        if(id_Song!=null)
+            list.add(id_Song);
+        if (content_Lyrics!=null)
+            list.add(content_Lyrics);
+        if (flag_Pure_Lyrics!=null)
+            list.add(flag_Pure_Lyrics);
 
 
         return list;
@@ -43,42 +43,42 @@ public class Lyrics {
     public Object[] objectArray()
     {
         Object[] array=new Object[4];
-        array[0]=ID_Lyrics;
-        array[1]=ID_Song;
-        array[2]=Content_Lyrics;
-        array[3]=Flag_Pure_Lyrics;
+        array[0]=id_Lyrics;
+        array[1]=id_Song;
+        array[2]=content_Lyrics;
+        array[3]=flag_Pure_Lyrics;
         return array;
     }
 
-    public Integer getID_Lyrics() {
-        return ID_Lyrics;
+    public Integer getId_Lyrics() {
+        return id_Lyrics;
     }
 
-    public void setID_Lyrics(Integer ID_Lyrics) {
-        this.ID_Lyrics = ID_Lyrics;
+    public void setId_Lyrics(Integer id_Lyrics) {
+        this.id_Lyrics = id_Lyrics;
     }
 
-    public Integer getID_Song() {
-        return ID_Song;
+    public Integer getId_Song() {
+        return id_Song;
     }
 
-    public void setID_Song(Integer ID_Song) {
-        this.ID_Song = ID_Song;
+    public void setId_Song(Integer id_Song) {
+        this.id_Song = id_Song;
     }
 
     public String getContent_Lyrics() {
-        return Content_Lyrics;
+        return content_Lyrics;
     }
 
     public void setContent_Lyrics(String content_Lyrics) {
-        Content_Lyrics = content_Lyrics;
+        this.content_Lyrics = content_Lyrics;
     }
 
     public Boolean getFlag_Pure_Lyrics() {
-        return Flag_Pure_Lyrics;
+        return flag_Pure_Lyrics;
     }
 
     public void setFlag_Pure_Lyrics(Boolean flag_Pure_Lyrics) {
-        Flag_Pure_Lyrics = flag_Pure_Lyrics;
+        this.flag_Pure_Lyrics = flag_Pure_Lyrics;
     }
 }
