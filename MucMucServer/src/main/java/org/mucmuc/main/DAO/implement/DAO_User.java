@@ -143,14 +143,14 @@ public class DAO_User implements Interface_User_DAO {
     }
 
 
-    public static void main(String args[])
-    {
-        DAO_User userDAO=new DAO_User();
-        User u=new User();
-        List<User> list=userDAO.queryAll();
-
-        System.out.println(list);
-
-    }
+//    public static void main(String args[])
+//    {
+//        DAO_User userDAO=new DAO_User();
+//        User u=new User();
+//        List<User> list=userDAO.queryAll();
+//
+//        System.out.println(list);
+//
+//    }
 
 }

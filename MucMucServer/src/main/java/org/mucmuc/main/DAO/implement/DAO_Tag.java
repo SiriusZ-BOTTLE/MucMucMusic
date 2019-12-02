@@ -144,14 +144,14 @@ public class DAO_Tag implements Interface_Tag_DAO {
     }
 
 
-    public static void main(String args[])
-    {
-        DAO_Tag userDAO=new DAO_Tag();
-        Tag tag=new Tag();
-        List<Tag> list=userDAO.queryAll();
-
-        System.out.println(list);
-
-    }
+//    public static void main(String args[])
+//    {
+//        DAO_Tag userDAO=new DAO_Tag();
+//        Tag tag=new Tag();
+//        List<Tag> list=userDAO.queryAll();
+//
+//        System.out.println(list);
+//
+//    }
 
 }
