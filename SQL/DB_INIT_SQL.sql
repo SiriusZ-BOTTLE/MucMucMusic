@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/26 11:45:43                          */
+/* Created on:     2019/11/28 20:01:41                          */
 /*==============================================================*/
 
 
@@ -31,15 +31,15 @@ create table Comment_Muc
    ID_Song              int,
    ID_User              varchar(24),
    ID_Reply             int,
-   Content              varchar(1500),
-   Time_Release         datetime,
-   Likes                int,
-   Dislikes             int,
-   Score                int,
+   ReleaseTime_Comment  datetime not null,
+   Content_Comment      varchar(1500) not null,
+   Likes_Comment        int not null,
+   Dislikes_Comment     int not null,
+   Score_Comment        int not null,
    primary key (ID_Comment)
 );
 
-alter table Comment_Muc comment 'ËØÑËÆ∫';
+alter table Comment_Muc comment '∆¿¬€';
 
 /*==============================================================*/
 /* Table: Lyrics                                                */
@@ -48,12 +48,12 @@ create table Lyrics
 (
    ID_Lyrics            int not null,
    ID_Song              int,
-   Content              varchar(1500),
-   Flag_Pure            bool,
+   Content_Lyrics       varchar(1500) not null,
+   Flag_Pure_Lyrics     bool not null,
    primary key (ID_Lyrics)
 );
 
-alter table Lyrics comment 'Ê≠åËØç';
+alter table Lyrics comment '∏Ë¥ ';
 
 /*==============================================================*/
 /* Table: Map_SL_S                                              */
@@ -65,7 +65,7 @@ create table Map_SL_S
    primary key (ID_SL, ID_Song)
 );
 
-alter table Map_SL_S comment 'Êò†Â∞Ñ-Ê≠åÂçïÂåÖÂê´Ê≠åÊõ≤';
+alter table Map_SL_S comment '”≥…‰-∏Ëµ•∞¸∫¨∏Ë«˙';
 
 /*==============================================================*/
 /* Table: Map_S_T                                               */
@@ -78,17 +78,18 @@ create table Map_S_T
    primary key (ID_Song, ID_Tag)
 );
 
-alter table Map_S_T comment 'Êò†Â∞Ñ-Ê≠åÊõ≤ÂíåÊ†áÁ≠æ';
+alter table Map_S_T comment '”≥…‰-∏Ë«˙∫Õ±Í«©';
 
 /*==============================================================*/
 /* Table: Record_CommentsSquare                                 */
 /*==============================================================*/
 create table Record_CommentsSquare
 (
-   ID_Comment           int
+   ID_Comment           int not null,
+   primary key (ID_Comment)
 );
 
-alter table Record_CommentsSquare comment 'ËØÑËÆ∫ÂπøÂú∫ÁöÑËØÑËÆ∫ËÆ∞ÂΩï';
+alter table Record_CommentsSquare comment '∆¿¬€π„≥°µƒ∆¿¬€º«¬º';
 
 /*==============================================================*/
 /* Table: Song                                                  */
@@ -96,14 +97,14 @@ alter table Record_CommentsSquare comment 'ËØÑËÆ∫ÂπøÂú∫ÁöÑËØÑËÆ∫ËÆ∞ÂΩï';
 create table Song
 (
    ID_Song              int not null,
-   Name_Song            varchar(90),
-   Singer               varchar(30),
-   Date_Release         date,
-   Content_Song         varchar(100),
+   Name_Song            varchar(90) not null,
+   Singer_Song          varchar(30),
+   ReleaseDate_Song     date,
+   FileURL_Song         varchar(200),
    primary key (ID_Song)
 );
 
-alter table Song comment 'Ê≠åÊõ≤';
+alter table Song comment '∏Ë«˙';
 
 /*==============================================================*/
 /* Table: SongList                                              */
@@ -112,13 +113,13 @@ create table SongList
 (
    ID_SL                int not null,
    ID_User              varchar(24),
-   Name_SL              varchar(90),
-   Date_SL              date,
+   Name_SL              varchar(90) not null,
+   Date_SL              date not null,
    Description_SL       varchar(900),
    primary key (ID_SL)
 );
 
-alter table SongList comment 'Ê≠åÂçï';
+alter table SongList comment '∏Ëµ•';
 
 /*==============================================================*/
 /* Table: Tag                                                   */
@@ -126,11 +127,11 @@ alter table SongList comment 'Ê≠åÂçï';
 create table Tag
 (
    ID_Tag               int not null,
-   Name_Tag             varchar(45),
+   Name_Tag             varchar(45) not null,
    primary key (ID_Tag)
 );
 
-alter table Tag comment 'Ê†áÁ≠æ';
+alter table Tag comment '±Í«©';
 
 /*==============================================================*/
 /* Table: User_Muc                                              */
@@ -138,17 +139,17 @@ alter table Tag comment 'Ê†áÁ≠æ';
 create table User_Muc
 (
    ID_User              varchar(24) not null,
-   Password_User        varchar(16),
+   Password_User        varchar(16) not null,
    Nickname_User        varchar(30),
-   Icon_User            longblob,
+   IconFileURL_User     varchar(200),
    Idiograph_User       varchar(150),
-   Gender_User          char(1),
-   Level_User           char(1),
-   State_User           char(1),
+   Gender_User          char(1) not null,
+   Level_User           char(1) not null,
+   State_User           char(1) not null,
    primary key (ID_User)
 );
 
-alter table User_Muc comment 'Áî®Êà∑';
+alter table User_Muc comment '”√ªß';
 
 alter table Comment_Muc add constraint FK_SongHasComments foreign key (ID_Song)
       references Song (ID_Song) on delete restrict on update restrict;
@@ -177,15 +178,3 @@ alter table Record_CommentsSquare add constraint FK_SomeComments foreign key (ID
 alter table SongList add constraint FK_UserCreateSongList foreign key (ID_User)
       references User_Muc (ID_User) on delete restrict on update restrict;
 
-
-CREATE VIEW `tag_song`
-AS (SELECT Tag.ID_Tag,Tag.Name_Tag,Song.* FROM Tag LEFT JOIN Map_S_T ON Tag.ID_Tag = Map_S_T.ID_Tag LEFT JOIN Song ON Map_S_T.ID_Song = Song.ID_Song);
-
-CREATE VIEW `song_tag`
-AS (SELECT Song.*,Tag.ID_Tag,Tag.Name_Tag FROM Song LEFT JOIN Map_S_T ON Song.ID_Song = Map_S_T.ID_Song LEFT JOIN Tag ON Map_S_T.ID_Tag = Tag.ID_Tag);
-
-CREATE VIEW `sl_s`
-AS (SELECT SL.ID_SL,SL.Name_SL,SL.Date_SL,Song.ID_Song,Song.Name_Song,Song.Singer,Song.Date_Release,Song.Content_Song FROM SongList SL LEFT JOIN Map_SL_S ON Map_SL_S.ID_SL = SL.ID_SL LEFT JOIN Song ON Map_SL_S.ID_Song = Song.ID_Song);
-
-CREATE VIEW `s_sl`
-AS (SELECT Song.ID_Song,Song.Name_Song,Song.Singer,Song.Date_Release,SL.* FROM Song  LEFT JOIN Map_SL_S ON Map_SL_S.ID_Song = Song.ID_Song LEFT JOIN SongList SL ON Map_SL_S.ID_SL = SL.ID_SL)
