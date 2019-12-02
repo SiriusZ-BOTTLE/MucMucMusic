@@ -28,7 +28,7 @@ public class DAO_User implements Interface_User_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_user +" where ID_User = ? ";
         //查询
-        List<User> userList=jdbc.query(sql,new Object[]{user.getID_User()}, new BeanPropertyRowMapper(User.class));
+        List<User> userList=jdbc.query(sql,new Object[]{user.getId_User()}, new BeanPropertyRowMapper(User.class));
 
         if(userList==null||userList.size()==0)
             return null;
@@ -68,12 +68,12 @@ public class DAO_User implements Interface_User_DAO {
         String sql_q="select * from "+ Set_StringConstants.table_user+" where ID_User = ? ";
 
         //查询
-        List<User> userList=jdbc.query(sql_q,new Object[]{user.getID_User()}, new BeanPropertyRowMapper(User.class));
+        List<User> userList=jdbc.query(sql_q,new Object[]{user.getId_User()}, new BeanPropertyRowMapper(User.class));
 
         if(userList==null||userList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_user+"where ID_User = "+user.getID_User();
+        String sql_d="delete from "+Set_StringConstants.table_user+"where ID_User = "+user.getId_User();
         return jdbc.update(sql_d);
     }
 
@@ -120,12 +120,13 @@ public class DAO_User implements Interface_User_DAO {
 //            list.add(user.getState_User());
         }
 
+
         if(sql.endsWith(","))
         {
             sql=sql.substring(0,sql.length()-1);//缩减
         }
         sql+=" where ID_User = ? ";
-        list.add(user.getID_User());
+        list.add(user.getId_User());
             //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
         return jdbc.update(sql,list.toArray());//执行更新

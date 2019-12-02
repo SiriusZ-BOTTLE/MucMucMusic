@@ -24,7 +24,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_tag +" where ID_Tag = ? ";
         //查询
-        List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getID_Tag()}, new BeanPropertyRowMapper(Tag.class));
+        List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getId_Tag()}, new BeanPropertyRowMapper(Tag.class));
 
         if(tagList==null||tagList.size()==0)
             return null;
@@ -64,12 +64,12 @@ public class DAO_Tag implements Interface_Tag_DAO {
         String sql_q="select * from "+ Set_StringConstants.table_tag+" where ID_Tag = ? ";
 
         //查询
-        List<Tag> tagList=jdbc.query(sql_q,new Object[]{tag.getID_Tag()}, new BeanPropertyRowMapper(Tag.class));
+        List<Tag> tagList=jdbc.query(sql_q,new Object[]{tag.getId_Tag()}, new BeanPropertyRowMapper(Tag.class));
 
         if(tagList==null||tagList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_tag+"where ID_Tag = "+tag.getID_Tag();
+        String sql_d="delete from "+Set_StringConstants.table_tag+"where ID_Tag = "+tag.getId_Tag();
         return jdbc.update(sql_d);
     }
 
@@ -93,7 +93,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
         }
         sql+=" where ID_Tag = ? ";
         list.add(tag.getName_Tag());
-        list.add(tag.getID_Tag());
+        list.add(tag.getId_Tag());
         //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
         return jdbc.update(sql,list.toArray());//执行更新
@@ -103,10 +103,10 @@ public class DAO_Tag implements Interface_Tag_DAO {
     @Override
     public int insertNew(Tag tag) {
 
-        String sql="insert into "+Set_StringConstants.table_tag+" values (?,?,?,?,?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_tag+" values (?) ";
 
         //以下两句效果相同
-        return jdbc.update(sql,tag.objectArray());//这个简洁点
+        return jdbc.update(sql,tag.getName_Tag());//这个简洁点
 //        return jdbc.update(sql,user.getID_User(),user.getPassword_User(),user.getNickname_User(),user.getIcon_User(),user.getIdiograph_User(),user.getGender_User(),user.getLevel_User(),user.getState_User());
     }
 
@@ -123,17 +123,17 @@ public class DAO_Tag implements Interface_Tag_DAO {
             return null;
 
         //查询
-        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Tag.class));
+        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Tag_Song.class));
 
 
-        for(Tag_Song t_s:tag_songList){
+        for(Tag_Song tag_song:tag_songList){
             Song s = new Song();
 
-            s.setID_Song(t_s.getID_Song());
-            s.setName_Song(t_s.getName_Song());
-            s.setReleaseDate_Song(t_s.getDate_Release());
-            s.setSinger_Song(t_s.getSinger());
-            s.setFileURL_Song(t_s.getContent_Song());
+            s.setId_Song(tag_song.getId_Song());
+            s.setName_Song(tag_song.getName_Song());
+            s.setReleaseDate_Song(tag_song.getDate_Release());
+            s.setSinger_Song(tag_song.getSinger());
+            s.setFileURL_Song(tag_song.getContent_Song());
 
             songList.add(s);
         }
@@ -144,14 +144,14 @@ public class DAO_Tag implements Interface_Tag_DAO {
     }
 
 
-    public static void main(String args[])
-    {
-        DAO_Tag userDAO=new DAO_Tag();
-        Tag tag=new Tag();
-        List<Tag> list=userDAO.queryAll();
-
-        System.out.println(list);
-
-    }
+//    public static void main(String args[])
+//    {
+//        DAO_Tag userDAO=new DAO_Tag();
+//        Tag tag=new Tag();
+//        List<Tag> list=userDAO.queryAll();
+//
+//        System.out.println(list);
+//
+//    }
 
 }

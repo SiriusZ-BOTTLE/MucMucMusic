@@ -21,7 +21,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_lyrics +" where ID_lyrics = ? ";
         //查询
-        List<Lyrics> lyricsList=jdbc.query(sql,new Object[]{lyrics.getID_Lyrics()}, new BeanPropertyRowMapper(Lyrics.class));
+        List<Lyrics> lyricsList=jdbc.query(sql,new Object[]{lyrics.getId_Lyrics()}, new BeanPropertyRowMapper(Lyrics.class));
 
         if(lyricsList==null||lyricsList.size()==0)
             return null;
@@ -33,13 +33,13 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
     public List<Lyrics> queryByID_Song(Lyrics lyrics) {
         String sql="select * from "+ Set_StringConstants.table_lyrics;
 
-        if(lyrics.getID_Song()!=null)
+        if(lyrics.getId_Song()!=null)
             sql=sql+"where ID_Song = ?";
         else
             return null;
 
         //查询
-        List<Lyrics> lyricsList=jdbc.query(sql,new Object[]{lyrics.getID_Song()}, new BeanPropertyRowMapper(Lyrics.class));
+        List<Lyrics> lyricsList=jdbc.query(sql,new Object[]{lyrics.getId_Song()}, new BeanPropertyRowMapper(Lyrics.class));
 
         return lyricsList;
     }
@@ -60,12 +60,12 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
         String sql_q="select * from "+ Set_StringConstants.table_lyrics+" where ID_Lyrics = ? ";
 
         //查询
-        List<Lyrics> lyricsList=jdbc.query(sql_q,new Object[]{lyrics.getID_Lyrics()}, new BeanPropertyRowMapper(Lyrics.class));
+        List<Lyrics> lyricsList=jdbc.query(sql_q,new Object[]{lyrics.getId_Lyrics()}, new BeanPropertyRowMapper(Lyrics.class));
 
         if(lyricsList==null||lyricsList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Lyrics = "+lyrics.getID_Lyrics();
+        String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Lyrics = "+lyrics.getId_Lyrics();
         return jdbc.update(sql_d);
     }
 
@@ -75,7 +75,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
 
         List<Object> list=lyrics.objectList();//获取非空项
 
-        if(lyrics.getID_Song()!=null)
+        if(lyrics.getId_Song()!=null)
         {
             sql+="ID_Song = ? ,";
 //            list.add(lyrics.getID_Song());
@@ -96,7 +96,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
             sql=sql.substring(0,sql.length()-1);//缩减
         }
         sql+=" where ID_Lyrics = ? ";
-        list.add(lyrics.getID_Lyrics());
+        list.add(lyrics.getId_Lyrics());
         //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
         return jdbc.update(sql,list.toArray());//执行更新
@@ -107,7 +107,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
         String sql="insert into "+Set_StringConstants.table_lyrics+" values (?,?,?) ";
 
         //以下两句效果相同
-        return jdbc.update(sql,lyrics.objectArray());//这个简洁点
+        return jdbc.update(sql,lyrics.getId_Song(),lyrics.getContent_Lyrics(),lyrics.getFlag_Pure_Lyrics());//这个简洁点
 //        return jdbc.update(sql,user.getID_User(),user.getPassword_User(),user.getNickname_User(),user.getIcon_User(),user.getIdiograph_User(),user.getGender_User(),user.getLevel_User(),user.getState_User());
 
     }

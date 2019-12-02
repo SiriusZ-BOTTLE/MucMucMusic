@@ -8,19 +8,19 @@ import java.util.List;
 public class User implements Serializable{
 //    private static final long serialVersionUID = 3401781428101852077L;
 
-    private String ID_User;//ID
-    private String Password_User;//密码
-    private String Nickname_User;//昵称
-    private String IconFileURL_User;//图标
-    private String Idiograph_User;//个性签名
+    private String id_User;//ID
+    private String password_User;//密码
+    private String nickname_User;//昵称
+    private String iconFileURL_User;//图标
+    private String idiograph_User;//个性签名
 //    private Character Gender_User;//性别
 //    private Character Level_User;//级别(分级)
 //    private Character State_User;//状态
     //坑点...这里不能使用Character对象...
     //我说怎么老是报错
-    private String Gender_User;//性别
-    private String Level_User;//级别(分级)
-    private String State_User;//状态
+    private String gender_User;//性别
+    private String level_User;//级别(分级)
+    private String state_User;//状态
 
     //一共八个属性
 
@@ -28,14 +28,14 @@ public class User implements Serializable{
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_User);
-        list.add(Password_User);
-        list.add(Nickname_User);
-        list.add(IconFileURL_User);
-        list.add(Idiograph_User);
-        list.add(Gender_User);
-        list.add(Level_User);
-        list.add(State_User);
+        list.add(id_User);
+        list.add(password_User);
+        list.add(nickname_User);
+        list.add(iconFileURL_User);
+        list.add(idiograph_User);
+        list.add(gender_User);
+        list.add(level_User);
+        list.add(state_User);
         return list;
     }
 
@@ -47,20 +47,20 @@ public class User implements Serializable{
 
 //        if(ID_User!=null)
 //            list.add(ID_User);
-        if(Password_User!=null)
-            list.add(Password_User);
-        if(Nickname_User!=null)
-            list.add(Nickname_User);
-        if(IconFileURL_User !=null)
-            list.add(IconFileURL_User);
-        if(Idiograph_User!=null)
-            list.add(Idiograph_User);
-        if(Gender_User!=null)
-            list.add(Gender_User);
-        if(Level_User!=null)
-            list.add(Level_User);
-        if(State_User!=null)
-            list.add(State_User);
+        if(password_User!=null)
+            list.add(password_User);
+        if(nickname_User!=null)
+            list.add(nickname_User);
+        if(iconFileURL_User !=null)
+            list.add(iconFileURL_User);
+        if(idiograph_User!=null)
+            list.add(idiograph_User);
+        if(gender_User!=null)
+            list.add(gender_User);
+        if(level_User!=null)
+            list.add(level_User);
+        if(state_User!=null)
+            list.add(state_User);
 
         return list;
     }
@@ -69,78 +69,78 @@ public class User implements Serializable{
     public Object[] objectArray()
     {
         Object[] array=new Object[8];
-        array[0]=ID_User;
-        array[1]=Password_User;
-        array[2]=Nickname_User;
-        array[3]= IconFileURL_User;
-        array[4]=Idiograph_User;
-        array[5]=Gender_User;
-        array[6]=Level_User;
-        array[7]=State_User;
+        array[0]=id_User;
+        array[1]=password_User;
+        array[2]=nickname_User;
+        array[3]=iconFileURL_User;
+        array[4]=idiograph_User;
+        array[5]=gender_User;
+        array[6]=level_User;
+        array[7]=state_User;
         return array;
     }
 
-    public String getID_User() {
-        return ID_User;
+    public String getId_User() {
+        return id_User;
     }
 
-    public void setID_User(String ID_User) {
-        this.ID_User = ID_User;
+    public void setId_User(String id_User) {
+        this.id_User = id_User;
     }
 
     public String getPassword_User() {
-        return Password_User;
+        return password_User;
     }
 
     public void setPassword_User(String password_User) {
-        Password_User = password_User;
+        this.password_User = password_User;
     }
 
     public String getNickname_User() {
-        return Nickname_User;
+        return nickname_User;
     }
 
     public void setNickname_User(String nickname_User) {
-        Nickname_User = nickname_User;
+        this.nickname_User = nickname_User;
     }
 
     public String getIconFileURL_User() {
-        return IconFileURL_User;
+        return iconFileURL_User;
     }
 
     public void setIconFileURL_User(String iconFileURL_User) {
-        IconFileURL_User = iconFileURL_User;
+        this.iconFileURL_User = iconFileURL_User;
     }
 
     public String getIdiograph_User() {
-        return Idiograph_User;
+        return idiograph_User;
     }
 
     public void setIdiograph_User(String idiograph_User) {
-        Idiograph_User = idiograph_User;
+        this.idiograph_User = idiograph_User;
     }
 
     public String getGender_User() {
-        return Gender_User;
+        return gender_User;
     }
 
     public void setGender_User(String gender_User) {
-        Gender_User = gender_User;
+        this.gender_User = gender_User;
     }
 
     public String getLevel_User() {
-        return Level_User;
+        return level_User;
     }
 
     public void setLevel_User(String level_User) {
-        Level_User = level_User;
+        this.level_User = level_User;
     }
 
     public String getState_User() {
-        return State_User;
+        return state_User;
     }
 
     public void setState_User(String state_User) {
-        State_User = state_User;
+        this.state_User = state_User;
     }
 }
