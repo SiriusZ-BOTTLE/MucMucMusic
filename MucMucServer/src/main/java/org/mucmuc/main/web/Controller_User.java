@@ -53,10 +53,15 @@ public class Controller_User {
     //测试用接口
     //@RequestParam注解指示user是一个请求参数, 该注解也可以省略
     @PostMapping(value = "/test")
-    public User test(@RequestParam User user)
+    public User test(@RequestParam User user0,@RequestParam User user1)
     {
-        return user;
+        return user0;
     }
+
+
+
+
+
 
 
 }

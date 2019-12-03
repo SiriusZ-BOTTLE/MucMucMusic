@@ -23,7 +23,6 @@ public class Record_CommentsSquare {
         if(id_Comment!=null)
             list.add(id_Comment);
 
-
         return list;
     }
 
