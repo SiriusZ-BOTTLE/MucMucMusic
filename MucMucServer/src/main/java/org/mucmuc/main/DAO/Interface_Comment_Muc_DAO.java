@@ -1,6 +1,7 @@
 package org.mucmuc.main.DAO;
 
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.User;
 
 import java.util.List;
 
@@ -13,12 +14,20 @@ public interface Interface_Comment_Muc_DAO {
      */
     Comment queryByPK(Comment comment);
 
+
     /**
-     * 根据属性(模糊)查询
+     * 根据属性(模糊)查询，按时间顺序降序排列     (筛选机制可以改进，保留以前最优质评论，更新现在的优秀评论)
      * @param comment1 comment2
      * @return
      */
-    List<Comment> queryByAttribute(Comment comment1,Comment comment2);
+    List<Comment> queryOrderbyTime(Comment comment1,Comment comment2);
+
+    /**
+     * 根据属性(模糊)查询，按Likes顺序降序排列
+     * @param comment1 comment2
+     * @return
+     */
+    List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2);
 
     /**
      * 查询全部
@@ -27,7 +36,7 @@ public interface Interface_Comment_Muc_DAO {
     List<Comment> queryAll();
 
     /**
-     * 根据主键删除
+     * 根据主键删除(前端设置只能删除自己的)
      * @return
      */
     int deleteByPK(Comment comment);
@@ -38,7 +47,7 @@ public interface Interface_Comment_Muc_DAO {
     int deleteByAttribute(Comment comment1,Comment comment2);
 
     /**
-     * 更新评论信息
+     * 更新评论内容(前端设置只能更新自己的)
      * @return
      */
     int update(Comment comment);
@@ -48,5 +57,6 @@ public interface Interface_Comment_Muc_DAO {
      * @return
      */
     int insertNew(Comment comment);
+
 
 }
