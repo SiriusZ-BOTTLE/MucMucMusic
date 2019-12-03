@@ -6,29 +6,29 @@ import java.util.List;
 
 //评论实体
 public class Comment {
-    private Integer ID_Comment;//评论ID
-    private Integer ID_Song;//歌曲ID
-    private Integer ID_User;//用户ID
-    private Integer ID_ReplyComment;//回复的评论ID
-    private String Content_Comment;//内容
-    private Date ReleaseTime_Comment;//发布时间ID_Reply
-    private Integer Likes_Comment;//点赞数
-    private Integer Dislikes_Comment;//踩数
-    private Integer Score_Comment;//打分
+    private Integer id_Comment;//评论ID
+    private Integer id_Song;//歌曲ID
+    private Integer id_User;//用户ID
+    private Integer id_ReplyComment;//回复的评论ID
+    private String content_Comment;//内容
+    private Date releaseTime_Comment;//发布时间ID_Reply
+    private Integer likes_Comment;//点赞数
+    private Integer dislikes_Comment;//踩数
+    private Integer score_Comment;//打分
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {
         List<Object> list=new ArrayList<Object>();
-        list.add(ID_Comment);
-        list.add(ID_Song);
-        list.add(ID_User);
-        list.add(ID_ReplyComment);
-        list.add(Content_Comment);
-        list.add(ReleaseTime_Comment);
-        list.add(Likes_Comment);
-        list.add(Dislikes_Comment);
-        list.add(Score_Comment);
+        list.add(id_Comment);
+        list.add(id_Song);
+        list.add(id_User);
+        list.add(id_ReplyComment);
+        list.add(content_Comment);
+        list.add(releaseTime_Comment);
+        list.add(likes_Comment);
+        list.add(dislikes_Comment);
+        list.add(score_Comment);
         return list;
     }
 
@@ -40,22 +40,22 @@ public class Comment {
 
 //        if(ID_Comment!=null)
 //            list.add(ID_Comment);
-        if(ID_Song!=null)
-            list.add(ID_Song);
-        if(ID_User!=null)
-            list.add(ID_User);
-        if(ID_ReplyComment!=null)
-            list.add(ID_ReplyComment);
-        if(Content_Comment!=null)
-            list.add(Content_Comment);
-        if(ReleaseTime_Comment!=null)
-            list.add(ReleaseTime_Comment);
-        if(Likes_Comment!=null)
-            list.add(Likes_Comment);
-        if(Dislikes_Comment!=null)
-            list.add(Dislikes_Comment);
-        if(Score_Comment!=null)
-            list.add(Score_Comment);
+        if(id_Song!=null)
+            list.add(id_Song);
+        if(id_User!=null)
+            list.add(id_User);
+        if(id_ReplyComment!=null)
+            list.add(id_ReplyComment);
+        if(content_Comment!=null)
+            list.add(content_Comment);
+        if(releaseTime_Comment!=null)
+            list.add(releaseTime_Comment);
+        if(likes_Comment!=null)
+            list.add(likes_Comment);
+        if(dislikes_Comment!=null)
+            list.add(dislikes_Comment);
+        if(score_Comment!=null)
+            list.add(score_Comment);
 
 
         return list;
@@ -65,88 +65,88 @@ public class Comment {
     public Object[] objectArray()
     {
         Object[] array=new Object[9];
-        array[0]=ID_Comment;
-        array[1]=ID_Song;
-        array[2]=ID_User;
-        array[3]=ID_ReplyComment;
-        array[4]=Content_Comment;
-        array[5]=ReleaseTime_Comment;
-        array[6]=Likes_Comment;
-        array[7]=Dislikes_Comment;
-        array[8]=Score_Comment;
+        array[0]=id_Comment;
+        array[1]=id_Song;
+        array[2]=id_User;
+        array[3]=id_ReplyComment;
+        array[4]=content_Comment;
+        array[5]=releaseTime_Comment;
+        array[6]=likes_Comment;
+        array[7]=dislikes_Comment;
+        array[8]=score_Comment;
         return array;
     }
 
 
-    public Integer getID_Comment() {
-        return ID_Comment;
+    public Integer getId_Comment() {
+        return id_Comment;
     }
 
-    public void setID_Comment(Integer ID_Comment) {
-        this.ID_Comment = ID_Comment;
+    public void setId_Comment(Integer id_Comment) {
+        this.id_Comment = id_Comment;
     }
 
-    public Integer getID_Song() {
-        return ID_Song;
+    public Integer getId_Song() {
+        return id_Song;
     }
 
-    public void setID_Song(Integer ID_Song) {
-        this.ID_Song = ID_Song;
+    public void setId_Song(Integer id_Song) {
+        this.id_Song = id_Song;
     }
 
-    public Integer getID_User() {
-        return ID_User;
+    public Integer getId_User() {
+        return id_User;
     }
 
-    public void setID_User(Integer ID_User) {
-        this.ID_User = ID_User;
+    public void setId_User(Integer id_User) {
+        this.id_User = id_User;
     }
 
-    public Integer getID_ReplyComment() {
-        return ID_ReplyComment;
+    public Integer getId_ReplyComment() {
+        return id_ReplyComment;
     }
 
-    public void setID_ReplyComment(Integer ID_ReplyComment) {
-        this.ID_ReplyComment = ID_ReplyComment;
+    public void setId_ReplyComment(Integer id_ReplyComment) {
+        this.id_ReplyComment = id_ReplyComment;
     }
 
     public String getContent_Comment() {
-        return Content_Comment;
+        return content_Comment;
     }
 
     public void setContent_Comment(String content_Comment) {
-        Content_Comment = content_Comment;
+        this.content_Comment = content_Comment;
     }
 
     public Date getReleaseTime_Comment() {
-        return ReleaseTime_Comment;
+        return releaseTime_Comment;
     }
 
     public void setReleaseTime_Comment(Date releaseTime_Comment) {
-        ReleaseTime_Comment = releaseTime_Comment;
+        this.releaseTime_Comment = releaseTime_Comment;
     }
 
     public Integer getLikes_Comment() {
-        return Likes_Comment;
+        return likes_Comment;
     }
 
     public void setLikes_Comment(Integer likes_Comment) {
-        Likes_Comment = likes_Comment;
+        this.likes_Comment = likes_Comment;
     }
 
     public Integer getDislikes_Comment() {
-        return Dislikes_Comment;
+        return dislikes_Comment;
     }
 
     public void setDislikes_Comment(Integer dislikes_Comment) {
-        Dislikes_Comment = dislikes_Comment;
+        this.dislikes_Comment = dislikes_Comment;
     }
 
     public Integer getScore_Comment() {
-        return Score_Comment;
+        return score_Comment;
     }
 
     public void setScore_Comment(Integer score_Comment) {
-        Score_Comment = score_Comment;
+        this.score_Comment = score_Comment;
     }
 }
