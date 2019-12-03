@@ -3,6 +3,7 @@ package org.mucmuc.main.DAO.implement;
 import org.mucmuc.main.DAO.Interface_Lyrics_DAO;
 import org.mucmuc.main.DAO.Set_StringConstants;
 import org.mucmuc.main.entity.Lyrics;
+import org.mucmuc.main.entity.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -67,6 +68,22 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
         //删除
         String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Lyrics = "+lyrics.getId_Lyrics();
         return jdbc.update(sql_d);
+    }
+
+    @Override
+    public int deleteBySong(Song song){
+
+        String sql_q="select * from "+ Set_StringConstants.table_lyrics+" where ID_Song = ? ";
+
+        //查询
+        List<Lyrics> lyricsList=jdbc.query(sql_q,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(Lyrics.class));
+
+        if(lyricsList==null||lyricsList.size()==0)
+            return 0;
+        //删除
+        String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Song = "+song.getId_Song();
+        return jdbc.update(sql_d);
+
     }
 
     @Override
