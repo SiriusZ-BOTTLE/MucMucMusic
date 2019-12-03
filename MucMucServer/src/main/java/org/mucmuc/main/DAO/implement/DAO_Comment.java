@@ -3,6 +3,7 @@ package org.mucmuc.main.DAO.implement;
 import org.mucmuc.main.DAO.Interface_Comment_Muc_DAO;
 import org.mucmuc.main.DAO.Set_StringConstants;
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -31,7 +32,7 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
     }
 
     @Override
-    public List<Comment> queryByAttribute(Comment comment1,Comment comment2) {
+    public List<Comment> queryOrderbyTime(Comment comment1,Comment comment2) {
 
         String sql="select * from "+ Set_StringConstants.table_comment + " where ";
 
@@ -88,7 +89,74 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
 
         if(sql.endsWith("and"))
         {
-            sql=sql.substring(0,sql.length()-3);//缩减
+            sql=sql.substring(0,sql.length()-3) + " order by Time_Release DESC";//缩减
+        }
+
+        //查询
+        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+
+        return commentList;
+    }
+
+    @Override
+    public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
+
+        String sql="select * from "+ Set_StringConstants.table_comment + " where ";
+
+        List<Object> list=new ArrayList<Object>();
+
+        if(comment1.getContent_Comment()!=null) {
+            sql=sql+" Content like ? and";
+            list.add(comment1.getContent_Comment());
+        }
+
+        if(comment1.getDislikes_Comment()!=null){
+            sql=sql+" Dislikes >= ? and Dislikes < ? and";
+            list.add(comment1.getDislikes_Comment());
+            list.add(comment2.getDislikes_Comment());
+        }
+
+        if(comment1.getId_ReplyComment()!=null){
+            sql=sql+" ID_Reply = ? and";
+            list.add(comment1.getId_ReplyComment());
+        }
+
+        if(comment1.getId_Song()!=null){
+            sql=sql+" ID_Song = ? and";
+            list.add(comment1.getId_Song());
+        }
+
+        if(comment1.getId_User()!=null){
+            sql=sql+" ID_User = ? and";
+            list.add(comment1.getId_User());
+        }
+
+        if(comment1.getLikes_Comment()!=null){
+            sql=sql+" Likes >= ? and Likes < ? and";
+            list.add(comment1.getLikes_Comment());
+            list.add(comment2.getLikes_Comment());
+        }
+
+        if(comment1.getReleaseTime_Comment()!=null){
+            sql=sql+" Time_Release = ? and";
+            list.add(comment1.getReleaseTime_Comment());
+        }
+
+        if(comment1.getScore_Comment()!=null){
+            sql=sql+" Score >= ? and Score < ? and";
+            list.add(comment1.getScore_Comment());
+            list.add(comment2.getScore_Comment());
+        }
+
+
+        if(sql.endsWith("where "))
+        {
+            return null;
+        }
+
+        if(sql.endsWith("and"))
+        {
+            sql=sql.substring(0,sql.length()-3) + " order by Likes DESC";//缩减
         }
 
         //查询

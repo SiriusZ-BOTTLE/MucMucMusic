@@ -1,6 +1,7 @@
 package org.mucmuc.main.DAO;
 
 import org.mucmuc.main.entity.Lyrics;
+import org.mucmuc.main.entity.Song;
 
 import java.util.List;
 
@@ -31,6 +32,12 @@ public interface Interface_Lyrics_DAO {
      * @return
      */
     int deleteByPK(Lyrics lyrics);
+
+    /**
+     * 根据歌曲id删除
+     * @return
+     */
+    int deleteBySong(Song song);
 
     /**
      * 更新歌词信息
