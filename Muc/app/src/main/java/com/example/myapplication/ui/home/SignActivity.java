@@ -21,56 +21,73 @@ import com.example.myapplication.bean_new.User;
 import org.json.JSONObject;
 
 public class SignActivity extends AppCompatActivity {
-    private EditText UserId,Password,PasswordAgain,Nickname,Place;
+    private EditText UserId,Password,PasswordAgain,Nickname;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
-        UserId=findViewById(R.id.userid);
-        Password=findViewById(R.id.password);
-//        Button btnl = findViewById(R.id.finish);
-//        btnl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new Thread(new Runnable(){
-//                    @Override
-//                    public void run() {
-//                        String userid = UserId.getText().toString();
-//                        String password = Password.getText().toString();
-//                        User user=new User();
-//                        user.setId_User(userid);
-//                        user.setPassword_User(password);
-//                        String body= JSON.toJSONString(user);
-//                        String res=new String();
-//                        res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/login",body,"UTF-8");
-//                        ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-//                        try{
-//                            if(result.getState()==true){
-//                                Intent it = new Intent();
-//                                it.setClass(LoginActivity.this, MainActivity.class);
-//                                editor.putString("name",UserId.getText().toString());
-//                                editor.putString("password",Password.getText().toString());
-//                                editor.putBoolean("flag",true);
-//                                editor.commit();
-//                                startActivity(it);
-//                                Looper.prepare();
-//                                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-//                                Looper.loop();
-//                            }
-//                            else{
-//                                Looper.prepare();
-//                                Toast.makeText(LoginActivity.this,result.getState()+" res:"+res, Toast.LENGTH_SHORT).show();
-//                                Looper.loop();
-//                            }
-//                        }catch(Exception e){
-//                            Looper.prepare();
-//                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            Looper.loop();
-//                        }
-//                    }
-//                }).start();
-//            }
-//        });
+        UserId=findViewById(R.id.SignInId);
+        Password=findViewById(R.id.SignInPwd);
+        PasswordAgain=findViewById(R.id.SignInPwdAgain);
+        Nickname=findViewById(R.id.SignInNickname);
+        Button btnl = findViewById(R.id.finish);
+        btnl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable(){
+                    @Override
+                    public void run() {
+                        try{
+                            String userid = UserId.getText().toString();
+                            String password = Password.getText().toString();
+                            String pwdAgain=PasswordAgain.getText().toString();
+                            String nickname=Nickname.getText().toString();
+                            if(password.equals(pwdAgain)==true){
+                                User user=new User();
+                                user.setId_User(userid);
+                                user.setPassword_User(password);
+                                user.setNickname_User(nickname);
+                                user.setGender_User("M");
+                                String body= JSON.toJSONString(user);
+                                String res=new String();
+                                res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/register",body,"UTF-8");
+                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+
+                                if(result.getState()==true){
+                                    Intent it = new Intent();
+                                    it.setClass(SignActivity.this, MainActivity.class);
+                                    startActivity(it);
+                                    editor.putString("name",UserId.getText().toString());
+                                    editor.putString("password",Password.getText().toString());
+                                    editor.putBoolean("flag",true);
+                                    editor.commit();
+                                    Looper.prepare();
+                                    Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                                else{
+                                    Looper.prepare();
+                                    Toast.makeText(SignActivity.this,"res:"+res+" body"+body, Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+//
+                            }
+                            else{
+                                Looper.prepare();
+                                Toast.makeText(SignActivity.this, "密码输入不一致", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
+
+                        }catch(Exception e){
+                            Looper.prepare();
+                            Toast.makeText(SignActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+
+                    }
+                }).start();
+            }
+        });
     }
 }

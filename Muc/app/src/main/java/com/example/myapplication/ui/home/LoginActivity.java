@@ -73,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                                 Looper.loop();
                             }
                             else{
-//                                Looper.prepare();
-//                                Toast.makeText(LoginActivity.this,result.getState()+" res:"+res, Toast.LENGTH_SHORT).show();
-//                                Looper.loop();
+                                Looper.prepare();
+                                Toast.makeText(LoginActivity.this,"登录失败", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
                             }
                         }catch(Exception e){
                             Looper.prepare();
