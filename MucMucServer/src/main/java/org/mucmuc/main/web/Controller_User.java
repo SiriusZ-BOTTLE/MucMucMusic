@@ -75,18 +75,20 @@ public class Controller_User {
     public ResultEntity delete(@RequestBody Map<String,Object> map)
     {
         User user0,user1;
+//        System.out.println(map.get("user0").getClass());
+        user0=JSON.parseObject(JSON.toJSONString(map.get("user0")), User.class);
+        user1=JSON.parseObject(JSON.toJSONString(map.get("user1")), User.class);
 
-        JSONObject jsonObj=null;
-//        jsonObj=(JSONObject)(map.get("user0"));
-        System.out.println(map.get("user0").getClass());
-
-//        user0=jsonObj.toJavaObject(User.class);
-//        jsonObj=(JSONObject)(map.get("user1"));
-//        user1=jsonObj.toJavaObject(User.class);
-
-//        return userService.delete(user0,user1);
-        return null;
+        return userService.delete(user0,user1);
     }
+
+    @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity update(@RequestBody User user)
+    {
+        return userService.update(user);
+    }
+
+
 
 
     //测试用接口
