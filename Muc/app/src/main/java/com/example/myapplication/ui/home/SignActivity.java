@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ public class SignActivity extends AppCompatActivity {
         PasswordAgain=findViewById(R.id.SignInPwdAgain);
         Nickname=findViewById(R.id.SignInNickname);
         Button btnl = findViewById(R.id.finish);
+        sp = getSharedPreferences("test", Context.MODE_PRIVATE);
+        editor =  sp.edit();
         btnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +46,9 @@ public class SignActivity extends AppCompatActivity {
                             String password = Password.getText().toString();
                             String pwdAgain=PasswordAgain.getText().toString();
                             String nickname=Nickname.getText().toString();
+//                            if(userid.isEmpty()||password.isEmpty()||pwdAgain.isEmpty()||nickname.isEmpty()){
+//                                throw new Exception("输入有空");
+//                            }
                             if(password.equals(pwdAgain)==true){
                                 User user=new User();
                                 user.setId_User(userid);
@@ -55,16 +61,19 @@ public class SignActivity extends AppCompatActivity {
                                 ResultEntity result = JSON.parseObject(res, ResultEntity.class);
 
                                 if(result.getState()==true){
-                                    Intent it = new Intent();
-                                    it.setClass(SignActivity.this, MainActivity.class);
-                                    startActivity(it);
-                                    editor.putString("name",UserId.getText().toString());
-                                    editor.putString("password",Password.getText().toString());
+//                                    Intent it = new Intent();
+//                                    it.setClass(SignActivity.this, MainActivity.class);
+
+                                    editor.putString("name",userid);
+                                    editor.putString("password",password);
                                     editor.putBoolean("flag",true);
                                     editor.commit();
                                     Looper.prepare();
                                     Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
+//                                    startActivity(it);
+//                                    onBackPressed();
+
                                 }
                                 else{
                                     Looper.prepare();
@@ -81,7 +90,7 @@ public class SignActivity extends AppCompatActivity {
 
                         }catch(Exception e){
                             Looper.prepare();
-                            Toast.makeText(SignActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignActivity.this, "输入不正确"+e.getMessage(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
 

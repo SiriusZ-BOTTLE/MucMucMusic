@@ -20,4 +20,14 @@
         <item name="thumb_image">@mipmap/seekbar_thumb_red</item>
         <item name="indicate_image">@mipmap/play_small_red</item>
     </style>
+
+    <style name="myratingbar"
+        parent="@android:style/Widget.RatingBar">
+        <item
+            name="android:progressDrawable">
+            @drawable/myratingbar
+        </item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:maxHeight">36dp</item>
+    </style>
 </resources>
