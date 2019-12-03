@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/28 20:01:41                          */
+/* Created on:     2019/12/3 18:08:35                           */
 /*==============================================================*/
 
 
@@ -48,8 +48,8 @@ create table Lyrics
 (
    ID_Lyrics            int not null,
    ID_Song              int,
-   Content_Lyrics       varchar(1500) not null,
-   Flag_Pure_Lyrics     bool not null,
+   Content_Lyrics       varchar(2400),
+   Flag_Pure_Lyrics     bool,
    primary key (ID_Lyrics)
 );
 
@@ -97,10 +97,11 @@ alter table Record_CommentsSquare comment '评论广场的评论记录';
 create table Song
 (
    ID_Song              int not null,
-   Name_Song            varchar(90) not null,
+   Name_Song            varchar(90),
    Singer_Song          varchar(30),
    ReleaseDate_Song     date,
    FileURL_Song         varchar(200),
+   Score_Song           float,
    primary key (ID_Song)
 );
 

@@ -117,6 +117,7 @@ public class Service_User implements Interface_User_service {
         }
         else
             resultEntity.setState(true);
+        resultEntity.setObject(user_db);
         return resultEntity;
     }
 
@@ -179,6 +180,7 @@ public class Service_User implements Interface_User_service {
 
         userDAO.deleteByPK(user1);//删除用户
         resultEntity.setState(true);
+        //不返回对象
         return resultEntity;
     }
 }

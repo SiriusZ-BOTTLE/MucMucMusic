@@ -3,6 +3,7 @@ package org.mucmuc.main.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
 import org.mucmuc.main.entity.User;
 
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class JsonUtil {
     }
 
 
-    //这是一个JSON使用实例
+    //这是一个JSON使用示例
     //老马你可以看看
     public static void main(String []args)
     {

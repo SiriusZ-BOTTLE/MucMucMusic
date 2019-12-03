@@ -1,5 +1,7 @@
 package org.mucmuc.main.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.entity.User;
 import org.mucmuc.main.service.implement.*;
 import org.mucmuc.main.entity.InteractionEntity.*;
@@ -7,6 +9,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 //控制器注解
@@ -60,7 +64,29 @@ public class Controller_User {
         return userService.get(user);
     }
 
+    /**
+     *
+     * @param map
+     * @return
+     * 注意事项, 两个User对象必须命名为"user0","user1"
+     */
 
+    @RequestMapping(value = "/delete",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity delete(@RequestBody Map<String,Object> map)
+    {
+        User user0,user1;
+
+        JSONObject jsonObj=null;
+//        jsonObj=(JSONObject)(map.get("user0"));
+        System.out.println(map.get("user0").getClass());
+
+//        user0=jsonObj.toJavaObject(User.class);
+//        jsonObj=(JSONObject)(map.get("user1"));
+//        user1=jsonObj.toJavaObject(User.class);
+
+//        return userService.delete(user0,user1);
+        return null;
+    }
 
 
     //测试用接口
