@@ -22,7 +22,7 @@ public class ResultEntity implements Serializable {
     private String info_error="";
     //操作信息(执行操作的返回信息)
     private String info_operation="Done";
-    //返回对象
+    //返回对象(默认是null)
     private Object object=null;
 
     public Boolean getState() {

@@ -48,6 +48,19 @@ public class Controller_User {
         return userService.register(user);
     }
 
+    /**
+     * 获取用户接口
+     * @param user
+     * @return
+     */
+
+    @RequestMapping(value = "/get",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity get(@RequestBody User user)
+    {
+        return userService.get(user);
+    }
+
+
 
 
     //测试用接口

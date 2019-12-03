@@ -179,7 +179,6 @@ public class Service_User implements Interface_User_service {
 
         userDAO.deleteByPK(user1);//删除用户
         resultEntity.setState(true);
-
         return resultEntity;
     }
 }
