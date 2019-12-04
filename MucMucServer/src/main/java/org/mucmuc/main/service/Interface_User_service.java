@@ -29,7 +29,7 @@ public interface Interface_User_service {
     ResultEntity register(User user);
 
     /**
-     * 多条件获取用户
+     * 获取用户
      * @param user
      * @return
      */
