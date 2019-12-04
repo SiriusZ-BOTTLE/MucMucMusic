@@ -133,7 +133,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
             s.setName_Song(tag_song.getName_Song());
             s.setReleaseDate_Song(tag_song.getDate_Release());
             s.setSinger_Song(tag_song.getSinger());
-            s.setFileURL_Song(tag_song.getContent_Song());
+            s.setFile_Song(tag_song.getContent_Song());
 
             songList.add(s);
         }

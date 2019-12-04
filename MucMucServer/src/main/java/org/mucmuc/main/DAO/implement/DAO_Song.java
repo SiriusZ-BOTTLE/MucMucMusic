@@ -108,7 +108,7 @@ public class DAO_Song implements Interface_Song_DAO {
             sql+=" Date_Release = ? ,";
 //            list.add(user.getIcon_User());
         }
-        if(song.getFileURL_Song()!=null)
+        if(song.getFile_Song()!=null)
         {
             sql+=" Content_Song = ? ,";
 //            list.add(user.getIdiograph_User());
@@ -136,7 +136,7 @@ public class DAO_Song implements Interface_Song_DAO {
         String sql="insert into "+Set_StringConstants.table_song+" values (?,?,?,?) ";
 
 
-        return jdbc.update(sql,song.getName_Song(),song.getSinger_Song(),song.getReleaseDate_Song(),song.getFileURL_Song());
+        return jdbc.update(sql,song.getName_Song(),song.getSinger_Song(),song.getReleaseDate_Song(),song.getFile_Song());
     }
 
     @Override

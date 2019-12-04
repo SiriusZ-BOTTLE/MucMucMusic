@@ -99,7 +99,7 @@ public class DAO_User implements Interface_User_DAO {
             sql+="Nickname_User= ? ,";
 //            list.add(user.getNickname_User());
         }
-        if(user.getIconFileURL_User()!=null)
+        if(user.getIconFile_User()!=null)
         {
             sql+="Icon_User= ? ,";
 //            list.add(user.getIcon_User());
