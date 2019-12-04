@@ -9,8 +9,10 @@ public class Song {
     private String name_Song;
     private String singer_Song;
     private Date releaseDate_Song;
+
     private String file_Song;
     private String iconFile_Song;
+
     private Integer Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
@@ -21,7 +23,9 @@ public class Song {
         list.add(name_Song);
         list.add(singer_Song);
         list.add(releaseDate_Song);
+
         list.add(file_Song);
+
         list.add(Score);
         return list;
     }
@@ -40,8 +44,10 @@ public class Song {
             list.add(singer_Song);
         if (releaseDate_Song!=null)
             list.add(releaseDate_Song);
+
         if (file_Song !=null)
             list.add(file_Song);
+
         if (Score!=null)
             list.add(Score);
 
@@ -57,7 +63,9 @@ public class Song {
         array[1]=name_Song;
         array[2]=singer_Song;
         array[3]=releaseDate_Song;
+
         array[4]= file_Song;
+
         array[5]=Score;
         return array;
     }
@@ -108,6 +116,14 @@ public class Song {
 
     public void setFile_Song(String file_Song) {
         this.file_Song = file_Song;
+    }
+
+    public Integer getScore() {
+        return Score;
+    }
+
+    public void setScore(Integer score) {
+        Score = score;
     }
 
     public Integer getScore() {
