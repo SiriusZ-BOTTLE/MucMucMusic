@@ -44,6 +44,8 @@ public class DAO_Song implements Interface_Song_DAO {
             sql=sql+" Singer like ? and";
         if(song.getReleaseDate_Song()!=null)
             sql=sql+" Date_Release like ? and";
+        if(song.getScore()!=null)
+            sql=sql+" Score = ? and";
 
         if(sql.endsWith("where "))
         {
@@ -109,6 +111,11 @@ public class DAO_Song implements Interface_Song_DAO {
         if(song.getFileURL_Song()!=null)
         {
             sql+=" Content_Song = ? ,";
+//            list.add(user.getIdiograph_User());
+        }
+        if(song.getScore()!=null)
+        {
+            sql+=" Score = ? ,";
 //            list.add(user.getIdiograph_User());
         }
 

@@ -34,7 +34,7 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
     @Override
     public List<Comment> queryOrderbyTime(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where ";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where Content != null and Content != ? and";
 
         List<Object> list=new ArrayList<Object>();
 
@@ -82,18 +82,17 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
         }
 
 
-        if(sql.endsWith("where "))
-        {
-            return null;
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
 
         if(sql.endsWith("and"))
         {
             sql=sql.substring(0,sql.length()-3) + " order by Time_Release DESC";//缩减
         }
-
         //查询
-        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+        List<Comment> commentList=jdbc.query(sql,new Object[]{"",list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
     }
@@ -101,7 +100,7 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
     @Override
     public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where ";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where Content != null and Content != ? and";
 
         List<Object> list=new ArrayList<Object>();
 
@@ -149,10 +148,10 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
         }
 
 
-        if(sql.endsWith("where "))
-        {
-            return null;
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
 
         if(sql.endsWith("and"))
         {
@@ -160,7 +159,7 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
         }
 
         //查询
-        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+        List<Comment> commentList=jdbc.query(sql,new Object[]{"", list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
     }
