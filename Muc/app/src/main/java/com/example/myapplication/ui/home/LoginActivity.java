@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btnl = findViewById(R.id.login);
         sp = getSharedPreferences("test",Context.MODE_PRIVATE);
         editor =  sp.edit();
+
         btnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("gender",((JSONObject)result.getObject()).toJavaObject(User.class).getGender_User());
                                 editor.putString("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                 editor.putString("state",((JSONObject)(result.getObject())).toJavaObject(User.class).getState_User());
+                                editor.putString("iograph",((JSONObject)(result.getObject())).toJavaObject(User.class).getIdiograph_User());
                                 editor.putBoolean("flag",true);
                                 editor.commit();
 //                                final Resources res = context.getResources();
@@ -84,13 +86,14 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         //已在主线程中，可以更新UI
-                                        View account = View.inflate(LoginActivity.this, R.layout.fragment_account, null);
-                                        ((TextView)(account.findViewById(R.id.user_name))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
-                                        ((TextView)(account.findViewById(R.id.user_val))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
+//                                        View account = View.inflate(LoginActivity.this, R.layout.fragment_account, null);
+//                                        ((TextView)(account.findViewById(R.id.user_name))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
+//                                        ((TextView)(account.findViewById(R.id.user_val))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                         Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
+                                  it.putExtra("nickname",((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
+                                  it.putExtra("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
 
 //                                String str = getString(R.string.qrcode_out_of_date_sec,String.format("<font color=\"#d40000\">%s</font>", 100);
 //                                textview.setText(str);

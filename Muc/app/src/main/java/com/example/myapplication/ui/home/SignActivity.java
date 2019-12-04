@@ -22,7 +22,7 @@ import com.example.myapplication.bean_new.User;
 import org.json.JSONObject;
 
 public class SignActivity extends AppCompatActivity {
-    private EditText UserId,Password,PasswordAgain,Nickname;
+    private EditText UserId,Password,PasswordAgain,Nickname,IoGraph;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class SignActivity extends AppCompatActivity {
         Password=findViewById(R.id.SignInPwd);
         PasswordAgain=findViewById(R.id.SignInPwdAgain);
         Nickname=findViewById(R.id.SignInNickname);
+        IoGraph =findViewById(R.id.SignIniograph);
         Button btnl = findViewById(R.id.finish);
         sp = getSharedPreferences("test", Context.MODE_PRIVATE);
         editor =  sp.edit();
@@ -46,6 +47,7 @@ public class SignActivity extends AppCompatActivity {
                             String password = Password.getText().toString();
                             String pwdAgain=PasswordAgain.getText().toString();
                             String nickname=Nickname.getText().toString();
+                            String iograph=IoGraph.getText().toString();
 //                            if(userid.isEmpty()||password.isEmpty()||pwdAgain.isEmpty()||nickname.isEmpty()){
 //                                throw new Exception("输入有空");
 //                            }
@@ -55,23 +57,25 @@ public class SignActivity extends AppCompatActivity {
                                 user.setPassword_User(password);
                                 user.setNickname_User(nickname);
                                 user.setGender_User("M");
+                                user.setIdiograph_User(iograph);
                                 String body= JSON.toJSONString(user);
                                 String res=new String();
                                 res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/register",body,"UTF-8");
                                 ResultEntity result = JSON.parseObject(res, ResultEntity.class);
 
                                 if(result.getState()==true){
-//                                    Intent it = new Intent();
-//                                    it.setClass(SignActivity.this, MainActivity.class);
+                                    Intent it = new Intent();
+                                    it.setClass(SignActivity.this, LoginActivity.class);
 
                                     editor.putString("name",userid);
                                     editor.putString("password",password);
                                     editor.putBoolean("flag",true);
                                     editor.commit();
-                                    Looper.prepare();
+//                                    Looper.prepare();
                                     Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-//                                    startActivity(it);
+//                                    Looper.loop();
+                                    startActivity(it);
+                                    finish();
 //                                    onBackPressed();
 
                                 }

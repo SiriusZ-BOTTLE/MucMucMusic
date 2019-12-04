@@ -58,20 +58,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="220dp"
                 android:layout_marginTop="40dp"
-                android:text="张三"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp" />
+<!--                android:text="张三"-->
 
             <TextView
-                android:id="@+id/user_val"
-                android:layout_width="50dp"
+                android:id="@+id/user_iograph"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="220dp"
                 android:layout_marginTop="80dp"
-                android:background="@drawable/biankuang"
-                android:text="lv3"
                 android:gravity="center"
-                android:textSize="17dp" />
+                android:textSize="15sp"
+                />
+<!--            android:text="lv3"-->
         </RelativeLayout>
 
     </RelativeLayout>

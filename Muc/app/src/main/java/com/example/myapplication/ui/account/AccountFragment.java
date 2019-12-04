@@ -29,11 +29,21 @@ import java.util.List;
 public class AccountFragment extends Fragment {
     private AccountViewModel accountViewModel1;
     public static List<Activity> activityList = new LinkedList();
+    SharedPreferences sp;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         accountViewModel1 = ViewModelProviders.of(this).get(AccountViewModel.class);
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         Button btn1 = root.findViewById(R.id.xiugai);
+
+        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+
+        TextView nickname = (TextView) root.findViewById(R.id.user_name);
+        nickname.setText(sp.getString("nickname",""));
+
+
+        TextView iograph = (TextView) root.findViewById(R.id.user_iograph);
+        iograph.setText(sp.getString("iograph",""));
 
         btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
             @Override
