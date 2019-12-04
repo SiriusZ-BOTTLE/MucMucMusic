@@ -14,7 +14,7 @@ public class S_SL {
     private String name_SL;
     private Date date_SL;
     private String description_SL;
-    private Integer Score;
+    private Double Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -152,11 +152,11 @@ public class S_SL {
         this.description_SL = description_SL;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return Score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         Score = score;
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface Interface_SongList_DAO {
 
+
     /**
      * 根据主键查询
      * @param sl
@@ -20,6 +21,15 @@ public interface Interface_SongList_DAO {
      * @return
      */
     List<SongList> queryByAttribute(SongList sl);
+
+
+    /**
+     * 随机查询
+     * @param num
+     * @return
+     */
+    List<SongList> queryRandom(Integer num);
+
 
     /**
      * 根据ID_User属性(精确)查询

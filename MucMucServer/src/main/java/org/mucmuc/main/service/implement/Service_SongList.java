@@ -12,6 +12,36 @@ public class Service_SongList implements Interface_SongList_server {
     private Interface_SongList_DAO songListDao;
 
     @Override
+    public ResultEntity get(SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(songList.getId_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_SL is NULL");
+            return resultEntity;
+        }
+
+        //数据库中获取
+        SongList songList_db=songListDao.queryByPK(songList);
+
+        if(songList_db==null)
+        {
+            resultEntity.setInfo_operation("歌单不存在");
+            return resultEntity;
+        }
+
+        resultEntity.setState(true);
+        resultEntity.setObject(songList_db);
+
+        return resultEntity;
+    }
+
+    @Override
+    public ResultEntity getByAttribute(SongList songList) {
+        return null;
+    }
+
+    @Override
     public ResultEntity update(SongList songList) {
 
         ResultEntity resultEntity=new ResultEntity();

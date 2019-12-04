@@ -8,12 +8,22 @@ import java.util.List;
 
 public interface Interface_Song_DAO {
 
+
     /**
      * 根据主键查询
      * @param song
      * @return
      */
     Song queryByPK(Song song);
+
+
+    /**
+     * 随机查询
+     * @param num
+     * @return
+     */
+    List<Song> queryRandom(Integer num);
+
 
     /**
      * 根据属性(模糊)查询

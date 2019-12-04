@@ -6,7 +6,7 @@ import org.mucmuc.main.entity.Comment;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
-import org.mucmuc.main.service.implement.Service_Comment_Muc;
+import org.mucmuc.main.service.implement.Service_Comment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class Controller_Comment {
 
     @Resource
-    private Service_Comment_Muc commentService;
+    private Service_Comment commentService;
 
     //@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url
     //@RequestParam则是将接口函数的参数直接放在请求URL中,作为参数传递

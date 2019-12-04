@@ -17,6 +17,13 @@ public interface Interface_Tag_DAO {
     Tag queryByPK(Tag tag);
 
     /**
+     * 随机查询
+     * @param num
+     * @return
+     */
+    List<Tag> queryRandom(Integer num);
+
+    /**
      * 根据属性(模糊)查询
      * @param tag
      * @return

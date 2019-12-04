@@ -13,7 +13,7 @@ public class SL_S {
     private String Singer;
     private Date date_Release;
     private String content_Song;
-    private Integer Score;
+    private Double Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -141,11 +141,11 @@ public class SL_S {
         this.content_Song = content_Song;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return Score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         Score = score;
     }
 }

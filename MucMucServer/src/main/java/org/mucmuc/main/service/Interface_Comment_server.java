@@ -6,7 +6,14 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
 
-public interface Interface_Comment_Muc_server {
+public interface Interface_Comment_server {
+
+
+    ResultEntity getRandom()
+
+
+
+
 
     /**
      * 写评论，以及更新歌曲score(comment song user)  //comment包括发布时间，父评论id
