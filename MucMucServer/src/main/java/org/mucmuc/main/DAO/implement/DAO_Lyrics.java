@@ -31,7 +31,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
     }
 
     @Override
-    public List<Lyrics> queryByID_Song(Lyrics lyrics) {
+    public Lyrics queryByID_Song(Lyrics lyrics) {
         String sql="select * from "+ Set_StringConstants.table_lyrics;
 
         if(lyrics.getId_Song()!=null)
@@ -42,7 +42,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
         //查询
         List<Lyrics> lyricsList=jdbc.query(sql,new Object[]{lyrics.getId_Song()}, new BeanPropertyRowMapper(Lyrics.class));
 
-        return lyricsList;
+        return lyricsList.get(0);
     }
 
     @Override
@@ -71,17 +71,17 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
     }
 
     @Override
-    public int deleteBySong(Song song){
+    public int deleteBySong(Lyrics lyrics){
 
         String sql_q="select * from "+ Set_StringConstants.table_lyrics+" where ID_Song = ? ";
 
         //查询
-        List<Lyrics> lyricsList=jdbc.query(sql_q,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(Lyrics.class));
+        List<Lyrics> lyricsList=jdbc.query(sql_q,new Object[]{lyrics.getId_Song()}, new BeanPropertyRowMapper(Lyrics.class));
 
         if(lyricsList==null||lyricsList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Song = "+song.getId_Song();
+        String sql_d="delete from "+Set_StringConstants.table_lyrics+"where ID_Song = "+lyrics.getId_Song();
         return jdbc.update(sql_d);
 
     }

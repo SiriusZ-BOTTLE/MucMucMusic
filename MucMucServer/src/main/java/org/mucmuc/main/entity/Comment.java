@@ -8,15 +8,13 @@ import java.util.List;
 public class Comment {
     private Integer id_Comment;//评论ID
     private Integer id_Song;//歌曲ID
-    private Integer id_User;//用户ID
+    private String id_User;//用户ID
     private Integer id_ReplyComment;//回复的评论ID
     private String content_Comment;//内容
     private Date releaseTime_Comment;//发布时间ID_Reply
     private Integer likes_Comment;//点赞数
     private Integer dislikes_Comment;//踩数
     private Integer score_Comment;//打分
-    private String Nickname_User;
-    private String Name_Song;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -31,8 +29,6 @@ public class Comment {
         list.add(likes_Comment);
         list.add(dislikes_Comment);
         list.add(score_Comment);
-        list.add(Nickname_User);
-        list.add(Name_Song);
         return list;
     }
 
@@ -60,10 +56,6 @@ public class Comment {
             list.add(dislikes_Comment);
         if(score_Comment!=null)
             list.add(score_Comment);
-        if(Nickname_User!=null)
-            list.add(Nickname_User);
-        if(Name_Song!=null)
-            list.add(Name_Song);
 
 
         return list;
@@ -72,7 +64,7 @@ public class Comment {
     //转换为Object数组, 方便insertNew
     public Object[] objectArray()
     {
-        Object[] array=new Object[11];
+        Object[] array=new Object[9];
         array[0]=id_Comment;
         array[1]=id_Song;
         array[2]=id_User;
@@ -82,8 +74,6 @@ public class Comment {
         array[6]=likes_Comment;
         array[7]=dislikes_Comment;
         array[8]=score_Comment;
-        array[9]=Nickname_User;
-        array[10]=Name_Song;
         return array;
     }
 
@@ -104,11 +94,11 @@ public class Comment {
         this.id_Song = id_Song;
     }
 
-    public Integer getId_User() {
+    public String getId_User() {
         return id_User;
     }
 
-    public void setId_User(Integer id_User) {
+    public void setId_User(String id_User) {
         this.id_User = id_User;
     }
 
@@ -160,19 +150,5 @@ public class Comment {
         this.score_Comment = score_Comment;
     }
 
-    public String getNickname_User() {
-        return Nickname_User;
-    }
 
-    public void setNickname_User(String nickname_User) {
-        Nickname_User = nickname_User;
-    }
-
-    public String getName_Song() {
-        return Name_Song;
-    }
-
-    public void setName_Song(String name_Song) {
-        Name_Song = name_Song;
-    }
 }

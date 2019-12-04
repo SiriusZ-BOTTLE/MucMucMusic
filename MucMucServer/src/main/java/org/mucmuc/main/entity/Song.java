@@ -10,6 +10,7 @@ public class Song {
     private String singer_Song;
     private Date releaseDate_Song;
     private String fileURL_Song;
+    private Integer Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -20,6 +21,7 @@ public class Song {
         list.add(singer_Song);
         list.add(releaseDate_Song);
         list.add(fileURL_Song);
+        list.add(Score);
         return list;
     }
 
@@ -39,6 +41,8 @@ public class Song {
             list.add(releaseDate_Song);
         if (fileURL_Song!=null)
             list.add(fileURL_Song);
+        if (Score!=null)
+            list.add(Score);
 
 
         return list;
@@ -47,12 +51,13 @@ public class Song {
     //转换为Object数组, 方便insertNew
     public Object[] objectArray()
     {
-        Object[] array=new Object[5];
+        Object[] array=new Object[6];
         array[0]=id_Song;
         array[1]=name_Song;
         array[2]=singer_Song;
         array[3]=releaseDate_Song;
         array[4]=fileURL_Song;
+        array[5]=Score;
         return array;
     }
 
@@ -94,5 +99,13 @@ public class Song {
 
     public void setFileURL_Song(String fileURL_Song) {
         this.fileURL_Song = fileURL_Song;
+    }
+
+    public Integer getScore() {
+        return Score;
+    }
+
+    public void setScore(Integer score) {
+        Score = score;
     }
 }

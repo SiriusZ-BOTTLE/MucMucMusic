@@ -19,7 +19,7 @@ public interface Interface_Lyrics_DAO {
      * @param lyrics
      * @return
      */
-    List<Lyrics> queryByID_Song(Lyrics lyrics);
+    Lyrics queryByID_Song(Lyrics lyrics);
 
     /**
      * 查询全部
@@ -37,7 +37,7 @@ public interface Interface_Lyrics_DAO {
      * 根据歌曲id删除
      * @return
      */
-    int deleteBySong(Song song);
+    int deleteBySong(Lyrics lyrics);
 
     /**
      * 更新歌词信息
