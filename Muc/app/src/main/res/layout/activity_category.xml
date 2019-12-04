@@ -7,19 +7,19 @@
 
     <com.google.android.material.appbar.AppBarLayout
 
-        android:id="@+id/app_bar_category"
+        android:id="@+id/app_bar_tag"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tool_bar_songlist"
+            android:id="@+id/tool_bar_tag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorRed"
             app:navigationIcon="@drawable/ic_back"
-            app:title="歌单分类"
+            app:title="分类详情"
             app:titleTextColor="@color/colorwhite" />
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorwhite"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_category"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_tag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 

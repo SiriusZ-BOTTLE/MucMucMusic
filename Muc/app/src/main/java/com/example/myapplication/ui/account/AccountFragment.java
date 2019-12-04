@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 
@@ -33,6 +34,7 @@ public class AccountFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
         Button btn1 = root.findViewById(R.id.xiugai);
+
         btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
             @Override
             public void onClick(View v) {

@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +19,7 @@ import java.util.List;
 public class FoundRecyclerViewAdapter extends RecyclerView.Adapter<FoundRecyclerViewAdapter.FoundRecyclerViewHolder> {
     private List<Category> mCategoryList;
     private Context mContext;
+    private FoundRecyclerViewAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
 
     static class FoundRecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView categorytitle;
@@ -56,10 +55,16 @@ public class FoundRecyclerViewAdapter extends RecyclerView.Adapter<FoundRecycler
 
 
     @Override
-    public void onBindViewHolder(FoundRecyclerViewHolder viewHolder, int position) {
+    public void onBindViewHolder(FoundRecyclerViewHolder viewHolder, final int position) {
         Category category = mCategoryList.get(position);
         viewHolder.categorytitle.setText(category.getName());
-
+        viewHolder.foundmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onRecycleItemClickListener!=null)
+                    onRecycleItemClickListener.OnRecycleItemClickListener(position);
+            }
+        });
         ChildAdapter childAdapter = (ChildAdapter) viewHolder.recyclerView.getAdapter();
 
         if(childAdapter==null){
@@ -77,5 +82,13 @@ public class FoundRecyclerViewAdapter extends RecyclerView.Adapter<FoundRecycler
     @Override
     public int getItemCount() {
         return mCategoryList.size();
+    }
+
+    public  void  OnRecycleItemClickListener(FoundRecyclerViewAdapter.OnRecycleItemClickListener v){
+        onRecycleItemClickListener = v;
+    }
+
+    public interface OnRecycleItemClickListener{
+        void OnRecycleItemClickListener(int position);
     }
 }

@@ -1,17 +1,15 @@
 package com.example.myapplication.ui.found;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,10 +28,10 @@ public class FoundFragment extends Fragment {
     private LinearLayout lltPageIndicator;
     private List<Category> categorylist = new ArrayList<>();
     private List<Music> musiclist = new ArrayList<>();
-    private int[] ImageArray=new int[]{R.drawable.nanshannan,R.drawable.xiaochou,R.drawable.faxian,R.drawable.luntan};
+    private int[] ImageArray=new int[]{R.drawable.nanshannan, R.drawable.xiaochou, R.drawable.faxian, R.drawable.luntan};
     private ImageView[] DotArray;
     private  List<View> ViewList = new ArrayList<View>();
-    private  int[] ids = {R.id.dot1,R.id.dot2,R.id.dot3,R.id.dot4};
+    private  int[] ids = {R.id.dot1, R.id.dot2, R.id.dot3, R.id.dot4};
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         foundViewModel =
@@ -82,12 +80,18 @@ public class FoundFragment extends Fragment {
         CategoryAdapter adapter = new CategoryAdapter(categorylist);
         recyclerView.setAdapter(adapter);
 
-
         RecyclerView recyclerView2 = root.findViewById(R.id.recycler_found);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView2.setLayoutManager(manager);
         FoundRecyclerViewAdapter adapter2 = new FoundRecyclerViewAdapter(categorylist,getActivity());
         recyclerView2.setAdapter(adapter2);
+        adapter2.OnRecycleItemClickListener(new FoundRecyclerViewAdapter.OnRecycleItemClickListener() {
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                Intent intent=new Intent(getActivity(), TagActivity.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
@@ -112,23 +116,23 @@ public class FoundFragment extends Fragment {
     }
 
     private void initMusic(){
-        Music three = new Music("南山南",R.drawable.nanshannan,"数据");
+        Music three = new Music("南山南", R.drawable.nanshannan,"数据");
         musiclist.add(three);
-        Music one = new Music("消愁",R.drawable.xiaochou,"数据");
+        Music one = new Music("消愁", R.drawable.xiaochou,"数据");
         musiclist.add(one);
-        Music two = new Music("论坛",R.drawable.luntan,"数据");
+        Music two = new Music("论坛", R.drawable.luntan,"数据");
         musiclist.add(two);
-        Music three1 = new Music("南山南",R.drawable.nanshannan,"数据");
+        Music three1 = new Music("南山南", R.drawable.nanshannan,"数据");
         musiclist.add(three1);
-        Music one1 = new Music("发现",R.drawable.faxian,"数据");
+        Music one1 = new Music("发现", R.drawable.faxian,"数据");
         musiclist.add(one1);
-        Music two1 = new Music("消愁",R.drawable.xiaochou,"数据");
+        Music two1 = new Music("消愁", R.drawable.xiaochou,"数据");
         musiclist.add(two1);
-        Music three2 = new Music("南山南",R.drawable.nanshannan,"数据");
+        Music three2 = new Music("南山南", R.drawable.nanshannan,"数据");
         musiclist.add(three2);
-        Music one3 = new Music("发现",R.drawable.faxian,"数据");
+        Music one3 = new Music("发现", R.drawable.faxian,"数据");
         musiclist.add(one3);
-        Music two4 = new Music("论坛",R.drawable.luntan,"数据");
+        Music two4 = new Music("论坛", R.drawable.luntan,"数据");
         musiclist.add(two4);
     }
     private void initCategory(){
