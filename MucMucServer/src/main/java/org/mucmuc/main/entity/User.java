@@ -40,13 +40,13 @@ public class User implements Serializable{
     }
 
     //转换为object列表,不包含空值(该函数功能同上)
-    @Deprecated
+//    @Deprecated
     public List<Object> objectList_notNull()
     {
         List<Object> list=new ArrayList<Object>();
 
-//        if(ID_User!=null)
-//            list.add(ID_User);
+        if(id_User!=null)
+            list.add(id_User);
         if(password_User!=null)
             list.add(password_User);
         if(nickname_User!=null)

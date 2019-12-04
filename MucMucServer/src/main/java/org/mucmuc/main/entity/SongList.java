@@ -10,7 +10,6 @@ public class SongList {
     private String name_SL;
     private Date date_SL;
     private String description_SL;
-    private String name_Song;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -21,7 +20,6 @@ public class SongList {
         list.add(name_SL);
         list.add(date_SL);
         list.add(description_SL);
-        list.add(name_Song);
         return list;
     }
 
@@ -41,8 +39,6 @@ public class SongList {
             list.add(date_SL);
         if (description_SL!=null)
             list.add(description_SL);
-        if (name_Song!=null)
-            list.add(name_Song);
 
 
         return list;
@@ -57,7 +53,6 @@ public class SongList {
         array[2]=name_SL;
         array[3]=date_SL;
         array[4]=description_SL;
-        array[5]=name_Song;
         return array;
     }
 
@@ -101,11 +96,4 @@ public class SongList {
         this.description_SL = description_SL;
     }
 
-    public String getName_Song() {
-        return name_Song;
-    }
-
-    public void setName_Song(String name_Song) {
-        this.name_Song = name_Song;
-    }
 }
