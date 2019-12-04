@@ -9,58 +9,63 @@ import org.mucmuc.main.entity.User;
 public interface Interface_Comment_Muc_server {
 
     /**
-     * 写评论，以及更新歌曲score(oldcomment user song)
-     * @param requestEntity
+     * 写评论，以及更新歌曲score(comment song user)  //comment包括发布时间，父评论id
+     * @param comment
      * @return
      */
-    ResultEntity write(RequestEntity requestEntity);
+    ResultEntity write(Comment comment, Song song, User user);
 
     /**
      * 修改自己评论内容，以及更新歌曲score
      */
-    ResultEntity modifyContent(RequestEntity requestEntity);
+    ResultEntity modifyContent(Comment comment);
 
     /**
      * 点赞
-     * @param requestEntity
+     * @param comment
      * @return
      */
-    ResultEntity likes(RequestEntity requestEntity);
+    ResultEntity likes(Comment comment);
 
     /**
      * 踩
-     * @param requestEntity
+     * @param comment
      * @return
      */
-    ResultEntity dislikes(RequestEntity requestEntity);
+    ResultEntity dislikes(Comment comment);
 
+    /**
+     * 修改评论Score
+     * @param comment
+     * @return
+     */
+    ResultEntity modifyscore(Comment comment);
 
     /**
      * 删除评论(管理员),更新歌曲score
-     * @param requestEntity
+     * @param comment
      * @return
      */
-    ResultEntity delete(RequestEntity requestEntity);
+    ResultEntity delete(Comment comment);
 
     /**
      * 显示当前评论的子评论（Comment）
-     * @param requestEntity
+     * @param comment
      * @return
      */
-    ResultEntity queryByReply(RequestEntity requestEntity);
+    ResultEntity queryByReply(Comment comment);
 
     /**
      * 显示当前歌曲的评论(song)
-     * @param requestEntity
+     * @param comment
      * @return
      */
-    ResultEntity queryBySong(RequestEntity requestEntity);
+    ResultEntity queryBySong(Comment comment);
 
     /**
      * 获得最新评论(song)
-     * @param requestEntity
      * @return
      */
-    ResultEntity queryNew(RequestEntity requestEntity);
+    ResultEntity queryNew();
 
 }

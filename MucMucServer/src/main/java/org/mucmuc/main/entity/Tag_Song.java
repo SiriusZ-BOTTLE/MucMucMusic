@@ -13,6 +13,7 @@ public class Tag_Song {
     private String Singer;
     private Date date_Release;
     private String content_Song;
+    private Integer Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -25,6 +26,7 @@ public class Tag_Song {
         list.add(Singer);
         list.add(date_Release);
         list.add(content_Song);
+        list.add(Score);
         return list;
     }
 
@@ -48,6 +50,8 @@ public class Tag_Song {
             list.add(date_Release);
         if(content_Song!=null)
             list.add(content_Song);
+        if(Score!=null)
+            list.add(Score);
 
 
         return list;
@@ -56,7 +60,7 @@ public class Tag_Song {
     //转换为Object数组, 方便insertNew
     public Object[] objectArray()
     {
-        Object[] array=new Object[7];
+        Object[] array=new Object[8];
         array[0]=id_Tag;
         array[1]=name_Tag;
         array[2]=id_Song;
@@ -64,6 +68,7 @@ public class Tag_Song {
         array[4]=Singer;
         array[5]=date_Release;
         array[6]=content_Song;
+        array[7]=Score;
         return array;
     }
 
@@ -122,5 +127,13 @@ public class Tag_Song {
 
     public void setContent_Song(String content_Song) {
         this.content_Song = content_Song;
+    }
+
+    public Integer getScore() {
+        return Score;
+    }
+
+    public void setScore(Integer score) {
+        Score = score;
     }
 }

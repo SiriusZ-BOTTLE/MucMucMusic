@@ -84,7 +84,7 @@
 
             <ImageView
                 android:id="@+id/imageview_play"
-                android:layout_width="192dp"
+                android:layout_width="100dp"
                 android:layout_height="37dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
@@ -97,6 +97,25 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:src="?attr/next_image" />
+            <ImageView
+                android:id="@+id/imageview_comment"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/pinglun" />
+
+            <ImageView
+                android:id="@+id/imageview_favotite"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/ic_favorite_border_red_400_18dp"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

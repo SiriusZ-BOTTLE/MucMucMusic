@@ -47,7 +47,7 @@ public class SongList {
     //转换为Object数组, 方便insertNew
     public Object[] objectArray()
     {
-        Object[] array=new Object[6];
+        Object[] array=new Object[5];
         array[0]=id_SL;
         array[1]=id_User;
         array[2]=name_SL;

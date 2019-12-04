@@ -9,7 +9,7 @@
     <View
         android:id="@+id/line1"
         android:layout_height="2px"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:background="@color/colorgray"
         app:layout_constraintTop_toTopOf="parent"

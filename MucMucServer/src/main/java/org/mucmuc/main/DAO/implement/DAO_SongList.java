@@ -189,6 +189,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
             s.setReleaseDate_Song(sl_s.getDate_Release());
             s.setSinger_Song(sl_s.getSinger());
             s.setFileURL_Song(sl_s.getContent_Song());
+            s.setScore(sl_s.getScore());
 
             songList.add(s);
         }

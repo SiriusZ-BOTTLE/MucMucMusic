@@ -20,7 +20,7 @@ public class User implements Serializable{
     //我说怎么老是报错
     private String gender_User;//性别
     private String level_User;//级别(分级)
-    private String state_User;//状态
+    private String state_User;//状态，正常是N
 
     //一共八个属性
 

@@ -52,7 +52,7 @@ public class ListplayActivity extends AppCompatActivity {
     private TextView textView1, textView2;
     private ImageView imageView_play, imageView_next, imageView_front,
             imageview, imageview_playstyle, imageview_location,
-            imageview_back;
+            imageview_back,imageview_comment,imageview_like;
     private int screen_width;
     private Random random = new Random();
     // 用于判断当前的播放顺序，0->单曲循环,1->顺序播放,2->随机播放
@@ -98,6 +98,8 @@ public class ListplayActivity extends AppCompatActivity {
         imageview_playstyle.setImageResource(R.mipmap.cicle);
         imageview_back = (ImageView) findViewById(R.id.title_back);
         imageview_location = (ImageView) findViewById(R.id.imageview_location);
+        imageview_comment = (ImageView) findViewById(R.id.imageview_comment);
+        imageview_like = (ImageView) findViewById(R.id.imageview_favotite);
         // 顶部和 底部操作栏按钮点击事件
         setClick();
 
@@ -183,6 +185,13 @@ public class ListplayActivity extends AppCompatActivity {
                     listview.setSelection(currentposition - 3);
                 }
 
+            }
+        });
+        imageview_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListplayActivity.this,CommentActivity.class);
+                startActivity(intent);
             }
         });
 

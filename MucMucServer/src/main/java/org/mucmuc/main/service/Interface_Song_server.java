@@ -1,5 +1,6 @@
 package org.mucmuc.main.service;
 
+import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 
@@ -12,35 +13,35 @@ import org.mucmuc.main.entity.Song;
 public interface Interface_Song_server {
 
     /**
-     * 播放歌曲
+     * 播放歌曲(song)
      * @param song
      * @return
      */
     ResultEntity play(Song song);
 
     /**
-     * 新增歌曲（管理员）
+     * 新增歌曲（管理员）(song)
      * @param song
      * @return
      */
     ResultEntity add(Song song);
 
     /**
-     * 删除歌曲(管理员)
+     * 删除歌曲(管理员)(song)
      * @param song
      * @return
      */
     ResultEntity delete(Song song);
 
     /**
-     * 更新歌曲信息（管理员）
+     * 更新歌曲信息（管理员）(song)
      * @param song
      * @return
      */
     ResultEntity updateInfo(Song song);
 
     /**
-     * 查询
+     * 查询(song)
      * @param song
      * @return
      */
@@ -56,7 +57,7 @@ public interface Interface_Song_server {
 //    ResultEntity querySLBySong(Song song);
 
     /**
-     * 获得歌曲的所有标签
+     * 获得歌曲的所有标签(song)
      * @param song
      * @return
      */
