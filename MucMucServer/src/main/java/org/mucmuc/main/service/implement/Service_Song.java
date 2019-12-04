@@ -1,16 +1,15 @@
 package org.mucmuc.main.service.implement;
 
 
-import com.alibaba.fastjson.JSONObject;
+
 import org.mucmuc.main.DAO.implement.DAO_Song;
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.Interface_Song_server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.mucmuc.main.DAO.implement.DAO_Song;
+
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class Service_Song implements Interface_Song_server {
             song = dao_Song.queryByPK(song);
             if (song == null){
                 errorMsg = "歌曲信息不存在！";
-            }else if(song.getFileURL_Song() == null){
+            }else if(song.getFile_Song() == null){
                 errorMsg = "歌曲url信息不存在！";
             }else {
                 success = Boolean.TRUE;

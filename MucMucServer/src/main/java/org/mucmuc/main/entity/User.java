@@ -11,7 +11,7 @@ public class User implements Serializable{
     private String id_User;//ID
     private String password_User;//密码
     private String nickname_User;//昵称
-    private String iconFileURL_User;//图标
+    private String iconFile_User;//图标
     private String idiograph_User;//个性签名
 //    private Character Gender_User;//性别
 //    private Character Level_User;//级别(分级)
@@ -31,7 +31,7 @@ public class User implements Serializable{
         list.add(id_User);
         list.add(password_User);
         list.add(nickname_User);
-        list.add(iconFileURL_User);
+        list.add(iconFile_User);
         list.add(idiograph_User);
         list.add(gender_User);
         list.add(level_User);
@@ -51,8 +51,8 @@ public class User implements Serializable{
             list.add(password_User);
         if(nickname_User!=null)
             list.add(nickname_User);
-        if(iconFileURL_User !=null)
-            list.add(iconFileURL_User);
+        if(iconFile_User !=null)
+            list.add(iconFile_User);
         if(idiograph_User!=null)
             list.add(idiograph_User);
         if(gender_User!=null)
@@ -72,7 +72,7 @@ public class User implements Serializable{
         array[0]=id_User;
         array[1]=password_User;
         array[2]=nickname_User;
-        array[3]=iconFileURL_User;
+        array[3]= iconFile_User;
         array[4]=idiograph_User;
         array[5]=gender_User;
         array[6]=level_User;
@@ -104,12 +104,12 @@ public class User implements Serializable{
         this.nickname_User = nickname_User;
     }
 
-    public String getIconFileURL_User() {
-        return iconFileURL_User;
+    public String getIconFile_User() {
+        return iconFile_User;
     }
 
-    public void setIconFileURL_User(String iconFileURL_User) {
-        this.iconFileURL_User = iconFileURL_User;
+    public void setIconFile_User(String iconFile_User) {
+        this.iconFile_User = iconFile_User;
     }
 
     public String getIdiograph_User() {
