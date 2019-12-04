@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+
+        android:id="@+id/app_bar_comment"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool_bar_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorRed"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="评论"
+            app:titleTextColor="@color/colorwhite" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/song_info"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/beijing"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_comment"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <ImageView
+            android:id="@+id/song_icon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="fitCenter"
+            android:layout_margin="15dp"
+            android:src="@drawable/xiaochou"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/comment_songname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="40dp"
+            android:text="消愁"
+            app:layout_constraintLeft_toRightOf="@id/song_icon"
+            app:layout_constraintTop_toTopOf="@id/song_icon"/>
+        <TextView
+            android:id="@+id/comment_songsinger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:text="毛不易"
+            android:textColor="@color/colorgreen"
+            app:layout_constraintLeft_toRightOf="@id/song_icon"
+            app:layout_constraintTop_toBottomOf="@id/comment_songname"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/goodcomment"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorgray"
+        app:layout_constraintTop_toBottomOf="@id/song_info">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="精彩评论"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_comment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/goodcomment"
+        app:layout_constraintBottom_toTopOf="@id/comment_add"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/comment_add"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorwhite"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <TextView
+            android:id="@+id/comment_add2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我也来写评论"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:background="@drawable/biankuang2"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

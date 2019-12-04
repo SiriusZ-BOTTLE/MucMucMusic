@@ -3,7 +3,9 @@
     package="com.example.myapplication">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="MucMuc"
@@ -23,6 +25,8 @@
         <activity android:name=".ui.music.play.ListplayActivity"></activity>
         <activity android:name=".ui.home.LoginActivity"></activity>
         <activity android:name=".ui.home.SignActivity"></activity>
+        <activity android:name=".ui.music.play.AddCommentActivity"></activity>
+        <activity android:name=".ui.music.play.CommentActivity"></activity>
     </application>
 
 </manifest>

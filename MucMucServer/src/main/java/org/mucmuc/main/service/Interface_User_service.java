@@ -29,7 +29,7 @@ public interface Interface_User_service {
     ResultEntity register(User user);
 
     /**
-     * 多条件获取用户
+     * 获取用户
      * @param user
      * @return
      */
@@ -52,10 +52,11 @@ public interface Interface_User_service {
 
     /**
      * 删除用户
-     * @param user
+     * @param user0
+     * @param user1
      * @return
      */
-    ResultEntity delete(User user);
+    ResultEntity delete(User user0,User user1);
 
 
 }

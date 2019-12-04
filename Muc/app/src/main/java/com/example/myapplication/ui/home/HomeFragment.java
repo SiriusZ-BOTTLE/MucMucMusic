@@ -41,11 +41,9 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private List<Music> musiclist = new ArrayList<>();
     private List<MusicList> musicList = new ArrayList<>();
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         TabHost tabHost= root.findViewById(R.id.tabhost);

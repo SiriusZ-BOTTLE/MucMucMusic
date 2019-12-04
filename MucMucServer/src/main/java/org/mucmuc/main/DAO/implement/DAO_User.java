@@ -80,9 +80,13 @@ public class DAO_User implements Interface_User_DAO {
     @Override
     public int update(User user) {
 
-        String sql="update "+Set_StringConstants.table_user+"set ";
+        String sql="update "+Set_StringConstants.table_user+"  set ";
 
-        List<Object> list=user.objectList();//获取非空项
+        List<Object> list=user.objectList_notNull();//获取非空项
+
+        list.remove(0);//删除主键
+
+        System.out.println(list.size());
 
         if(user.getPassword_User()!=null)
         {
@@ -120,12 +124,12 @@ public class DAO_User implements Interface_User_DAO {
 //            list.add(user.getState_User());
         }
 
-
         if(sql.endsWith(","))
         {
             sql=sql.substring(0,sql.length()-1);//缩减
         }
         sql+=" where ID_User = ? ";
+        System.out.println(sql);
         list.add(user.getId_User());
             //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
@@ -144,14 +148,14 @@ public class DAO_User implements Interface_User_DAO {
     }
 
 
-    public static void main(String args[])
-    {
-        DAO_User userDAO=new DAO_User();
-        User u=new User();
-        List<User> list=userDAO.queryAll();
-
-        System.out.println(list);
-
-    }
+//    public static void main(String args[])
+//    {
+//        DAO_User userDAO=new DAO_User();
+//        User u=new User();
+//        List<User> list=userDAO.queryAll();
+//
+//        System.out.println(list);
+//
+//    }
 
 }
