@@ -4,6 +4,11 @@
 /*==============================================================*/
 
 
+/*
+*  这个是更改过的SQL, 因为PowerDesigner里面并没有mediumtext类型, 只有一个通用的Text类型  
+*  因此手动更改字段类型
+*/
+
 drop table if exists Comment_Muc;
 
 drop table if exists Lyrics;
@@ -39,7 +44,7 @@ create table Comment_Muc
    primary key (ID_Comment)
 );
 
-alter table Comment_Muc comment '����';
+alter table Comment_Muc comment 'ÆÀÂÛ';
 
 /*==============================================================*/
 /* Table: Lyrics                                                */
@@ -53,7 +58,7 @@ create table Lyrics
    primary key (ID_Lyrics)
 );
 
-alter table Lyrics comment '���';
+alter table Lyrics comment '¸è´Ê';
 
 /*==============================================================*/
 /* Table: Map_SL_S                                              */
@@ -65,7 +70,7 @@ create table Map_SL_S
    primary key (ID_SL, ID_Song)
 );
 
-alter table Map_SL_S comment 'ӳ��-�赥��������';
+alter table Map_SL_S comment 'Ó³Éä-¸èµ¥°üº¬¸èÇú';
 
 /*==============================================================*/
 /* Table: Map_S_T                                               */
@@ -78,7 +83,7 @@ create table Map_S_T
    primary key (ID_Song, ID_Tag)
 );
 
-alter table Map_S_T comment 'ӳ��-�����ͱ�ǩ';
+alter table Map_S_T comment 'Ó³Éä-¸èÇúºÍ±êÇ©';
 
 /*==============================================================*/
 /* Table: Record_CommentsSquare                                 */
@@ -89,7 +94,7 @@ create table Record_CommentsSquare
    primary key (ID_Comment)
 );
 
-alter table Record_CommentsSquare comment '���۹㳡�����ۼ�¼';
+alter table Record_CommentsSquare comment 'ÆÀÂÛ¹ã³¡µÄÆÀÂÛ¼ÇÂ¼';
 
 /*==============================================================*/
 /* Table: Song                                                  */
@@ -100,13 +105,13 @@ create table Song
    Name_Song            varchar(90),
    Singer_Song          varchar(30),
    ReleaseDate_Song     date,
-   File_Song            text,
-   IconFile_Song        text,
+   File_Song            mediumtext,
+   IconFile_Song        mediumtext,
    Score_Song           float,
    primary key (ID_Song)
 );
 
-alter table Song comment '����';
+alter table Song comment '¸èÇú';
 
 /*==============================================================*/
 /* Table: SongList                                              */
@@ -121,7 +126,7 @@ create table SongList
    primary key (ID_SL)
 );
 
-alter table SongList comment '�赥';
+alter table SongList comment '¸èµ¥';
 
 /*==============================================================*/
 /* Table: Tag                                                   */
@@ -133,7 +138,7 @@ create table Tag
    primary key (ID_Tag)
 );
 
-alter table Tag comment '��ǩ';
+alter table Tag comment '±êÇ©';
 
 /*==============================================================*/
 /* Table: User_Muc                                              */
@@ -143,7 +148,7 @@ create table User_Muc
    ID_User              varchar(24) not null,
    Password_User        varchar(16) not null,
    Nickname_User        varchar(30),
-   IconFile_User        text,
+   IconFile_User        mediumtext,
    Idiograph_User       varchar(150),
    Gender_User          char(1) not null,
    Level_User           char(1) not null,
@@ -151,7 +156,7 @@ create table User_Muc
    primary key (ID_User)
 );
 
-alter table User_Muc comment '�û�';
+alter table User_Muc comment 'ÓÃ»§';
 
 alter table Comment_Muc add constraint FK_SongHasComments foreign key (ID_Song)
       references Song (ID_Song) on delete restrict on update restrict;
