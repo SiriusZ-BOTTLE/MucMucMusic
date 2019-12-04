@@ -9,7 +9,7 @@ import org.mucmuc.main.entity.User;
 public interface Interface_Comment_Muc_server {
 
     /**
-     * 写评论，以及更新歌曲score(comment user song)  //comment包括发布时间，父评论id
+     * 写评论，以及更新歌曲score(comment song user)  //comment包括发布时间，父评论id
      * @param comment
      * @return
      */
