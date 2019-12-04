@@ -13,7 +13,7 @@ public class Song {
     private String file_Song;
     private String iconFile_Song;
 
-    private Integer Score;
+    private Double Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -118,19 +118,13 @@ public class Song {
         this.file_Song = file_Song;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return Score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         Score = score;
     }
 
-    public Integer getScore() {
-        return Score;
-    }
 
-    public void setScore(Integer score) {
-        Score = score;
-    }
 }
