@@ -41,13 +41,14 @@ public class DAO_User implements Interface_User_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_user;
 
-        if(user.getNickname_User()!=null)
-            sql=sql+"where Nickname_User like ?";
+        if(user.getNickname_User()!=null&&user.getId_User()!=null)
+            sql=sql+" where Nickname_User like ? or id_User like ? ";
         else
             return null;
 
         //查询
-        List<User> userList=jdbc.query(sql,new Object[]{user.getNickname_User()}, new BeanPropertyRowMapper(User.class));
+        List<User> userList=
+                jdbc.query(sql,new Object[]{"%"+user.getNickname_User()+"%","%"+user.getId_User()+"%"}, new BeanPropertyRowMapper(User.class));
 
         return userList;
     }

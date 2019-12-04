@@ -89,6 +89,13 @@ public class Controller_User {
     }
 
 
+    @RequestMapping(value = "/fuzzyGet",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity fuzzyGet(@RequestBody User user)
+    {
+        return userService.getByAttribute(user);
+    }
+
+
 
 
     //测试用接口

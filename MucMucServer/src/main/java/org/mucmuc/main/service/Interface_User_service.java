@@ -43,6 +43,12 @@ public interface Interface_User_service {
     ResultEntity getAll();
 
     /**
+     * 根据属性模糊查询(只支持用户昵称模糊查询)
+     * @return
+     */
+    ResultEntity getByAttribute(User user);
+
+    /**
      * 更新用户
      * @param user
      * @return
