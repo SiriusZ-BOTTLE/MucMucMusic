@@ -64,18 +64,12 @@ public class SignActivity extends AppCompatActivity {
                                 ResultEntity result = JSON.parseObject(res, ResultEntity.class);
 
                                 if(result.getState()==true){
-                                    Intent it = new Intent();
-                                    it.setClass(SignActivity.this, LoginActivity.class);
-
-                                    editor.putString("name",userid);
-                                    editor.putString("password",password);
-                                    editor.putBoolean("flag",true);
-                                    editor.commit();
-//                                    Looper.prepare();
+                                    Intent it = new Intent(SignActivity.this,LoginActivity.class);
+                                    Looper.prepare();
                                     Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-//                                    Looper.loop();
                                     startActivity(it);
                                     finish();
+                                    Looper.loop();
 //                                    onBackPressed();
 
                                 }
