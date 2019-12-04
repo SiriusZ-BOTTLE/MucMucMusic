@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //服务包
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service(value = "Service_User")
 public class Service_User implements Interface_User_service {
@@ -124,6 +126,24 @@ public class Service_User implements Interface_User_service {
     @Override
     public ResultEntity getAll() {
         return null;
+    }
+
+    @Override
+    public ResultEntity getByAttribute(User user) {
+        ResultEntity resultEntity=new ResultEntity();
+        if(user.getNickname_User()==null||user.getId_User()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> nickName_User is NULL or id_User is NULL");
+            return resultEntity;
+        }
+
+        List<User> list=userDAO.queryByAttribute(user);
+
+        resultEntity.setObject(list);//返回列表信息
+
+        resultEntity.setState(true);
+
+        return resultEntity;
     }
 
     @Override
