@@ -205,12 +205,12 @@ public class DAO_Comment implements Interface_Comment_DAO {
         List<Object> list=new ArrayList<Object>();
 
         if(comment1.getContent_Comment()!=null) {
-            sql=sql+" Content like ? and";
+            sql=sql+" Content_Comment like ? and";
             list.add(comment1.getContent_Comment());
         }
 
         if(comment1.getDislikes_Comment()!=null){
-            sql=sql+" Dislikes >= ? and Dislikes < ? and";
+            sql=sql+" Dislikes_Comment >= ? and Dislikes < ? and";
             list.add(comment1.getDislikes_Comment());
             list.add(comment2.getDislikes_Comment());
         }
@@ -231,18 +231,18 @@ public class DAO_Comment implements Interface_Comment_DAO {
         }
 
         if(comment1.getLikes_Comment()!=null){
-            sql=sql+" Likes >= ? and Likes < ? and";
+            sql=sql+" Likes_Comment >= ? and Likes < ? and";
             list.add(comment1.getLikes_Comment());
             list.add(comment2.getLikes_Comment());
         }
 
         if(comment1.getReleaseTime_Comment()!=null){
-            sql=sql+" Time_Release = ? and";
+            sql=sql+" ReleaseTime_Comment = ? and";
             list.add(comment1.getReleaseTime_Comment());
         }
 
         if(comment1.getScore_Comment()!=null){
-            sql=sql+" Score >= ? and Score < ? and";
+            sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
         }
@@ -292,20 +292,20 @@ public class DAO_Comment implements Interface_Comment_DAO {
         }
         if(comment.getContent_Comment()!=null)
         {
-            sql+="Content = ? ,";
+            sql+="Content_Comment = ? ,";
         }
         if(comment.getReleaseTime_Comment()!=null)
         {
-            sql+="Time_Release = ? ,";
+            sql+="ReleaseTime_Comment = ? ,";
         }
         if(comment.getLikes_Comment()!=null){
-            sql+="Likes = ? ,";
+            sql+="Likes_Comment = ? ,";
         }
         if(comment.getDislikes_Comment()!=null){
-            sql+="Dislikes = ? ,";
+            sql+="Dislikes_Comment = ? ,";
         }
         if(comment.getScore_Comment()!=null) {
-            sql += "Score = ? ,";
+            sql += "Score_Comment = ? ,";
         }
 
         if(sql.endsWith(","))
