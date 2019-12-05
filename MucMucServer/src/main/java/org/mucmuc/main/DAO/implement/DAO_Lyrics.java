@@ -90,7 +90,7 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
     public int update(Lyrics lyrics) {
         String sql="update "+Set_StringConstants.table_lyrics+"set ";
 
-        List<Object> list=lyrics.objectList();//获取非空项
+        List<Object> list=lyrics.objectList_notNull();//获取非空项
 
         if(lyrics.getId_Song()!=null)
         {

@@ -32,7 +32,7 @@ public class SL_S {
     }
 
     //转换为object列表,不包含空值(该函数功能同上)
-    @Deprecated
+    //  @Deprecated
     public List<Object> objectList_notNull()
     {
         List<Object> list=new ArrayList<Object>();

@@ -10,7 +10,7 @@ import org.mucmuc.main.entity.SongList;
  */
 
 
-public interface Interface_SongList_server {
+public interface Interface_SongList_service {
 
 
     /**

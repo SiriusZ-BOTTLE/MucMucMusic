@@ -265,7 +265,7 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
     public int update(Comment comment) {
         String sql="update "+Set_StringConstants.table_comment+"set ";
 
-        List<Object> list=comment.objectList();//获取非空项
+        List<Object> list=comment.objectList_notNull();//获取非空项
 
         if(comment.getId_Song()!=null)
         {

@@ -6,7 +6,7 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 /**
  * @author ZSR
  */
-public interface Interface_Tag_server {
+public interface Interface_Tag_service {
 
 
 
