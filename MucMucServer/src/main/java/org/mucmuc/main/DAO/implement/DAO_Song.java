@@ -108,22 +108,26 @@ public class DAO_Song implements Interface_Song_DAO {
         }
         if(song.getSinger_Song()!=null)
         {
-            sql+=" Singer = ? ,";
+            sql+=" Singer_Song = ? ,";
 //            list.add(user.getNickname_User());
         }
         if(song.getReleaseDate_Song()!=null)
         {
-            sql+=" Date_Release = ? ,";
+            sql+=" ReleaseDate_Song = ? ,";
 //            list.add(user.getIcon_User());
         }
         if(song.getFile_Song()!=null)
         {
-            sql+=" Content_Song = ? ,";
+            sql+=" File_Song = ? ,";
 //            list.add(user.getIdiograph_User());
+        }
+        if(song.getIconFile_Song()!=null)
+        {
+            sql+=" IconFile_Song = ? ,";
         }
         if(song.getScore()!=null)
         {
-            sql+=" Score = ? ,";
+            sql+=" Score_Song = ? ,";
 //            list.add(user.getIdiograph_User());
         }
 
@@ -141,10 +145,10 @@ public class DAO_Song implements Interface_Song_DAO {
 
     @Override
     public int insertNew(Song song) {
-        String sql="insert into "+Set_StringConstants.table_song+" values (?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_song+" values (?,?,?,?,?,?) ";
 
 
-        return jdbc.update(sql,song.getName_Song(),song.getSinger_Song(),song.getReleaseDate_Song(),song.getFile_Song());
+        return jdbc.update(sql,song.getName_Song(),song.getSinger_Song(),song.getReleaseDate_Song(),song.getFile_Song(),song.getIconFile_Song(),song.getScore());
     }
 
     @Override

@@ -99,12 +99,12 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
         }
         if(lyrics.getContent_Lyrics()!=null)
         {
-            sql+="Content = ? ,";
+            sql+="Content_Lyrics = ? ,";
 //            list.add(lyrics.getContent_Lyrics());
         }
         if(lyrics.getFlag_Pure_Lyrics()!=null)
         {
-            sql+="Flag_Pure = ? ,";
+            sql+="Flag_Pure_Lyrics = ? ,";
 //            list.add(lyrics.getFlag_Pure_Lyrics());
         }
 
