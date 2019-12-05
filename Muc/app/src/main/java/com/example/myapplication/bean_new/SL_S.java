@@ -13,6 +13,7 @@ public class SL_S {
     private String Singer;
     private Date date_Release;
     private String content_Song;
+    private Double Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -26,6 +27,7 @@ public class SL_S {
         list.add(Singer);
         list.add(date_Release);
         list.add(content_Song);
+        list.add(Score);
         return list;
     }
 
@@ -51,6 +53,8 @@ public class SL_S {
             list.add(date_Release);
         if(content_Song!=null)
             list.add(content_Song);
+        if(Score!=null)
+            list.add(Score);
 
 
         return list;
@@ -68,6 +72,7 @@ public class SL_S {
         array[5]=Singer;
         array[6]=date_Release;
         array[7]=content_Song;
+        array[8]=Score;
         return array;
     }
 
@@ -134,5 +139,13 @@ public class SL_S {
 
     public void setContent_Song(String content_Song) {
         this.content_Song = content_Song;
+    }
+
+    public Double getScore() {
+        return Score;
+    }
+
+    public void setScore(Double score) {
+        Score = score;
     }
 }

@@ -65,11 +65,12 @@ public class SignActivity extends AppCompatActivity {
 
                                 if(result.getState()==true){
                                     Intent it = new Intent(SignActivity.this,LoginActivity.class);
-                                    Looper.prepare();
-                                    Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                                     startActivity(it);
                                     finish();
+                                    Looper.prepare();
+                                    Toast.makeText(SignActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
+
 //                                    onBackPressed();
 
                                 }

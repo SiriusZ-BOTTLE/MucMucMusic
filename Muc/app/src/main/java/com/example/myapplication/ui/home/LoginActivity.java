@@ -81,17 +81,17 @@ public class LoginActivity extends AppCompatActivity {
 //                                final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.album_appwidget);
 //                                views.setViewVisibility(R.id.title, View.GONE);
 //                                views.setTextViewText(R.id.artist, res.getText(R.string.emptyplaylist));
-                                Handler mainHandler = new Handler(Looper.getMainLooper());
-                                mainHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //已在主线程中，可以更新UI
-//                                        View account = View.inflate(LoginActivity.this, R.layout.fragment_account, null);
-//                                        ((TextView)(account.findViewById(R.id.user_name))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
-//                                        ((TextView)(account.findViewById(R.id.user_val))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
-                                        Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+//                                Handler mainHandler = new Handler(Looper.getMainLooper());
+//                                mainHandler.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //已在主线程中，可以更新UI
+////                                        View account = View.inflate(LoginActivity.this, R.layout.fragment_account, null);
+////                                        ((TextView)(account.findViewById(R.id.user_name))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
+////                                        ((TextView)(account.findViewById(R.id.user_val))).setText(((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
+//                                        Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
                                   it.putExtra("nickname",((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
                                   it.putExtra("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
 
@@ -100,8 +100,9 @@ public class LoginActivity extends AppCompatActivity {
 //                                invalidate();
                                 startActivity(it);
 
-//                                Looper.prepare();
-//                                Looper.loop();
+                                Looper.prepare();
+                                Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
                             }
                             else{
                                 Looper.prepare();

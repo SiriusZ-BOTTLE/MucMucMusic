@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @Author ZSR
  * 注:
  * state字段指示总体操作是否成功完成, 无论发生了前端调用错误,或者逻辑上无法完成操作(比如用户登录时账号不存在的情况)
- * state字段都应该为false, 仅当
+ * state字段都应该为false, 仅当成功完成操作时, state才为true
  */
 
 
@@ -16,13 +16,13 @@ public class ResultEntity implements Serializable {
 
     private static final long serialVersionUID = 3401781428101852075L;
 
-    //状态信息,true表示成功,false表示失败
+    //状态信息,true表示成功,false表示失败(默认是false)
     private Boolean state=false;
     //错误信息(指示前端的调用错误)
     private String info_error="";
     //操作信息(执行操作的返回信息)
-    private String info_operation="Undefined";
-    //返回对象
+    private String info_operation="Done";
+    //返回对象(默认是null)
     private Object object=null;
 
     public Boolean getState() {

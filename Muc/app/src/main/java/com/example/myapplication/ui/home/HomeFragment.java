@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
         }
     }
     private void initMusic(){
-            Music three = new Music("南山南",R.drawable.nanshannan,"数据");
+        Music three = new Music("南山南",R.drawable.nanshannan,"数据");
         musiclist.add(three);
         Music one = new Music("消愁",R.drawable.xiaochou,"数据");
         musiclist.add(one);

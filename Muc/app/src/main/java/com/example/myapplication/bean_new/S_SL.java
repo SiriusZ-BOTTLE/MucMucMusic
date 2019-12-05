@@ -14,6 +14,7 @@ public class S_SL {
     private String name_SL;
     private Date date_SL;
     private String description_SL;
+    private Double Score;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -28,6 +29,7 @@ public class S_SL {
         list.add(name_SL);
         list.add(date_SL);
         list.add(description_SL);
+        list.add(Score);
         return list;
     }
 
@@ -55,13 +57,15 @@ public class S_SL {
             list.add(date_SL);
         if(description_SL!=null)
             list.add(description_SL);
+        if(Score!=null)
+            list.add(Score);
         return list;
     }
 
     //转换为Object数组, 方便insertNew
     public Object[] objectArray()
     {
-        Object[] array=new Object[9];
+        Object[] array=new Object[10];
         array[0]=id_Song;
         array[1]=name_Song;
         array[2]=Singer;
@@ -71,6 +75,7 @@ public class S_SL {
         array[6]=name_SL;
         array[7]=date_SL;
         array[8]=description_SL;
+        array[9]=Score;
         return array;
     }
 
@@ -145,5 +150,13 @@ public class S_SL {
 
     public void setDescription_SL(String description_SL) {
         this.description_SL = description_SL;
+    }
+
+    public Double getScore() {
+        return Score;
+    }
+
+    public void setScore(Double score) {
+        Score = score;
     }
 }

@@ -32,14 +32,14 @@ public class AccountFragment extends Fragment {
     SharedPreferences sp;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         accountViewModel1 = ViewModelProviders.of(this).get(AccountViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_account, container, false);
+        View root = inflater.inflate(R.layout.fragment_account, container, false);//获得布局
 
         Button btn1 = root.findViewById(R.id.xiugai);
 
-        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
 
-        TextView nickname = (TextView) root.findViewById(R.id.user_name);
-        nickname.setText(sp.getString("nickname",""));
+        TextView nickname = (TextView) root.findViewById(R.id.user_name);//获得指定TextView
+        nickname.setText(sp.getString("nickname",""));//修改TextView
 
 
         TextView iograph = (TextView) root.findViewById(R.id.user_iograph);

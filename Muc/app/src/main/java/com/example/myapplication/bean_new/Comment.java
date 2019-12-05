@@ -8,7 +8,7 @@ import java.util.List;
 public class Comment {
     private Integer id_Comment;//评论ID
     private Integer id_Song;//歌曲ID
-    private Integer id_User;//用户ID
+    private String id_User;//用户ID
     private Integer id_ReplyComment;//回复的评论ID
     private String content_Comment;//内容
     private Date releaseTime_Comment;//发布时间ID_Reply
@@ -94,11 +94,11 @@ public class Comment {
         this.id_Song = id_Song;
     }
 
-    public Integer getId_User() {
+    public String getId_User() {
         return id_User;
     }
 
-    public void setId_User(Integer id_User) {
+    public void setId_User(String id_User) {
         this.id_User = id_User;
     }
 
@@ -149,4 +149,6 @@ public class Comment {
     public void setScore_Comment(Integer score_Comment) {
         this.score_Comment = score_Comment;
     }
+
+
 }
