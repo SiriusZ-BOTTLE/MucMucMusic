@@ -58,12 +58,12 @@ public class ResultEntity implements Serializable {
     }
 
     /**
-     *
-     * @param state
+     *  @param state
      * @param info_error
+     * @param info_operation
      * @param object
      */
-    public ResultEntity(Boolean state, String info_error, Object object) {
+    public ResultEntity(Boolean state, String info_error, String info_operation, Object object) {
         this.state = state;
         this.info_error = info_error;
         this.object = object;

@@ -1,12 +1,9 @@
 package org.mucmuc.main.service.implement;
 
 
-import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.DAO.implement.DAO_Lyrics;
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Lyrics;
-import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.service.Interface_Lyrics_server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,8 @@ public class Service_Lyrics implements Interface_Lyrics_server {
     public ResultEntity getLyrics(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "获取歌词信息成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (lyrics == null){
             errorMsg = "请求数据不能为空！";
         } else {
@@ -45,7 +43,7 @@ public class Service_Lyrics implements Interface_Lyrics_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,lyrics);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, lyrics);
         return resultEntity;
     }
 
@@ -69,7 +67,7 @@ public class Service_Lyrics implements Interface_Lyrics_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
     }
 
@@ -93,7 +91,7 @@ public class Service_Lyrics implements Interface_Lyrics_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
     }
 
@@ -118,7 +116,7 @@ public class Service_Lyrics implements Interface_Lyrics_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
     }
 }

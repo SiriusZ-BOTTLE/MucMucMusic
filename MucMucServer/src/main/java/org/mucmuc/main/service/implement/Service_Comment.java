@@ -49,18 +49,18 @@ public class Service_Comment implements Interface_Comment_server {
 
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "添加评论成功！";
-
+        String errorMsg = "";
+        String opMsg="done";
         if(comment == null || song == null || user == null) {
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         }else if(comment.getScore_Comment()!=null && (comment.getScore_Comment() >100 || comment.getScore_Comment() <0)){
             errorMsg = "分数格式不符合，需在0～100";
         }else if ( song.getId_Song() ==null){
-            errorMsg = "歌曲编号不能为空！";
+            errorMsg = "歌曲编号不能为空";
         } else if(user.getId_User() == null || user.getId_User().equals("")){
-            errorMsg = "用户编号不能为空！";
+            errorMsg = "用户编号不能为空";
         } else if(comment.getReleaseTime_Comment()==null){
-            errorMsg = "评论的发布日期不能为空！";
+            errorMsg = "评论的发布日期不能为空";
         } else{
             comment.setDislikes_Comment(0);
             comment.setLikes_Comment(0);
@@ -89,11 +89,11 @@ public class Service_Comment implements Interface_Comment_server {
             //更新评论信息
             int resultRow = dao_Comment.insertNew(comment);
             if (resultRow < 1){
-                errorMsg = "更新评论失败！";
+                errorMsg = "更新评论失败";
             }else {
                 resultRow = dao_Song.update(song);
                 if (resultRow < 1){
-                    errorMsg = "更新歌曲分数失败！";
+                    errorMsg = "更新歌曲分数失败";
                 }else{
                     success = Boolean.TRUE;
                 }
@@ -102,9 +102,8 @@ public class Service_Comment implements Interface_Comment_server {
         }
 
 
-
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg ,null);
         return resultEntity;
     }
 
@@ -112,23 +111,24 @@ public class Service_Comment implements Interface_Comment_server {
     public ResultEntity modifyContent(Comment comment) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "更新评论内容成功！";
+        String errorMsg ="";
+        String opMsg="done";
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if (comment.getContent_Comment() == null ){
-            errorMsg = "评论内容不能为空！";
+            errorMsg = "评论内容不能为空";
         } else {
             //更新用户信息
             int resultRow = dao_Comment.update(comment);
             if (resultRow < 1){
-                errorMsg = "更新评论内容失败！";
+                opMsg = "更新评论内容失败";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg, null);
         return resultEntity;
 
     }
@@ -137,27 +137,28 @@ public class Service_Comment implements Interface_Comment_server {
     public ResultEntity likes(Comment comment) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "评论点赞成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if (comment.getId_Comment() == null ){
-            errorMsg = "评论id不能为空！";
+            errorMsg = "评论id不能为空";
         } else if(comment.getLikes_Comment() == null || comment.getLikes_Comment() < 0){
-            errorMsg = "点赞数格式不对！";
+            errorMsg = "点赞数小于0或为空";
         }else {
 
             comment.setScore_Comment(comment.getScore_Comment() + 1);
             //更新用户信息
             int resultRow = dao_Comment.update(comment);
             if (resultRow < 1){
-                errorMsg = "更新评论点赞数失败！";
+                opMsg = "更新评论点赞数失败";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, null);
         return resultEntity;
     }
 
@@ -165,27 +166,28 @@ public class Service_Comment implements Interface_Comment_server {
     public ResultEntity dislikes(Comment comment) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "评论踩成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if (comment.getId_Comment() == null ){
-            errorMsg = "评论id不能为空！";
+            errorMsg = "评论id不能为空";
         } else if(comment.getLikes_Comment() == null || comment.getLikes_Comment() < 0){
-            errorMsg = "踩格式不对！";
+            errorMsg = "踩数小于0或为空";
         }else {
 
             comment.setScore_Comment(comment.getScore_Comment() + 1);
             //更新用户信息
             int resultRow = dao_Comment.update(comment);
             if (resultRow < 1){
-                errorMsg = "更新评论踩失败！";
+                opMsg = "更新评论踩失败";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, null);
         return resultEntity;
     }
 
@@ -193,27 +195,28 @@ public class Service_Comment implements Interface_Comment_server {
     public ResultEntity modifyscore(Comment comment){
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "修改分数成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if (comment.getId_Comment() == null ){
-            errorMsg = "评论编号不能为空！";
+            errorMsg = "评论编号不能为空";
         } else if(comment.getScore_Comment() <0 || comment.getLikes_Comment() > 100){
-            errorMsg = "评论score格式不对！";
+            errorMsg = "评论score格式不对";
         }else {
 
 
             //更新用户信息
             int resultRow = dao_Comment.update(comment);
             if (resultRow < 1){
-                errorMsg = "更新评论score失败！";
+                opMsg = "更新评论score失败";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, null);
         return resultEntity;
     }
 
@@ -221,11 +224,12 @@ public class Service_Comment implements Interface_Comment_server {
     public ResultEntity delete(Comment comment) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "歌曲删除成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if (comment.getId_Comment() == null){
-            errorMsg = "评论编号不能为空！";
+            errorMsg = "评论编号不能为空";
         }else{
             Comment comment2 = new Comment();
             comment2.setId_ReplyComment(comment.getId_ReplyComment());
@@ -258,11 +262,11 @@ public class Service_Comment implements Interface_Comment_server {
                 //删除评论信息
                 int resultRow = dao_Comment.deleteByPK(comment);
                 if (resultRow < 1){
-                    errorMsg = "删除评论失败！";
+                    opMsg = "删除评论失败";
                 }else {
                     resultRow = dao_Song.update(song);
                     if (resultRow < 1){
-                        errorMsg = "更新歌曲分数失败！";
+                        opMsg = "更新歌曲分数失败";
                     }else{
                         success = Boolean.TRUE;
                     }
@@ -271,9 +275,8 @@ public class Service_Comment implements Interface_Comment_server {
             }
         }
 
-
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, null);
         return resultEntity;
     }
 
@@ -282,9 +285,10 @@ public class Service_Comment implements Interface_Comment_server {
         List<Comment> commentList = null;
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "获取子评论信息成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         }else if (comment.getId_Comment() == null){
             errorMsg = "评论编号不能为空";
         }else {
@@ -294,14 +298,14 @@ public class Service_Comment implements Interface_Comment_server {
             //根据请求参数查询子评论
             commentList = dao_Comment.queryOrderbyTime(comment2, null);
             if (commentList == null && commentList.size()<0){
-                errorMsg = "子评论信息不存在！";
+                opMsg = "子评论信息不存在";
             } else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,commentList);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, commentList);
         return resultEntity;
     }
 
@@ -310,24 +314,24 @@ public class Service_Comment implements Interface_Comment_server {
         List<Comment> commentList = null;
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "获取改歌曲下的评论信息成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (comment == null){
-            errorMsg = "请求数据不能为空！";
+            errorMsg = "请求数据不能为空";
         } else if(comment.getId_Song() == null){
             errorMsg = "相应歌曲编号不能为空";
         }else {
             //根据请求参数查询歌曲信息
             commentList = dao_Comment.queryOrderbyTime(comment, null);
-
-            if (commentList == null){
-                errorMsg = "评论信息不存在！";
-            } else {
-                success = Boolean.TRUE;
+            success = Boolean.TRUE;
+            if (commentList.size()==0){
+                opMsg = "评论信息不存在";
             }
+            success=Boolean.TRUE;
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,commentList);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, commentList);
         return resultEntity;
     }
 
@@ -336,21 +340,20 @@ public class Service_Comment implements Interface_Comment_server {
         List<Comment> commentList = null;
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "获取改歌曲下的评论信息成功！";
-
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
 
         //根据请求参数查询歌曲信息
         commentList = dao_Comment.queryAll();
 
-        if (commentList == null){
-            errorMsg = "评论信息不存在！";
+        if (commentList.size()==0){
+            opMsg = "评论信息不存在";
         } else {
             success = Boolean.TRUE;
         }
 
-
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,commentList);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, commentList);
         return resultEntity;
     }
 }

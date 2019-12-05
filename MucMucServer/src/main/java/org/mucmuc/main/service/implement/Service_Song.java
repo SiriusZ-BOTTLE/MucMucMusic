@@ -60,7 +60,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,song);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, , song);
         return resultEntity;
     }
 
@@ -86,7 +86,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
     }
 
@@ -110,7 +110,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
     }
 
@@ -136,7 +136,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, , null);
         return resultEntity;
 
     }
@@ -160,7 +160,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,song);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, , song);
         return resultEntity;
     }
 
@@ -184,7 +184,7 @@ public class Service_Song implements Interface_Song_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,tagList);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, , tagList);
         return resultEntity;
     }
 }
