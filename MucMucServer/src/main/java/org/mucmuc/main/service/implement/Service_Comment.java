@@ -1,22 +1,17 @@
 package org.mucmuc.main.service.implement;
 
-import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.DAO.implement.DAO_Comment;
 import org.mucmuc.main.DAO.implement.DAO_Song;
 import org.mucmuc.main.entity.Comment;
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
-import org.mucmuc.main.service.Interface_Comment_Muc_server;
+import org.mucmuc.main.service.Interface_Comment_server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.Cipher;
-import javax.naming.CompositeName;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.lang.Double;
 
 /**
  * @Author: mjj
@@ -24,7 +19,7 @@ import java.util.Map;
  * @Desprition: 评论业务实现类
  */
 @Service(value = "CommmentService")
-public class Service_Comment_Muc implements Interface_Comment_Muc_server {
+public class Service_Comment implements Interface_Comment_server {
 
     @Autowired
     private DAO_Comment dao_Comment;
@@ -32,6 +27,21 @@ public class Service_Comment_Muc implements Interface_Comment_Muc_server {
     @Autowired
     private DAO_Song dao_Song;
 
+
+    @Override
+    public ResultEntity getRandom(Integer num) {
+        ResultEntity resultEntity =new ResultEntity();
+
+        if(num<=0||num>100)
+        {
+            resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+            return resultEntity;
+        }
+
+        resultEntity.setObject(dao_Comment.queryRandom(num));
+        resultEntity.setState(true);
+        return resultEntity;
+    }
 
     @Override
     public ResultEntity write(Comment comment, Song song, User user) {
@@ -61,7 +71,7 @@ public class Service_Comment_Muc implements Interface_Comment_Muc_server {
             comment2.setId_Song(comment.getId_Song());
             List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
             int count = 0;
-            int sum =0;
+            Double sum =0.0;
             for(Comment c :commentList){
                 if(c.getScore_Comment()!=null && c.getScore_Comment() >=0 ){
                     count++;
@@ -230,7 +240,7 @@ public class Service_Comment_Muc implements Interface_Comment_Muc_server {
                 comment2.setId_Song(comment.getId_Song());
                 List<Comment> commentList2= dao_Comment.queryOrderbyLikes(comment2, null);
                 int count = 0;
-                int sum =0;
+                Double sum =0.0;
                 for(Comment c :commentList){
 
                     if(c.getScore_Comment()!=null && (c.getScore_Comment() >=0 || c.getScore_Comment() <=100)){

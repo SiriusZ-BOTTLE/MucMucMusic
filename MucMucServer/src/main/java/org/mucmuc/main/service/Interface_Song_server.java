@@ -13,6 +13,14 @@ import org.mucmuc.main.entity.Song;
 public interface Interface_Song_server {
 
     /**
+     * 随机获取指定数量的记录
+     * @return
+     */
+    ResultEntity getRandom(Integer num);
+
+
+
+    /**
      * 播放歌曲(song)
      * @param song
      * @return

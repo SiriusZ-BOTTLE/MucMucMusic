@@ -1,9 +1,8 @@
 package org.mucmuc.main.DAO.implement;
 
-import org.mucmuc.main.DAO.Interface_Comment_Muc_DAO;
+import org.mucmuc.main.DAO.Interface_Comment_DAO;
 import org.mucmuc.main.DAO.Set_StringConstants;
 import org.mucmuc.main.entity.Comment;
-import org.mucmuc.main.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class DAO_Comment implements Interface_Comment_Muc_DAO {
+public class DAO_Comment implements Interface_Comment_DAO {
 
 
     @Autowired
@@ -29,6 +28,15 @@ public class DAO_Comment implements Interface_Comment_Muc_DAO {
             return null;
 
         return commentList.get(0);
+    }
+
+    @Override
+    public List<Comment> queryRandom(Integer num) {
+
+        String sql=" select * from "+Set_StringConstants.table_comment+" order by rand() limit 0,"+num;
+        List<Comment> commentList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Comment.class));
+
+        return commentList;
     }
 
     @Override

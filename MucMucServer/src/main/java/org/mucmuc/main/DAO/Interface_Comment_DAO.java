@@ -5,7 +5,7 @@ import org.mucmuc.main.entity.User;
 
 import java.util.List;
 
-public interface Interface_Comment_Muc_DAO {
+public interface Interface_Comment_DAO {
 
     /**
      * 根据主键查询
@@ -13,6 +13,14 @@ public interface Interface_Comment_Muc_DAO {
      * @return
      */
     Comment queryByPK(Comment comment);
+
+
+    /**
+     * 随机查询
+     * @param num
+     * @return
+     */
+    List<Comment> queryRandom(Integer num);
 
 
     /**

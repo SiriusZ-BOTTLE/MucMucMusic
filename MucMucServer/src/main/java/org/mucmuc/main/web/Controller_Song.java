@@ -19,7 +19,7 @@ import java.util.Map;
 @ResponseBody
 @Controller
 //@RestController//等价注解
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/song")
 public class Controller_Song {
 
     @Resource
@@ -28,6 +28,19 @@ public class Controller_Song {
     //@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url
     //@RequestParam则是将接口函数的参数直接放在请求URL中,作为参数传递
     //如果使用PostMapping或者GetMapping注解, 则无需再加上"method=RequestMethod.POST"参数
+
+
+    /**
+     * 随机获取,获取指定数量的记录
+     * @param num
+     * @return
+     */
+    @RequestMapping(value = "/getRandom",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getRandom(@RequestBody Integer num)
+    {
+        return songService.getRandom(num);
+    }
+
 
 
     /**

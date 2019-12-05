@@ -4,9 +4,6 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{3D9B544B-EEC5-4FB3-84A7-76007EB142B8}" Loaded="No" Name="MucMuc" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="../../../Model/MucMuc.cdm"/>
-		<Model Expanded="Yes" ID="{746A21D8-F840-4936-B862-E69AC80DEBFD}" Loaded="No" Name="MucMuc" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="../../../Model/MucMuc.pdm"/>
-		<Model Expanded="Yes" ID="{3D9B544B-EEC5-4FB3-84A7-76007EB142B8}" Name="MucMuc" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="../../../Model/MucMuc.cdm"/>
 		<Model Expanded="Yes" ID="{746A21D8-F840-4936-B862-E69AC80DEBFD}" Name="MucMuc" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="../../../Model/MucMuc.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>

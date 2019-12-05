@@ -33,6 +33,14 @@ public class DAO_Tag implements Interface_Tag_DAO {
     }
 
     @Override
+    public List<Tag> queryRandom(Integer num) {
+        String sql=" select * from "+Set_StringConstants.table_tag+" order by rand() limit 0,"+num;
+        List<Tag> list=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Tag.class));
+
+        return list;
+    }
+
+    @Override
     public List<Tag> queryByAttribute(Tag tag) {
 
         String sql="select * from "+ Set_StringConstants.table_tag;

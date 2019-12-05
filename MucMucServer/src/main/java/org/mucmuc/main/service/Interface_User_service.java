@@ -1,6 +1,5 @@
 package org.mucmuc.main.service;
 
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.User;
 

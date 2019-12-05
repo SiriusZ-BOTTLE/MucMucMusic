@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/12/4 17:04:49                           */
+/* Created on:     2019/12/5 10:09:06                           */
 /*==============================================================*/
 
 
@@ -27,7 +27,7 @@ drop table if exists User_Muc;
 /*==============================================================*/
 create table Comment_Muc
 (
-   ID_Comment           int not null,
+   ID_Comment           int not null auto_increment,
    ID_Song              int,
    ID_User              varchar(24),
    ID_Reply             int,
@@ -46,7 +46,7 @@ alter table Comment_Muc comment '评论';
 /*==============================================================*/
 create table Lyrics
 (
-   ID_Lyrics            int not null,
+   ID_Lyrics            int not null auto_increment,
    ID_Song              int,
    Content_Lyrics       varchar(2400),
    Flag_Pure_Lyrics     bool,
@@ -96,7 +96,7 @@ alter table Record_CommentsSquare comment '评论广场的评论记录';
 /*==============================================================*/
 create table Song
 (
-   ID_Song              int not null,
+   ID_Song              int not null auto_increment,
    Name_Song            varchar(90),
    Singer_Song          varchar(30),
    ReleaseDate_Song     date,
@@ -113,7 +113,7 @@ alter table Song comment '歌曲';
 /*==============================================================*/
 create table SongList
 (
-   ID_SL                int not null,
+   ID_SL                int not null auto_increment,
    ID_User              varchar(24),
    Name_SL              varchar(90) not null,
    Date_SL              date not null,
@@ -128,7 +128,7 @@ alter table SongList comment '歌单';
 /*==============================================================*/
 create table Tag
 (
-   ID_Tag               int not null,
+   ID_Tag               int not null auto_increment,
    Name_Tag             varchar(45) not null,
    primary key (ID_Tag)
 );

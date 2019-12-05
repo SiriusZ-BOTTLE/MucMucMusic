@@ -64,6 +64,14 @@ public class DAO_SongList implements Interface_SongList_DAO {
     }
 
     @Override
+    public List<SongList> queryRandom(Integer num) {
+        String sql=" select * from "+Set_StringConstants.table_songlist+" order by rand() limit 0,"+num;
+        List<SongList> list=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(SongList.class));
+
+        return list;
+    }
+
+    @Override
     public List<SongList> preciousqueryByID_User(SongList sl){
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
