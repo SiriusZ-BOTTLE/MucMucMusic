@@ -2,8 +2,15 @@ package com.example.myapplication.ui.home;
 
 import android.app.ActionBar;
 import android.app.Notification;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +35,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.Base64Util;
+import com.example.myapplication.Util.HttpUtil;
+
+import com.example.myapplication.Util.MessageBox;
 import com.example.myapplication.bean.Music;
 import com.example.myapplication.bean.MusicList;
+import com.example.myapplication.bean_new.Song;
+import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
+import com.example.myapplication.bean_new.SongList;
+import com.example.myapplication.bean_new.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +58,12 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private List<Music> musiclist = new ArrayList<>();
-    private List<MusicList> musicList = new ArrayList<>();
+    private List<Song> musiclist = new ArrayList<>();//歌曲数组
+    private List<SongList> songlist= new ArrayList<>();//歌单数组
+
+    private SharedPreferences sp;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -57,12 +80,12 @@ public class HomeFragment extends Fragment {
         for (int i = 0, count = tabWidget.getChildCount(); i < count; i++) {
             View v = tabWidget.getChildAt(i);
             v.setBackgroundResource(R.drawable.tab_selector);
-            tv = ((TextView) tabWidget.getChildAt(i).findViewById(
-                    android.R.id.title));
+            tv = ((TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title));
             tv.setTextColor(Color.rgb(255,255,255));
         }
 
         initMusic();
+
         initMusicList();
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
@@ -71,10 +94,11 @@ public class HomeFragment extends Fragment {
         MusicAdapter adapter = new MusicAdapter(musiclist);
         recyclerView.setAdapter(adapter);
 
+
         RecyclerView recyclerView1 =root.findViewById(R.id.recycler_view_musiclist);
         GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(),2);
         recyclerView1.setLayoutManager(layoutManager1);
-        MusicListAdapter adapter1 = new MusicListAdapter(musicList);
+        MusicListAdapter adapter1 = new MusicListAdapter(songlist);
         recyclerView1.setAdapter(adapter1);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -97,35 +121,51 @@ public class HomeFragment extends Fragment {
         return root;
     }
     private void initMusicList(){
-        for(int i=0;i<3;i++){
-            MusicList three = new MusicList("南山南",R.drawable.nanshannan,100,"马頔");
-            musicList.add(three);
-            MusicList one = new MusicList("消愁",R.drawable.xiaochou,100,"毛不易");
-            musicList.add(one);
-            MusicList two = new MusicList("南山南",R.drawable.nanshannan,100,"假数据");
-            musicList.add(two);
-            MusicList one1 = new MusicList("消愁",R.drawable.xiaochou,100,"假数据");
-            musicList.add(one1);
-        }
+//        for(int i=0;i<3;i++){
+//            SongList three = new SongList("南山南",R.drawable.nanshannan,100,"马頔");
+//            musicList.add(three);
+//            MusicList one = new MusicList("消愁",R.drawable.xiaochou,100,"毛不易");
+//            musicList.add(one);
+//            MusicList two = new MusicList("南山南",R.drawable.nanshannan,100,"假数据");
+//            musicList.add(two);
+//            MusicList one1 = new MusicList("消愁",R.drawable.xiaochou,100,"假数据");
+//            musicList.add(one1);
+//        }
     }
-    private void initMusic(){
-        Music three = new Music("南山南",R.drawable.nanshannan,"数据");
-        musiclist.add(three);
-        Music one = new Music("消愁",R.drawable.xiaochou,"数据");
-        musiclist.add(one);
-        Music two = new Music("论坛",R.drawable.luntan,"数据");
-        musiclist.add(two);
-        Music three1 = new Music("南山南",R.drawable.nanshannan,"数据");
-        musiclist.add(three1);
-        Music one1 = new Music("发现",R.drawable.faxian,"数据");
-        musiclist.add(one1);
-        Music two1 = new Music("消愁",R.drawable.xiaochou,"数据");
-        musiclist.add(two1);
-        Music three2 = new Music("南山南",R.drawable.nanshannan,"数据");
-        musiclist.add(three2);
-        Music one3 = new Music("发现",R.drawable.faxian,"数据");
-        musiclist.add(one3);
-        Music two4 = new Music("论坛",R.drawable.luntan,"数据");
-        musiclist.add(two4);
+    private void initMusic(){//初始化主页歌曲界面
+        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
+        String res=sp.getString("HomeFragment","");
+        if(res.isEmpty()){
+            return;
+        }
+        ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+        if(result.getState()==true){
+            for(int i=0;i<1;i++){
+                musiclist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
+            }
+
+        }
+        else{
+            Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
+        }
+
+//        Song three = new Song("南山南",R.drawable.nanshannan,"数据");
+//        musiclist.add(three);
+//        Song one = new Song("消愁",R.drawable.xiaochou,"数据");
+//        musiclist.add(one);
+//        Song two = new Song("论坛",R.drawable.luntan,"数据");
+//        musiclist.add(two);
+//        Song three1 = new Song("南山南",R.drawable.nanshannan,"数据");
+//        musiclist.add(three1);
+//        Song one1 = new Song("发现",R.drawable.faxian,"数据");
+//        musiclist.add(one1);
+//        Song two1 = new Song("消愁",R.drawable.xiaochou,"数据");
+//        musiclist.add(two1);
+//        Song three2 = new Song("南山南",R.drawable.nanshannan,"数据");
+//        musiclist.add(three2);
+//        Song one3 = new Song("发现",R.drawable.faxian,"数据");
+//        musiclist.add(one3);
+//        Song two4 = new Song("论坛",R.drawable.luntan,"数据");
+//        musiclist.add(two4);
     }
 }

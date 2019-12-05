@@ -45,6 +45,9 @@ public class AccountFragment extends Fragment {
         TextView iograph = (TextView) root.findViewById(R.id.user_iograph);
         iograph.setText(sp.getString("iograph",""));
 
+        //设置用户头像
+
+
         btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
             @Override
             public void onClick(View v) {
