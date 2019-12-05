@@ -8,11 +8,11 @@ import org.mucmuc.main.entity.User;
 
 public interface Interface_Comment_server {
 
-
-    ResultEntity getRandom()
-
-
-
+    /**
+     * 随机获取指定数量的记录
+     * @return
+     */
+    ResultEntity getRandom(Integer num);
 
 
     /**

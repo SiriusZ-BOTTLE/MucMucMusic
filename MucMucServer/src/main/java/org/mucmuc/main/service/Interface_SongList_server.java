@@ -4,13 +4,21 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.SongList;
 
 /**
- * @Author ZSR
+ * @author ZSR
  *
  *
  */
 
 
 public interface Interface_SongList_server {
+
+
+    /**
+     * 随机获取指定数量的记录
+     * @return
+     */
+    ResultEntity getRandom(Integer num);
+
 
     /**
      * 获取歌单(信息)
