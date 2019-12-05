@@ -1,12 +1,9 @@
 package org.mucmuc.main.service.implement;
 
 
-import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.DAO.implement.DAO_Lyrics;
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Lyrics;
-import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.service.Interface_Lyrics_server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,8 @@ public class Service_Lyrics implements Interface_Lyrics_server {
     public ResultEntity getLyrics(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "获取歌词信息成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (lyrics == null){
             errorMsg = "请求数据不能为空！";
         } else {
@@ -45,7 +43,7 @@ public class Service_Lyrics implements Interface_Lyrics_server {
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg,lyrics);
+        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, lyrics);
         return resultEntity;
     }
 
@@ -53,7 +51,8 @@ public class Service_Lyrics implements Interface_Lyrics_server {
     public ResultEntity update(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "更新歌词信息成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (lyrics == null){
             errorMsg = "请求数据不能为空！";
         } else if (lyrics.getId_Lyrics() == null || lyrics.getId_Lyrics().equals("")){
@@ -62,14 +61,14 @@ public class Service_Lyrics implements Interface_Lyrics_server {
             //更新用户信息
             int resultRow = dao_Lyrics.update(lyrics);
             if (resultRow < 1){
-                errorMsg = "更新歌词失败！";
+                opMsg = "更新歌词失败！";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg , null);
         return resultEntity;
     }
 
@@ -77,7 +76,8 @@ public class Service_Lyrics implements Interface_Lyrics_server {
     public ResultEntity delete(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "歌词删除成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (lyrics == null){
             errorMsg = "请求数据不能为空！";
         } else if (lyrics.getId_Song() == null){
@@ -86,14 +86,14 @@ public class Service_Lyrics implements Interface_Lyrics_server {
             //删除歌词信息
             int resultRow = dao_Lyrics.deleteBySong(lyrics);
             if (resultRow < 1){
-                errorMsg = "删除歌词失败！";
+                opMsg = "删除歌词失败！";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg , null);
         return resultEntity;
     }
 
@@ -101,7 +101,8 @@ public class Service_Lyrics implements Interface_Lyrics_server {
     public ResultEntity add(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
-        String errorMsg = "添加歌词成功！";
+        String errorMsg = "";//错误信息默认为空
+        String opMsg="done";//操作信息默认为完成
         if (lyrics == null){
             errorMsg = "请求数据不能为空！";
         } else if (lyrics.getFlag_Pure_Lyrics() == Boolean.TRUE){
@@ -111,14 +112,14 @@ public class Service_Lyrics implements Interface_Lyrics_server {
             //插入用户信息
             int resultRow = dao_Lyrics.insertNew(lyrics);
             if (resultRow < 1){
-                errorMsg = "添加歌词失败！";
+                opMsg = "添加歌词失败！";
             }else {
                 success = Boolean.TRUE;
             }
         }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, null);
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg , null);
         return resultEntity;
     }
 }
