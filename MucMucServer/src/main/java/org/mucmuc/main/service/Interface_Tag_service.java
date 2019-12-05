@@ -24,7 +24,7 @@ public interface Interface_Tag_service {
     ResultEntity get(Tag tag);
 
     /**
-     * 用户创建标签
+     * 用户为歌曲创建标签
      * @param song
      * @param tag
      * @return

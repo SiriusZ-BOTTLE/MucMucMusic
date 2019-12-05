@@ -3,6 +3,7 @@ package org.mucmuc.main.service;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Map_SL_S;
 
+@Deprecated
 public interface Interface_Map_SL_S_service {
 
     /**

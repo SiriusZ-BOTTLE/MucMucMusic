@@ -17,6 +17,13 @@ public interface Interface_Tag_DAO {
     Tag queryByPK(Tag tag);
 
     /**
+     * 根据标签名查询
+     * @param tag
+     * @return
+     */
+    Tag queryByName(Tag tag);
+
+    /**
      * 随机查询
      * @param num
      * @return

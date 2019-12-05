@@ -1,7 +1,10 @@
 package org.mucmuc.main.web;
 
+import com.alibaba.fastjson.JSON;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
+import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.User;
 import org.mucmuc.main.service.implement.Service_SongList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 //控制器注解
 @ResponseBody
@@ -39,6 +43,26 @@ public class Controller_SongList {
     public ResultEntity get(@RequestBody SongList songList)
     {
         return songListService.get(songList);
+    }
+
+    @RequestMapping(value = "/addSongToSL",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity addSongToSongList(@RequestBody Map<String,Object> map)
+    {
+        Song song= JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
+        SongList songList=JSON.parseObject(JSON.toJSONString(map.get("songList")), SongList.class);
+
+
+        return songListService.addSongToSongList(song,songList);
+    }
+
+    @RequestMapping(value = "/removeSongFromSL",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity removeSongFromSongList(@RequestBody Map<String,Object> map)
+    {
+        Song song= JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
+        SongList songList=JSON.parseObject(JSON.toJSONString(map.get("songList")), SongList.class);
+
+
+        return songListService.removeSongFromSongList(song,songList);
     }
 
 

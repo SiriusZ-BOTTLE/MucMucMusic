@@ -33,6 +33,17 @@ public class DAO_Tag implements Interface_Tag_DAO {
     }
 
     @Override
+    public Tag queryByName(Tag tag) {
+
+        String sql="select * from "+ Set_StringConstants.table_tag +" where name_Tag = ? ";
+        List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getName_Tag()}, new BeanPropertyRowMapper(Tag.class));
+
+        if(tagList==null||tagList.size()==0)
+            return null;
+        return tagList.get(0);
+    }
+
+    @Override
     public List<Tag> queryRandom(Integer num) {
         String sql=" select * from "+Set_StringConstants.table_tag+" order by rand() limit 0,"+num;
         List<Tag> list=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Tag.class));

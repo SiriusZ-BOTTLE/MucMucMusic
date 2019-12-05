@@ -1,6 +1,7 @@
 package org.mucmuc.main.service;
 
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
+import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
 
 /**
@@ -34,6 +35,21 @@ public interface Interface_SongList_service {
      * @return
      */
     ResultEntity getByAttribute(SongList songList);
+
+
+    /**
+     * 添加歌曲至歌单
+     * @return
+     */
+    ResultEntity addSongToSongList(Song song, SongList songList);
+
+    /**
+     * 从歌单中移除歌曲
+     * @param song
+     * @param songList
+     * @return
+     */
+    ResultEntity removeSongFromSongList(Song song, SongList songList);
 
 
     /**

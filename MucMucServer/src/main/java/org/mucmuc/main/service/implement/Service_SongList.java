@@ -1,7 +1,10 @@
 package org.mucmuc.main.service.implement;
 
+import org.mucmuc.main.DAO.Interface_Map_SL_S_DAO;
 import org.mucmuc.main.DAO.Interface_SongList_DAO;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
+import org.mucmuc.main.entity.Map_SL_S;
+import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
 import org.mucmuc.main.service.Interface_SongList_service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ public class Service_SongList implements Interface_SongList_service {
 
     @Autowired
     private Interface_SongList_DAO songListDao;
+    @Autowired
+    private Interface_Map_SL_S_DAO map_S_SL_DAO;
 
     @Override
     public ResultEntity getRandom(Integer num) {
@@ -56,6 +61,62 @@ public class Service_SongList implements Interface_SongList_service {
     @Override
     public ResultEntity getByAttribute(SongList songList) {
         return null;
+    }
+
+    @Override
+    public ResultEntity addSongToSongList(Song song, SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(song.getId_Song()==null||songList.getId_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_Song or id_SL is NULL");
+            return resultEntity;
+        }
+
+        Map_SL_S map_SL_S=new Map_SL_S();
+        map_SL_S.setId_Song(song.getId_Song());
+        map_SL_S.setId_SL(songList.getId_SL());
+
+        //从数据库中获取
+        Map_SL_S map_SL_S_db=map_S_SL_DAO.queryByPK(map_SL_S);
+
+        if(map_SL_S_db!=null)
+        {
+            resultEntity.setInfo_operation("歌单中已经包含该歌曲");
+            return resultEntity;
+        }
+        //插入到数据库
+        map_S_SL_DAO.insertNew(map_SL_S);
+        resultEntity.setState(true);
+        return resultEntity;
+    }
+
+    @Override
+    public ResultEntity removeSongFromSongList(Song song, SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(song.getId_Song()==null||songList.getId_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_Song or id_SL is NULL");
+            return resultEntity;
+        }
+
+        Map_SL_S map_SL_S=new Map_SL_S();
+        map_SL_S.setId_Song(song.getId_Song());
+        map_SL_S.setId_SL(songList.getId_SL());
+
+        //从数据库中获取
+        Map_SL_S map_SL_S_db=map_S_SL_DAO.queryByPK(map_SL_S);
+
+        if(map_SL_S_db==null)
+        {
+            resultEntity.setInfo_operation("歌单中不存在该歌曲");
+            return resultEntity;
+        }
+        //从数据库中删除
+        map_S_SL_DAO.deleteByPK(map_SL_S);
+        resultEntity.setState(true);
+        return resultEntity;
     }
 
     @Override
