@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 @ResponseBody
 @Controller
 //@RestController//等价注解
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/lyrics")
 public class Controller_Lyrics {
 
     @Resource

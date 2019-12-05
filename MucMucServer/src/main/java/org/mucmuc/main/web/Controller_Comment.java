@@ -20,7 +20,7 @@ import java.util.Map;
 @ResponseBody
 @Controller
 //@RestController//等价注解
-@RequestMapping(value = "/lyrics")
+@RequestMapping(value = "/comment")
 public class Controller_Comment {
 
     @Resource

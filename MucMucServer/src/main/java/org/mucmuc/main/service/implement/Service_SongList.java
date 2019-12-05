@@ -5,7 +5,9 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.SongList;
 import org.mucmuc.main.service.Interface_SongList_server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value = "Service_SongList")
 public class Service_SongList implements Interface_SongList_server {
 
     @Autowired

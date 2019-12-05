@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @Date: Created in 20:52 2019/12/3
  * @Desprition: 歌词业务实现类
  */
-@Service(value = "LyricsService")
+@Service(value = "Service_Lyrics")
 public class Service_Lyrics implements Interface_Lyrics_server {
 
     @Autowired
