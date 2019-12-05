@@ -36,7 +36,7 @@ public class Controller_Song {
      * @return
      */
     @RequestMapping(value = "/getRandom",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity getRandom(@RequestBody Integer num)
+    public ResultEntity getRandom(@RequestBody int num)
     {
         return songService.getRandom(num);
     }

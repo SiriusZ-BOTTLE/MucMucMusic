@@ -18,7 +18,7 @@ import java.lang.Double;
  * @Date: Created in 00:59 2019/12/4
  * @Desprition: 评论业务实现类
  */
-@Service(value = "CommmentService")
+@Service(value = "Service_Commment")
 public class Service_Comment implements Interface_Comment_server {
 
     @Autowired

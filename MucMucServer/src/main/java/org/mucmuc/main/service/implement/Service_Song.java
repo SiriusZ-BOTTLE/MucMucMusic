@@ -18,7 +18,7 @@ import java.util.List;
  * @Date: Created in 21:40 2019/3/12
  * @Desprition: 歌曲业务实现类
  */
-@Service(value = "SongService")
+@Service(value = "Service_Song")
 public class Service_Song implements Interface_Song_server {
 
     @Autowired

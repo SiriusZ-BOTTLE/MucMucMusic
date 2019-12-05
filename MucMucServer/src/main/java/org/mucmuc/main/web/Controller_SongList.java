@@ -21,8 +21,6 @@ public class Controller_SongList {
     @Resource
     private Service_SongList songListService;
 
-
-
     /**
      * 随机获取,获取指定数量的记录
      * @param num
@@ -62,7 +60,7 @@ public class Controller_SongList {
      * @param songList
      * @return
      */
-    @RequestMapping(value = "/update",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    @RequestMapping(value = "/delete",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity delete(@RequestBody SongList songList)
     {
         return songListService.delete(songList);

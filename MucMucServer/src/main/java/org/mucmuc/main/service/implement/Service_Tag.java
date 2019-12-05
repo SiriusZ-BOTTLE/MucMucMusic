@@ -6,7 +6,9 @@ import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.Interface_Tag_server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value = "Service_Tag")
 public class Service_Tag implements Interface_Tag_server {
 
     @Autowired

@@ -1,10 +1,11 @@
 package org.mucmuc.main.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SongList {
+public class SongList implements Serializable {
     private Integer id_SL;
     private String id_User;
     private String name_SL;
