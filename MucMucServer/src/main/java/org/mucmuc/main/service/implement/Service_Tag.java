@@ -31,11 +31,35 @@ public class Service_Tag implements Interface_Tag_server {
 
     @Override
     public ResultEntity get(Tag tag) {
-        return null;
+        ResultEntity resultEntity =new ResultEntity();
+
+        if(tag.getId_Tag()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_Tag is NULL");
+            return resultEntity;
+        }
+
+        Tag tag_db=tagDao.queryByPK(tag);
+
+        if(tag_db==null)
+        {
+            resultEntity.setInfo_operation("未找到指定标签");
+            return resultEntity;
+        }
+        resultEntity.setObject(tag_db);
+        resultEntity.setState(true);
+        return resultEntity;
     }
 
     @Override
     public ResultEntity create(Song song, Tag tag) {
+        ResultEntity resultEntity =new ResultEntity();
+        if(song.getId_Song()==null||tag.getId_Tag()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> ");
+        }
+
+
         return null;
     }
 
