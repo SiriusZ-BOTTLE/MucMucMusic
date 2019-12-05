@@ -4,7 +4,7 @@ package org.mucmuc.main.service.implement;
 import org.mucmuc.main.DAO.implement.DAO_Lyrics;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Lyrics;
-import org.mucmuc.main.service.Interface_Lyrics_server;
+import org.mucmuc.main.service.Interface_Lyrics_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @Desprition: 歌词业务实现类
  */
 @Service(value = "Service_Lyrics")
-public class Service_Lyrics implements Interface_Lyrics_server {
+public class Service_Lyrics implements Interface_Lyrics_service {
 
     @Autowired
     private DAO_Lyrics dao_Lyrics;

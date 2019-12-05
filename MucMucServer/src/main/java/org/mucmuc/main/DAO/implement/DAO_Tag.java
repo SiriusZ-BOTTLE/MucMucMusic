@@ -86,7 +86,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
 
         String sql="update "+Set_StringConstants.table_tag+"set ";
 
-        List<Object> list=tag.objectList();//获取非空项
+        List<Object> list=tag.objectList_notNull();//获取非空项
 
 
         if(tag.getName_Tag()!=null)

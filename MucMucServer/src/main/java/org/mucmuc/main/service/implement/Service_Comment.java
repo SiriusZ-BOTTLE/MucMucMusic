@@ -6,7 +6,7 @@ import org.mucmuc.main.entity.Comment;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
-import org.mucmuc.main.service.Interface_Comment_server;
+import org.mucmuc.main.service.Interface_Comment_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.lang.Double;
  * @Desprition: 评论业务实现类
  */
 @Service(value = "Service_Commment")
-public class Service_Comment implements Interface_Comment_server {
+public class Service_Comment implements Interface_Comment_service {
 
     @Autowired
     private DAO_Comment dao_Comment;

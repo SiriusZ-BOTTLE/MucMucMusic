@@ -10,7 +10,7 @@ import org.mucmuc.main.entity.Song;
  * @Desprition: 用户业务接口
  */
 
-public interface Interface_Song_server {
+public interface Interface_Song_service {
 
     /**
      * 随机获取指定数量的记录

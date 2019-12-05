@@ -24,10 +24,7 @@ public class Map_S_T {
     {
         List<Object> list=new ArrayList<Object>();
 
-        if (id_Song!=null)
-            list.add(id_Song);
-        if(id_Tag!=null)
-            list.add(id_Tag);
+
         if(Num!=null)
             list.add(Num);
 

@@ -22,10 +22,7 @@ public class Map_SL_S {
     {
         List<Object> list=new ArrayList<Object>();
 
-        if(id_SL!=null)
-            list.add(id_SL);
-        if(id_Song!=null)
-            list.add(id_Song);
+
 
 
         return list;

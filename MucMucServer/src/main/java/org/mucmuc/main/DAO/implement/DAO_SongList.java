@@ -36,7 +36,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
 
-        List<Object> list = sl.objectList();//获取非空项
+        List<Object> list = sl.objectList_notNull();//获取非空项
 
         if(sl.getId_User()!=null)
             sql=sql+" ID_User like ? and";
@@ -76,7 +76,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
 
-        List<Object> list = sl.objectList();//获取非空项
+        List<Object> list = sl.objectList_notNull();//获取非空项
 
         if(sl.getId_User()!=null)
             sql=sql+" ID_User = ? and";
@@ -131,7 +131,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
     public int update(SongList sl) {
         String sql="update "+Set_StringConstants.table_songlist+"set ";
 
-        List<Object> list=sl.objectList();//获取非空项
+        List<Object> list=sl.objectList_notNull();//获取非空项
 
         if(sl.getId_User()!=null)
         {
