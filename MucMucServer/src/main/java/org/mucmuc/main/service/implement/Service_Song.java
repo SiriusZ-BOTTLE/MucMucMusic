@@ -6,7 +6,7 @@ import org.mucmuc.main.DAO.implement.DAO_Song;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.Tag;
-import org.mucmuc.main.service.Interface_Song_server;
+import org.mucmuc.main.service.Interface_Song_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * @Desprition: 歌曲业务实现类
  */
 @Service(value = "Service_Song")
-public class Service_Song implements Interface_Song_server {
+public class Service_Song implements Interface_Song_service {
 
     @Autowired
     private DAO_Song dao_Song;

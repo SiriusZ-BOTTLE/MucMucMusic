@@ -4,7 +4,7 @@ import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Lyrics;
 
-public interface Interface_Lyrics_server {
+public interface Interface_Lyrics_service {
 
     /**
      * 仅仅获得歌词(Lyrics)

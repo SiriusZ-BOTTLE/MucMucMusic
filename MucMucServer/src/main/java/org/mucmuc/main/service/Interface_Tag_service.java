@@ -8,7 +8,7 @@ import org.mucmuc.main.entity.Tag;
 /**
  * @author ZSR
  */
-public interface Interface_Tag_server {
+public interface Interface_Tag_service {
 
     /**
      * 随机获取指定数量的记录

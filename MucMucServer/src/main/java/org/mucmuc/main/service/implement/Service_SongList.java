@@ -3,12 +3,12 @@ package org.mucmuc.main.service.implement;
 import org.mucmuc.main.DAO.Interface_SongList_DAO;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.SongList;
-import org.mucmuc.main.service.Interface_SongList_server;
+import org.mucmuc.main.service.Interface_SongList_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value = "Service_SongList")
-public class Service_SongList implements Interface_SongList_server {
+public class Service_SongList implements Interface_SongList_service {
 
     @Autowired
     private Interface_SongList_DAO songListDao;

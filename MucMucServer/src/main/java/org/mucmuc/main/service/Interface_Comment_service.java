@@ -6,7 +6,7 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
 
-public interface Interface_Comment_server {
+public interface Interface_Comment_service {
 
     /**
      * 随机获取指定数量的记录
