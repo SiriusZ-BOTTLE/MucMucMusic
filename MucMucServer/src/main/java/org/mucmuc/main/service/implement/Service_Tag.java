@@ -2,6 +2,7 @@ package org.mucmuc.main.service.implement;
 
 import org.mucmuc.main.DAO.implement.DAO_Tag;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
+import org.mucmuc.main.entity.Map_S_T;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.Interface_Tag_server;
@@ -56,9 +57,10 @@ public class Service_Tag implements Interface_Tag_server {
         ResultEntity resultEntity =new ResultEntity();
         if(song.getId_Song()==null||tag.getId_Tag()==null)
         {
-            resultEntity.setInfo_error("<ERROR> ");
+            resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
+            return resultEntity;
         }
-
+//        Map_S_T map_S_T=new
 
         return null;
     }
