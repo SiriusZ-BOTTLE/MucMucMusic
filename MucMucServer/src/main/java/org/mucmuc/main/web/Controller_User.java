@@ -33,7 +33,7 @@ public class Controller_User {
      * 用户登录接口
      * @param user:要登录的用户信息(只需要账户和密码即可)
      * @return ResultEntity
-     * 登录成功后用户对象会放入ResultEntity.object中
+     * Object:User
      */
     @RequestMapping(value = "/login",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity login(@RequestBody User user)
@@ -45,6 +45,7 @@ public class Controller_User {
      * 用户注册接口
      * @param user:要注册的用户信息
      * @return ResultEntity
+     * Object:User
      */
     @RequestMapping(value = "/register",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity register(@RequestBody User user)
@@ -56,8 +57,8 @@ public class Controller_User {
      * 获取用户接口
      * @param user
      * @return
+     * Object:User
      */
-
     @RequestMapping(value = "/get",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity get(@RequestBody User user)
     {
@@ -65,12 +66,13 @@ public class Controller_User {
     }
 
     /**
-     *
+     * 删除用户
+     * 传入Map中用户1参数名为user0,用户2参数名为user1
      * @param map
      * @return
      * 注意事项, 两个User对象必须命名为"user0","user1"
+     * Object:null
      */
-
     @RequestMapping(value = "/delete",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity delete(@RequestBody Map<String,Object> map)
     {
@@ -82,6 +84,12 @@ public class Controller_User {
         return userService.delete(user0,user1);
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     * Object:User
+     */
     @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity update(@RequestBody User user)
     {
@@ -94,8 +102,6 @@ public class Controller_User {
     {
         return userService.getByAttribute(user);
     }
-
-
 
 
     //测试用接口

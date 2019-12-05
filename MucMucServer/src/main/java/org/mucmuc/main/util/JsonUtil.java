@@ -2,11 +2,15 @@ package org.mucmuc.main.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,8 +36,7 @@ public class JsonUtil {
 
     //这是一个JSON使用示例
     //老马你可以看看
-    public static void main(String []args)
-    {
+    public static void main(String []args) {
 //        //映射,键值对
 //        Map<String,Object> m=new HashMap<>();
 //
@@ -60,12 +63,51 @@ public class JsonUtil {
 //        User u=o.toJavaObject(User.class);//转换为Java的对象(这里是转换到User对象)
 //
 //        System.out.println(u.getId_User());//打印User对象的ID
-        Integer i=5;
-        String res=JSON.toJSONString(i);
+//        Integer i = 5;
+//        String res = JSON.toJSONString(i);
+//        System.out.println(res);
+//
+//
+        List<User> l = new ArrayList<User>();
+//
+        User u = new User();
+        u.setId_User("User");
+        u.setIdiograph_User("asdfjklajsdfljasdh");
+
+        l.add(u);
+        l.add(u);
+        l.add(u);
+        l.add(u);
+        l.add(u);
+
+//        String str = JSON.toJSONString(l);//转换为JSON字符串
+//        System.out.println(str);
+//
+//        List<JSONObject> l_p = JSON.parseObject(str, List.class);//解析JSON字符串}
+
+
+        ResultEntity resultEntity =new ResultEntity();
+
+
+
+
+        resultEntity.setObject(l);
+
+        //转换为字符串
+        String res = JSON.toJSONString(resultEntity);
 
         System.out.println(res);
 
+        //解析字符串
+        ResultEntity resultEntity_parsed=JSON.parseObject(res,ResultEntity.class);
+
+        JSONArray array=(JSONArray) (resultEntity_parsed.getObject());
+
+        System.out.println(array.get(0).getClass());
+
+        User user=((JSONObject)(array.get(0))).toJavaObject(User.class);
+
+        System.out.println(user.getId_User());
+
     }
-
-
 }

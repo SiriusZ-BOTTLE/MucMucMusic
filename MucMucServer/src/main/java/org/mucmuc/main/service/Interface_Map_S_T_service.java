@@ -6,6 +6,7 @@ import org.mucmuc.main.entity.Map_S_T;
 
 import java.util.Map;
 
+@Deprecated
 public interface Interface_Map_S_T_service {
 
     /**
