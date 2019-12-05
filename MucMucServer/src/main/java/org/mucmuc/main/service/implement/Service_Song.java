@@ -26,6 +26,21 @@ public class Service_Song implements Interface_Song_server {
 
 
     @Override
+    public ResultEntity getRandom(Integer num) {
+        ResultEntity resultEntity =new ResultEntity();
+
+        if(num<=0||num>100)
+        {
+            resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+            return resultEntity;
+        }
+
+        resultEntity.setObject(dao_Song.queryRandom(num));
+        resultEntity.setState(true);
+        return resultEntity;
+    }
+
+    @Override
     public ResultEntity play(Song song) {
 
         Boolean success = Boolean.FALSE;

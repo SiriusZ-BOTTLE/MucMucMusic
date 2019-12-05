@@ -12,6 +12,21 @@ public class Service_SongList implements Interface_SongList_server {
     private Interface_SongList_DAO songListDao;
 
     @Override
+    public ResultEntity getRandom(Integer num) {
+        ResultEntity resultEntity =new ResultEntity();
+
+        if(num<=0||num>100)
+        {
+            resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+            return resultEntity;
+        }
+
+        resultEntity.setObject(songListDao.queryRandom(num));
+        resultEntity.setState(true);
+        return resultEntity;
+    }
+
+    @Override
     public ResultEntity get(SongList songList) {
         ResultEntity resultEntity=new ResultEntity();
 

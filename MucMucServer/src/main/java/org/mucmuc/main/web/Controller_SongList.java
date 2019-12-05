@@ -23,6 +23,20 @@ public class Controller_SongList {
 
 
 
+    /**
+     * 随机获取,获取指定数量的记录
+     * @param num
+     * @return
+     */
+    @RequestMapping(value = "/getRandom",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getRandom(@RequestBody Integer num)
+    {
+        return songListService.getRandom(num);
+    }
+
+
+
+
     @RequestMapping(value = "/get",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity get(@RequestBody SongList songList)
     {
