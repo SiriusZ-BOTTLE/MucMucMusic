@@ -104,13 +104,18 @@ public class LoginActivity extends AppCompatActivity {
                                 it.putExtra("nickname",((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
                                 it.putExtra("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                 String res2=new String();
+                                String res3=new String();
                                 try{
                                     String body2= JSON.toJSONString(1);
 
-                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","1","UTF-8");
+                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","4","UTF-8");
                                     ResultEntity result2 = JSON.parseObject(res2, ResultEntity.class);
-                                    editor.putString("HomeFragment",res2);
 
+                                    String body3 = JSON.toJSONString(1);
+                                    res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","1","UTF-8");
+
+                                    editor.putString("HomeFragment",res2);
+                                    editor.putString("Home_SongList",res3);
 //                                    MessageBox.sendMessage(LoginActivity.this,res2);
                                 }catch (Exception e){
                                     Looper.prepare();

@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
 
         initMusic();
 
-        initMusicList();
+        //initMusicList();
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -122,16 +122,20 @@ public class HomeFragment extends Fragment {
         return root;
     }
     private void initMusicList(){
-//        for(int i=0;i<3;i++){
-//            SongList three = new SongList("南山南",R.drawable.nanshannan,100,"马頔");
-//            musicList.add(three);
-//            MusicList one = new MusicList("消愁",R.drawable.xiaochou,100,"毛不易");
-//            musicList.add(one);
-//            MusicList two = new MusicList("南山南",R.drawable.nanshannan,100,"假数据");
-//            musicList.add(two);
-//            MusicList one1 = new MusicList("消愁",R.drawable.xiaochou,100,"假数据");
-//            musicList.add(one1);
-//        }
+        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
+        String res=sp.getString("Home_SongList","");
+        if(res.isEmpty()){
+            return;
+        }
+        ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+        if(result.getState()==true){
+            for(int i=0;i<4;i++){
+                songlist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(SongList.class));
+            }
+        }
+        else{
+            Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private Handler handler = new Handler() {
