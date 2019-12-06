@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        MusicAdapter adapter = new MusicAdapter(musiclist);
+        MusicAdapter adapter = new MusicAdapter(musiclist,getActivity());
         recyclerView.setAdapter(adapter);
 
 
@@ -132,6 +133,22 @@ public class HomeFragment extends Fragment {
 //            musicList.add(one1);
 //        }
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Log.d("idList", "handleMessage: " );
+                    break;
+                case 2:
+                    Log.d("music", "handleMessage: " );
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     private void initMusic(){//初始化主页歌曲界面
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
         String res=sp.getString("HomeFragment","");
@@ -143,7 +160,6 @@ public class HomeFragment extends Fragment {
             for(int i=0;i<1;i++){
                 musiclist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
             }
-
         }
         else{
             Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
