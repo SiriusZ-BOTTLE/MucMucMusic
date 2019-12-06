@@ -1,8 +1,11 @@
 package com.example.myapplication.ui.home;
 
 import android.app.Activity;
+
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +27,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> {
+public class MusicAdapter extends RecyclerView.Adapter implements View.OnClickListener {
     private List<Song> mMusicList;
+    private Context mContext;
     static Map<Integer,Integer> MusicIdtoImage=new HashMap<Integer, Integer>();
-
-    static class  ViewHolder extends RecyclerView.ViewHolder{
+    private MusicAdapter.OnRecycleItemClickListener onRecycleItemClickListener =null;
+    static class  MusicViewHolder extends RecyclerView.ViewHolder{
         ImageView musicImage;
         TextView musicName;
         View musicView;
 
-        public  ViewHolder(View view){
+        MusicViewHolder(View view){
             super(view);
             musicView = view;
             musicImage = (ImageView) view.findViewById(R.id.music_image);
@@ -43,49 +47,30 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
         }
     }
 
-    public MusicAdapter(List<Song> MusicList){
-        mMusicList = MusicList;
+    public MusicAdapter(List<Song> MusicList, Context mContext){
+        this.mContext = mContext;
+        this.mMusicList = MusicList;
     }
 
     @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public  RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_music, parent ,false);
-        final ViewHolder holder = new ViewHolder(view);
-        holder.musicView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Song music = mMusicList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+music.getName_Song(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.musicImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Song music = mMusicList.get(position);
-                Toast.makeText(v.getContext(),"you clicked image "+music.getName_Song(),Toast.LENGTH_SHORT).show();
-            }
-        });
+        final RecyclerView.ViewHolder holder = new MusicViewHolder(view);
+        view.setOnClickListener(this);
         return  holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position){
+        MusicViewHolder musicViewHolder = (MusicViewHolder) holder;
         Song music = mMusicList.get(position);
         music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
-        byte[] b=Base64Util.decode(music.getIconFile_Song());
 
-//		BitmapFactory.Options op = new BitmapFactory.Options();
-//		op.inSampleSize = 2;
-//		op.inJustDecodeBounds = true; //它仅仅会把它的宽，高取回来给你，这样就不会占用太多的内存，也就不会那么频繁的发生OOM了。           
-//		op.inPreferredConfig = Bitmap.Config.RGB_565; // 默认是Bitmap.Config.ARGB_8888
-
-        holder.musicImage.setImageBitmap(MusicAdapter.createBitmapFromByteData(b,null));
-//        MessageBox.sendMessage(MainActivity.class,);
+        byte[] b= Base64Util.decode(music.getIconFile_Song());
+        musicViewHolder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
         //测试用
 //        holder.musicImage.setImageResource(music.getId_Song());
-        holder.musicName.setText(music.getName_Song());
+        musicViewHolder.musicName.setText(music.getName_Song());
     }
 	private static Bitmap createBitmapFromByteData(byte[] data , BitmapFactory.Options options){
     	Bitmap bitmap = null;
@@ -118,5 +103,22 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
 //        }
 //        return res_ID;
 //    }
+    public void OnRecycleItemClickListener(MusicAdapter.OnRecycleItemClickListener v) {
+        onRecycleItemClickListener = v;
+    }
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public interface OnRecycleItemClickListener {
+        void OnRecycleItemClickListener(View view,int position);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (onRecycleItemClickListener != null)
+            onRecycleItemClickListener.OnRecycleItemClickListener(v, (Integer) v.getTag());
+    }
 }
 
