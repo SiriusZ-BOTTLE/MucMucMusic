@@ -57,7 +57,7 @@ public class AccountFragment extends Fragment {
         bottomSheetLayout = (BottomSheetLayout) root.findViewById(R.id.bottomSheetLayout);
         image_head = (ImageView) root.findViewById(R.id.h_head); //绑定用户头像控件
         byte[] data=Base64Util.decode(sp.getString("iconFile_User",""));
-        imageview.setImageBitmap( BitmapFactory.decodeByteArray(data, 0, data.length));//修改头像
+        image_head.setImageBitmap( BitmapFactory.decodeByteArray(data, 0, data.length));//修改头像
         image_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
