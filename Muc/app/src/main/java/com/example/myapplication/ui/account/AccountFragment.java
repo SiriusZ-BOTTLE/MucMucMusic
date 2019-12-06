@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.ui.home.LoginActivity;
 
 import java.util.LinkedList;
@@ -37,6 +40,10 @@ public class AccountFragment extends Fragment {
         Button btn1 = root.findViewById(R.id.xiugai);
 
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
+
+		ImageView imageview=root.findViewById(R.id.h_head);//获取头像ImageView
+		byte[] data=Base64Util.decode(sp.getString("iconFile_User",""));
+        imageview.setImageBitmap( BitmapFactory.decodeByteArray(data, 0, data.length));//修改头像
 
         TextView nickname = (TextView) root.findViewById(R.id.user_name);//获得指定TextView
         nickname.setText(sp.getString("nickname",""));//修改TextView

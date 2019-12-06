@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.home;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.Util.MessageBox;
@@ -71,12 +73,29 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Song music = mMusicList.get(position);
+        music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
         byte[] b=Base64Util.decode(music.getIconFile_Song());
-        holder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
+
+//		BitmapFactory.Options op = new BitmapFactory.Options();
+//		op.inSampleSize = 2;
+//		op.inJustDecodeBounds = true; //它仅仅会把它的宽，高取回来给你，这样就不会占用太多的内存，也就不会那么频繁的发生OOM了。           
+//		op.inPreferredConfig = Bitmap.Config.RGB_565; // 默认是Bitmap.Config.ARGB_8888
+
+        holder.musicImage.setImageBitmap(MusicAdapter.createBitmapFromByteData(b,null));
+//        MessageBox.sendMessage(MainActivity.class,);
         //测试用
 //        holder.musicImage.setImageResource(music.getId_Song());
         holder.musicName.setText(music.getName_Song());
     }
+	private static Bitmap createBitmapFromByteData(byte[] data , BitmapFactory.Options options){
+    	Bitmap bitmap = null;
+		if(options == null){
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		}else{
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+		}
+		return bitmap;
+	}
 
     @Override
     public int getItemCount(){

@@ -44,9 +44,9 @@ import java.util.Random;
 public class ListplayActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private ListView listview;
-    private List<Song> list;
+    private List<Song> list;//加入歌
     private PlayAdapter adapter;
-    private MediaPlayer mplayer = new MediaPlayer();
+    private MediaPlayer mplayer = new MediaPlayer();//播放器
     private GradientTextView text_main;
     private SeekBar seekBar;
     private TextView textView1, textView2;
@@ -271,7 +271,7 @@ public class ListplayActivity extends AppCompatActivity {
                 }
             }
         });
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {//歌曲播放进度条
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
@@ -302,11 +302,11 @@ public class ListplayActivity extends AppCompatActivity {
         textView2.setText(sharedPreferences.getString("song_singer", "歌手").trim());
     }
 
-    private void setListView() {
+    private void setListView() {//把数据库的歌曲加入list
         listview = (ListView) this.findViewById(R.id.listveiw);
 
         list = new ArrayList<Song>();
-        list = MusicUtils.getMusicData(ListplayActivity.this);
+        list = MusicUtils.getMusicData(ListplayActivity.this);//查找本地歌曲
         adapter = new PlayAdapter(ListplayActivity.this, list);
         // 标记正在播放的音乐条目为主题色
         adapter.setFlag(currentposition);
@@ -410,7 +410,7 @@ public class ListplayActivity extends AppCompatActivity {
 
         try {
             mplayer.reset();
-            mplayer.setDataSource(list.get(position).getPath());
+            mplayer.setDataSource(list.get(position).getPath());//把音频加入播放器
             mplayer.prepare();
             mplayer.start();
 

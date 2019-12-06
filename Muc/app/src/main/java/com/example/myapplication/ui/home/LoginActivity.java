@@ -81,6 +81,10 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                 editor.putString("state",((JSONObject)(result.getObject())).toJavaObject(User.class).getState_User());
                                 editor.putString("iograph",((JSONObject)(result.getObject())).toJavaObject(User.class).getIdiograph_User());
+								String music=((JSONObject)(result.getObject())).toJavaObject(User.class).getIconFile_User();
+								music=music.substring(music.indexOf(',')+1);
+//								music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
+								editor.putString("iconFile_User",music);
                                 editor.putBoolean("flag",true);
 //                                final Resources res = context.getResources();
 //                                final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.album_appwidget);
