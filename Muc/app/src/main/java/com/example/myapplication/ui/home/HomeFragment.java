@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
 
         initMusic();
 
-        //initMusicList();
+        initMusicList();
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment {
         }
         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
         if(result.getState()==true){
-            for(int i=0;i<4;i++){
+            for(int i=0;i<1;i++){
                 songlist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(SongList.class));
             }
         }
@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment {
         }
         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
         if(result.getState()==true){
-            for(int i=0;i<1;i++){
+            for(int i=0;i<4;i++){
                 musiclist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
             }
         }

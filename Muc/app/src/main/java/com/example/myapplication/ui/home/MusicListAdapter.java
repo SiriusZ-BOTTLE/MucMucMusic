@@ -68,7 +68,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 //        byte[] b= Base64Util.decode(music.getIconFile_Song());
 //        musicViewHolder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
 //        holder.musiclistImage.setImageResource(musiclist.getId_SL());
-        holder.musiclistImage.setImageResource(MusicAdapter.MusicIdtoImage.get(musiclist.getId_SL()));
+        //holder.musiclistImage.setImageResource(MusicAdapter.MusicIdtoImage.get(musiclist.getId_SL()));
         holder.musiclistName.setText(musiclist.getName_SL());
     }
 

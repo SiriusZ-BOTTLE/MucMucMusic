@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView musicName;
         TextView commentDetails;
         ImageView commentDianzan;
+        RatingBar ratingBar;
         TextView commentFrom;
         TextView authorName;
         View commentView;
@@ -36,6 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentDianzan = (ImageView) view.findViewById(R.id.comment_dianzan);
             commentFrom = (TextView) view.findViewById(R.id.comment_from);
             authorName = (TextView) view.findViewById(R.id.comment_authorname);
+            ratingBar = (RatingBar) view.findViewById(R.id.forum_ratingbar);
         }
     }
 
@@ -73,6 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.musicImage.setImageResource(comment.getMusic().getImageId());
         holder.authorName.setText(comment.getAuthor_name());
         holder.commentDetails.setText(comment.getDetails());
+        holder.ratingBar.setRating(comment.getScore());
     }
 
     @Override

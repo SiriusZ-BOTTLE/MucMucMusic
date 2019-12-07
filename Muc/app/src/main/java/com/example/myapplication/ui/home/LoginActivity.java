@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                     ResultEntity result2 = JSON.parseObject(res2, ResultEntity.class);
 
                                     String body3 = JSON.toJSONString(1);
-                                    res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","1","UTF-8");
+                                    res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","2","UTF-8");
 
                                     editor.putString("HomeFragment",res2);
                                     editor.putString("Home_SongList",res3);
@@ -157,7 +157,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     public static void main(String [] args)
     {
 

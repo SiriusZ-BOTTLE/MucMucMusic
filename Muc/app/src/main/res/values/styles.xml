@@ -36,7 +36,7 @@
             name="android:progressDrawable">
             @drawable/myratingbar2
         </item>
-        <item name="android:minHeight">20dp</item>
-        <item name="android:maxHeight">20dp</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
     </style>
 </resources>
