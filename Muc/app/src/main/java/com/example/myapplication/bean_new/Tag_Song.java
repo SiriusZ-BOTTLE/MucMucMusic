@@ -1,6 +1,5 @@
 package com.example.myapplication.bean_new;
 
-import javax.xml.crypto.dsig.SignedInfo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

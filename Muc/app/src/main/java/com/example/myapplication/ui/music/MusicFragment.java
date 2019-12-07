@@ -40,7 +40,7 @@ public class MusicFragment extends Fragment {
             }
         });
         ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
-        play.setOnClickListener(new View.OnClickListener() {
+        play.setOnClickListener(new View.OnClickListener() {//跳转到播放音乐界面
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ListplayActivity.class);

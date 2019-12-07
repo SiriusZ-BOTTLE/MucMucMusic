@@ -1,11 +1,15 @@
 package com.example.myapplication.ui.music.play;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,16 +21,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.bean.Comment;
 import com.example.myapplication.bean.Music;
+import com.example.myapplication.bean.Song;
+import com.example.myapplication.bean_new.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentActivity extends AppCompatActivity {
     private List<Comment> commentList = new ArrayList<>();
     private List<Music> musiclist = new ArrayList<>();
-
+    private Music music = new Music();
+    private SharedPreferences sp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,15 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+        Intent it = getIntent();
+        String songname = it.getStringExtra("song_name");
+        String songsinger = it.getStringExtra("song_singer");
+        TextView s_name = (TextView) findViewById(R.id.comment_songname);
+        TextView s_singer = (TextView) findViewById(R.id.comment_songsinger);
+        s_name.setText(songname);
+        s_singer.setText(songsinger);
+        music.setAuthor(songsinger);
+        music.setName(songname);
         initComment();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -56,10 +75,35 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CommentActivity.this,AddCommentActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,3);
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data){
+        switch (requestCode){
+            case 3:
+                if(resultCode == RESULT_OK){
+                    String detail = data.getStringExtra("details");
+                    float score = data.getFloatExtra("score",0);
+                    Comment comment = new Comment();
+                    comment.setScore(score);
+                    comment.setDetails(detail);
+                    User user = new User();
+                    sp = getSharedPreferences("test",Context.MODE_PRIVATE);
+                    user.setNickname_User(sp.getString("nickname",""));
+                    user.setIconFile_User(sp.getString("iconFile_User",""));
+                    comment.setUser(user);
+                    comment.setMusic(music);
+                    commentList.add(comment);
+                }
+                break;
+            default:
+        }
+
+    }
+
 
     private void initMusic(){
         Music three = new Music("南山南", R.drawable.nanshannan,"数据");
@@ -74,16 +118,6 @@ public class CommentActivity extends AppCompatActivity {
     }
     private void initComment(){
         initMusic();
-        for(int i=0;i<3;i++){
-            com.example.myapplication.bean.Comment one = new com.example.myapplication.bean.Comment("这是一首很好听的歌，我非常喜欢","余阳",musiclist.get(0));
-            commentList.add(one);
-            com.example.myapplication.bean.Comment two = new com.example.myapplication.bean.Comment("这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢","余阳",musiclist.get(2));
-            commentList.add(two);
-            com.example.myapplication.bean.Comment three = new com.example.myapplication.bean.Comment("这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢","南歌w",musiclist.get(2));
-            commentList.add(three);
-            com.example.myapplication.bean.Comment four = new com.example.myapplication.bean.Comment("这是一首很好听的歌，我非常喜欢，这是一首很好听的歌，我非常喜欢，这是一首很好听的歌，我非常喜欢","余阳w",musiclist.get(3));
-            commentList.add(four);
-        }
     }
 }
 
@@ -94,6 +128,7 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
         TextView userName;
         TextView releaseTime;
         TextView commentDetails;
+        RatingBar ratingBar;
         TextView likeNum;
         ImageView like;
         View commentView;
@@ -102,6 +137,7 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
             super(view);
             commentView = view;
             userIcon = (ImageView) view.findViewById(R.id.userimage);
+            ratingBar = (RatingBar) view.findViewById(R.id.comment_ratingbar);
             userName = (TextView) view.findViewById(R.id.username);
             releaseTime = (TextView) view.findViewById(R.id.releasetime);
             like = (ImageView) view.findViewById(R.id.comment_like);
@@ -139,11 +175,19 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Comment comment = commentList.get(position);
-        holder.userIcon.setImageResource(comment.getMusic().getImageId());
-        holder.userName.setText(comment.getAuthor_name());
+        byte [] b = Base64Util.decode(comment.getUser().getIconFile_User());
+        holder.userIcon.setImageBitmap(BitmapFactory.decodeByteArray(b,0,b.length));
+        holder.userName.setText(comment.getUser().getNickname_User());
         holder.commentDetails.setText(comment.getDetails());
+        holder.ratingBar.setRating(comment.getScore());
         holder.likeNum.setText("1000");
-        holder.releaseTime.setText("2019年12月2日");
+
+        Date date = new Date();
+        //设置要获取到什么样的时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //获取String类型的时间
+        String createdate = sdf.format(date);
+        holder.releaseTime.setText(createdate);
     }
 
     @Override

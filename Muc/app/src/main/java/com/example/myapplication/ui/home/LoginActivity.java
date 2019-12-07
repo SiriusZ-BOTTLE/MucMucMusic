@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +17,15 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.HttpUtil;
+import com.example.myapplication.Util.MessageBox;
 import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
+import com.example.myapplication.bean_new.Song;
 import com.example.myapplication.bean_new.User;
 
 
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private ResultEntity result;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -63,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         String res=new String();
                         res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/login",body,"UTF-8");
                         result = JSON.parseObject(res, ResultEntity.class);
+
 //                        System.out.println(res);
                         try{
                             if(result.getState()==true){
@@ -75,8 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                 editor.putString("state",((JSONObject)(result.getObject())).toJavaObject(User.class).getState_User());
                                 editor.putString("iograph",((JSONObject)(result.getObject())).toJavaObject(User.class).getIdiograph_User());
+								String music=((JSONObject)(result.getObject())).toJavaObject(User.class).getIconFile_User();
+								music=music.substring(music.indexOf(',')+1);
+//								music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
+								editor.putString("iconFile_User",music);
                                 editor.putBoolean("flag",true);
-                                editor.commit();
 //                                final Resources res = context.getResources();
 //                                final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.album_appwidget);
 //                                views.setViewVisibility(R.id.title, View.GONE);
@@ -92,12 +101,31 @@ public class LoginActivity extends AppCompatActivity {
 //                                        Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 //                                    }
 //                                });
-                                  it.putExtra("nickname",((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
-                                  it.putExtra("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
+                                it.putExtra("nickname",((JSONObject)result.getObject()).toJavaObject(User.class).getNickname_User());
+                                it.putExtra("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
+                                String res2=new String();
+                                String res3=new String();
+                                try{
+                                    String body2= JSON.toJSONString(1);
 
+                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","4","UTF-8");
+                                    ResultEntity result2 = JSON.parseObject(res2, ResultEntity.class);
+
+                                    String body3 = JSON.toJSONString(1);
+                                    res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","2","UTF-8");
+
+                                    editor.putString("HomeFragment",res2);
+                                    editor.putString("Home_SongList",res3);
+//                                    MessageBox.sendMessage(LoginActivity.this,res2);
+                                }catch (Exception e){
+                                    Looper.prepare();
+                                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
 //                                String str = getString(R.string.qrcode_out_of_date_sec,String.format("<font color=\"#d40000\">%s</font>", 100);
 //                                textview.setText(str);
 //                                invalidate();
+                                editor.commit();
                                 startActivity(it);
 
                                 Looper.prepare();
@@ -129,7 +157,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     public static void main(String [] args)
     {
 

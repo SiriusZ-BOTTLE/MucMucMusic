@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SongList implements Serializable {
+public class SongList implements Serializable {//歌单
     private Integer id_SL;
     private String id_User;
     private String name_SL;

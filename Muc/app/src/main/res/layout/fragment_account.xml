@@ -4,162 +4,154 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/toolbar_fragment_personal"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorRed"
-        android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
+    <TextView
             android:id="@+id/title_account"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:text="账号"
-            android:textSize="25dp"></TextView>
-    </RelativeLayout>
+            android:background="@color/colorRed"
+            android:gravity="center"
+            android:textSize="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <RelativeLayout
-        android:layout_below="@+id/toolbar_fragment_personal"
-        android:id="@+id/relative"
+    <com.flipboard.bottomsheet.BottomSheetLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bottomSheetLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_fragment_personal"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-        <ImageView
-            android:id="@+id/h_back"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@drawable/beijing" />
-
-        <ImageView
-            android:id="@+id/h_head"
-            android:layout_width="82dp"
-            android:layout_height="85dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/xiaochou" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/h_back"
-            android:layout_marginBottom="68dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="220dp"
-                android:layout_marginTop="40dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="17sp" />
-<!--                android:text="张三"-->
-
-            <TextView
-                android:id="@+id/user_iograph"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="220dp"
-                android:layout_marginTop="80dp"
-                android:gravity="center"
-                android:textSize="12dp"
-                />
-<!--            android:text="lv3"-->
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <!--子项-->
-    <LinearLayout
-        android:id="@+id/buttonPanel"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/relative"
-        app:layout_constraintLeft_toLeftOf="parent">
-
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/title_account"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <LinearLayout
+            android:id="@+id/buttonPanel"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/xiugai"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="修改资料"
-                android:textColor="#000000"
-                android:textSize="20dp" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/h_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/beijing"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#090808"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="60dp">
+                <ImageView
+                    android:id="@+id/h_head"
+                    android:layout_width="82dp"
+                    android:layout_height="85dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/xiaochou"
+                    app:layout_constraintTop_toTopOf="@id/h_back"
+                    app:layout_constraintLeft_toLeftOf="@id/h_back"/>
 
-            <Button
-                android:id="@+id/shezhi"
-                android:text="设置"
-                android:textSize="20dp"
-                android:textColor="#000000"
-                android:layout_weight="1"
-                android:layout_marginLeft="12dp"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="17sp"
+                    app:layout_constraintTop_toTopOf="@id/h_head"
+                    app:layout_constraintLeft_toRightOf="@id/h_head"
+                    android:text="张三"/>
+
+
+                <TextView
+                    android:id="@+id/user_iograph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:textSize="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/user_name"
+                    app:layout_constraintLeft_toRightOf="@id/h_head"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/xiugai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="修改资料"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
             </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#090808"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="60dp">
-            <Button
-                android:text="关于"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="12dp"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/concerning"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#090808"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="60dp">
+
+                <Button
+                    android:id="@+id/shezhi"
+                    android:text="设置"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
             </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#090808"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="60dp">
-            <Button
-                android:text="退出当前账号"
-                android:textSize="20dp"
-                android:textColor="#000000"
-                android:layout_weight="1"
-                android:layout_marginLeft="12dp"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/exit"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#090808"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="60dp">
+                <Button
+                    android:text="关于"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/concerning"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#090808"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="60dp">
+                <Button
+                    android:text="退出当前账号"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/exit"/>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </com.flipboard.bottomsheet.BottomSheetLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

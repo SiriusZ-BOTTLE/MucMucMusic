@@ -10,11 +10,20 @@ public class Song {
     private String singer_Song;
     private Date releaseDate_Song;
 
-    private String file_Song;
-    private String iconFile_Song;
+    private String file_Song;//音频
+    private String iconFile_Song;//歌曲图片
 
     private Double Score;
 
+    public Song(){
+
+    }
+
+    public Song(String name,int Id,String author){
+        this.name_Song = name;
+        this.id_Song = Id;
+        this.singer_Song = author;
+    }
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
     {

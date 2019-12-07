@@ -51,13 +51,17 @@ public class ForumFragment extends Fragment {
         initMusic();
         for(int i=0;i<3;i++){
             Comment one = new Comment("这是一首很好听的歌，我非常喜欢","余阳",musiclist.get(0));
+            one.setScore(3);
             commentList.add(one);
             Comment two = new Comment("这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢","余阳",musiclist.get(2));
             commentList.add(two);
+            one.setScore(1);
             Comment three = new Comment("这是一首很好听的歌，我非常喜欢,这是一首很好听的歌，我非常喜欢","南歌w",musiclist.get(2));
             commentList.add(three);
+            one.setScore(4);
             Comment four = new Comment("这是一首很好听的歌，我非常喜欢，这是一首很好听的歌，我非常喜欢，这是一首很好听的歌，我非常喜欢","余阳w",musiclist.get(3));
             commentList.add(four);
+            one.setScore(5);
         }
 
 
