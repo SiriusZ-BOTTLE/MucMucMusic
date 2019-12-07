@@ -3,7 +3,9 @@ package org.mucmuc.main.service.implement;
 
 import org.mucmuc.main.DAO.Interface_Map_SL_S_DAO;
 import org.mucmuc.main.DAO.implement.DAO_Map_SL_S;
+import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Map_SL_S;
+import org.mucmuc.main.service.Interface_Map_SL_S_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +17,29 @@ import java.util.List;
  * @Desprition: 歌单中歌曲业务实现类
  */
 @Service(value = "Service_Map_SL_S")
-public class Service_Map_SL_S implements Interface_Map_SL_S_DAO {
+public class Service_Map_SL_S implements Interface_Map_SL_S_service {
 
     @Autowired
     private DAO_Map_SL_S dao_map_sl_s;
 
+
     @Override
-    public Map_SL_S queryByPK(Map_SL_S map_sl_s) {
+    public ResultEntity getMap_SL_S(Map_SL_S map_sl_s) {
         return null;
     }
 
     @Override
-    public List<Map_SL_S> queryAll() {
+    public ResultEntity getAll() {
         return null;
     }
 
     @Override
-    public int deleteByPK(Map_SL_S map_sl_s) {
-        return 0;
+    public ResultEntity delete(Map_SL_S map_sl_s) {
+        return null;
     }
 
     @Override
-    public int insertNew(Map_SL_S map_sl_s) {
-        return 0;
+    public ResultEntity add(Map_SL_S map_sl_s) {
+        return null;
     }
 }

@@ -20,7 +20,7 @@ public interface Interface_SongList_DAO {
      * @param sl
      * @return
      */
-    List<SongList> queryByAttribute(SongList sl);
+    List<SongList> queryByName(SongList sl);
 
 
     /**
@@ -29,6 +29,15 @@ public interface Interface_SongList_DAO {
      * @return
      */
     List<SongList> queryRandom(Integer num);
+
+
+    /**
+     * 根据用户ID查询
+     * @return
+     */
+    List<SongList> queryByUserID(String id_User);
+
+
 
 
     /**

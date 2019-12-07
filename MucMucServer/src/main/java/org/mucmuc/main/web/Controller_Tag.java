@@ -1,7 +1,6 @@
 package org.mucmuc.main.web;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.Tag;
@@ -25,6 +24,23 @@ public class Controller_Tag {
 
     @Resource
     private Service_Tag tagService;
+
+
+
+    /**
+     * 搜索(按歌名模糊搜索)
+     * @param tag
+     * @return
+     */
+    @RequestMapping(value = "/search",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search(@RequestBody Tag tag)
+    {
+        return tagService.search(tag);
+    }
+
+
+
+
 
     /**
      * 获取指定数量的记录
@@ -52,7 +68,7 @@ public class Controller_Tag {
 
 
     /**
-     * 创建一个歌单下的标签(映射)
+     * 创建一个歌曲下的标签(映射)
      * 传入Map中歌曲参数名为song,标签参数名为tag
      * @param map
      * @return
@@ -96,6 +112,17 @@ public class Controller_Tag {
         return tagService.tagCountMinusOne(song,tag);
     }
 
+
+    /**
+     * 获取歌曲的所有标签
+     * @param song
+     * @return ResultEntity
+     */
+    @RequestMapping(value = "/getTagBySong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getTagBySong(@RequestBody Song song)
+    {
+        return tagService.getTagBySong(song);
+    }
 
 
 }

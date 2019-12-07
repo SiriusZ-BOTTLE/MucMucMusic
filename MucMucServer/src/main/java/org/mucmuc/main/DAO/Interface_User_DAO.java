@@ -13,11 +13,11 @@ public interface Interface_User_DAO {
     User queryByPK(User user);
 
     /**
-     * 根据属性(模糊)查询
+     * 根据属性(模糊)查找
      * @param user
      * @return
      */
-    List<User> queryByAttribute(User user);
+    List<User> queryByName(User user);
 
     /**
      * 查询全部

@@ -1,8 +1,6 @@
 package org.mucmuc.main.web;
 
 
-import com.alibaba.fastjson.JSON;
-import org.mucmuc.main.entity.Comment;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.service.implement.Service_Song;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 //控制器注解
 @ResponseBody
@@ -28,6 +25,17 @@ public class Controller_Song {
     //@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url
     //@RequestParam则是将接口函数的参数直接放在请求URL中,作为参数传递
     //如果使用PostMapping或者GetMapping注解, 则无需再加上"method=RequestMethod.POST"参数
+
+    /**
+     * 搜索(按歌名模糊搜索)
+     * @param song
+     * @return
+     */
+    @RequestMapping(value = "/search",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search(@RequestBody Song song)
+    {
+        return songService.search(song);
+    }
 
 
     /**
@@ -44,19 +52,19 @@ public class Controller_Song {
 
 
     /**
-     * 播放接口
+     * 获取歌曲信息
      * @param
      * @return ResultEntity
      * 将歌曲url信息放入ResultEntity.object中
      */
-    @RequestMapping(value = "/play",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity play(@RequestBody Song song)
+    @RequestMapping(value = "/get",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity get(@RequestBody Song song)
     {
-        return songService.play(song);
+        return songService.get(song);
     }
 
     /**
-     * 新增歌曲接口
+     * 新增歌曲
      * @param song:
      * @return ResultEntity
      */
@@ -67,7 +75,7 @@ public class Controller_Song {
     }
 
     /**
-     * 删除歌曲接口
+     * 删除歌曲
      * @param song
      * @return
      */
@@ -79,39 +87,32 @@ public class Controller_Song {
     }
 
     /**
-     * 更新歌曲接口
+     * 更新歌曲
      * @param song
      * @return
      */
 
-    @RequestMapping(value = "/updateInfo",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity updateInfo(@RequestBody Song song)
+    @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity update(@RequestBody Song song)
     {
-        return songService.updateInfo(song);
+        return songService.update(song);
     }
 
 
     /**
-     * 查询歌曲接口
+     * 查询歌曲
      * @param song
      * @return ResultEntity
+     * 废弃了!!!!!!!!!不再使用
      */
+    @Deprecated
     @RequestMapping(value = "/queryBySong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity queryBySong(@RequestBody Song song)
     {
-        return songService.queryBySong(song);
+        return songService.get(song);
     }
 
-    /**
-     * 获取歌曲的所有标签
-     * @param song
-     * @return ResultEntity
-     */
-    @RequestMapping(value = "/queryTagBySong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity queryTagBySong(@RequestBody Song song)
-    {
-        return songService.queryTagBySong(song);
-    }
+
 
 
 }

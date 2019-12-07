@@ -32,33 +32,35 @@ public class DAO_SongList implements Interface_SongList_DAO {
     }
 
     @Override
-    public List<SongList> queryByAttribute(SongList sl) {
+    public List<SongList> queryByName(SongList sl) {
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
 
         List<Object> list = sl.objectList_notNull();//获取非空项
 
-        if(sl.getId_User()!=null)
-            sql=sql+" ID_User like ? and";
+//        if(sl.getId_User()!=null)
+//            sql=sql+" ID_User like ? and";
         if(sl.getName_SL()!=null)
-            sql=sql+" Name_SL like ? and";
-        if(sl.getDate_SL()!=null)
-            sql=sql+" Date_SL = ? and";
-        if(sl.getDescription_SL()!=null)
-            sql=sql+" Description_SL like ? and";
-
-        if(sql.endsWith("where "))
-        {
+            sql=sql+" Name_SL like ? ";
+        else
             return null;
-        }
+//        if(sl.getDate_SL()!=null)
+//            sql=sql+" Date_SL = ? and";
+//        if(sl.getDescription_SL()!=null)
+//            sql=sql+" Description_SL like ? and";
 
-        if(sql.endsWith("and"))
-        {
-            sql=sql.substring(0,sql.length()-3);//缩减
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
+//
+//        if(sql.endsWith("and"))
+//        {
+//            sql=sql.substring(0,sql.length()-3);//缩减
+//        }
 
         //查询
-        List<SongList> slList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(SongList.class));
+        List<SongList> slList=jdbc.query(sql,new Object[]{"%"+sl.getName_SL()+"%"}, new BeanPropertyRowMapper(SongList.class));
 
         return slList;
     }
@@ -68,6 +70,14 @@ public class DAO_SongList implements Interface_SongList_DAO {
         String sql=" select * from "+Set_StringConstants.table_songlist+" order by rand() limit 0,"+num;
         List<SongList> list=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(SongList.class));
 
+        return list;
+    }
+
+    @Override
+    public List<SongList> queryByUserID(String id_User) {
+        String sql=" select * from "+Set_StringConstants.table_songlist+" where id_User = ?";
+
+        List<SongList> list=jdbc.query(sql,new Object[]{id_User},new BeanPropertyRowMapper(SongList.class));
         return list;
     }
 

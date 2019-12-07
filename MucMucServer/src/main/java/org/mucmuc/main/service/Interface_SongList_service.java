@@ -3,6 +3,7 @@ package org.mucmuc.main.service;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.User;
 
 /**
  * @author ZSR
@@ -31,10 +32,19 @@ public interface Interface_SongList_service {
 
 
     /**
-     * 根据属性模糊查询(只支持歌单名称模糊查询)
+     * 根据属性模糊查找(只支持歌单名称模糊查询)
      * @return
      */
-    ResultEntity getByAttribute(SongList songList);
+    ResultEntity search(SongList songList);
+
+
+    /**
+     * 获取用户的所有歌单
+     * @param user
+     * @return
+     */
+    ResultEntity getUserSongList(User user);
+
 
 
     /**
