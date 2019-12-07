@@ -199,8 +199,8 @@ public class ListplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListplayActivity.this,CommentActivity.class);
-                intent.putExtra("song_name",list.get(currentposition).getSong());
-                intent.putExtra("song_singer",list.get(currentposition).getSinger());
+                intent.putExtra("song_name",list.get(currentposition).getName_Song());
+                intent.putExtra("song_singer",list.get(currentposition).getSinger_Song());
                 startActivity(intent);
             }
         });
