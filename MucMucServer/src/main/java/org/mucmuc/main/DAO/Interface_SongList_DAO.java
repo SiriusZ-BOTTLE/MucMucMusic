@@ -32,6 +32,15 @@ public interface Interface_SongList_DAO {
 
 
     /**
+     * 根据用户ID查询
+     * @return
+     */
+    List<SongList> queryByUserID(String id_User);
+
+
+
+
+    /**
      * 根据ID_User属性(精确)查询
      * @param sl
      * @return

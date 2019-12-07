@@ -72,6 +72,14 @@ public class DAO_SongList implements Interface_SongList_DAO {
     }
 
     @Override
+    public List<SongList> queryByUserID(String id_User) {
+        String sql=" select * from "+Set_StringConstants.table_songlist+" where id_User = ?";
+
+        List<SongList> list=jdbc.query(sql,new Object[]{id_User},new BeanPropertyRowMapper(SongList.class));
+        return list;
+    }
+
+    @Override
     public List<SongList> preciousqueryByID_User(SongList sl){
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";

@@ -52,9 +52,9 @@ public class Controller_Comment {
     @RequestMapping(value = "/write",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity write(@RequestBody Map<String, Object> map)
     {
-        Comment comment = JSON.parseObject(JSON.toJSONString(map.get("Comment")), Comment.class);
-        User user = JSON.parseObject(JSON.toJSONString(map.get("User")), User.class);
-        Song song = JSON.parseObject(JSON.toJSONString(map.get("Song")), Song.class);
+        Comment comment = JSON.parseObject(JSON.toJSONString(map.get("comment")), Comment.class);
+        User user = JSON.parseObject(JSON.toJSONString(map.get("user")), User.class);
+        Song song = JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
 
 
         return commentService.write(comment,song,user);

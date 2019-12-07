@@ -44,7 +44,7 @@ public class Controller_Song {
 
 
     /**
-     * 播放接口
+     * 播放
      * @param
      * @return ResultEntity
      * 将歌曲url信息放入ResultEntity.object中
@@ -56,7 +56,7 @@ public class Controller_Song {
     }
 
     /**
-     * 新增歌曲接口
+     * 新增歌曲
      * @param song:
      * @return ResultEntity
      */
@@ -67,7 +67,7 @@ public class Controller_Song {
     }
 
     /**
-     * 删除歌曲接口
+     * 删除歌曲
      * @param song
      * @return
      */
@@ -79,7 +79,7 @@ public class Controller_Song {
     }
 
     /**
-     * 更新歌曲接口
+     * 更新歌曲
      * @param song
      * @return
      */
@@ -92,7 +92,7 @@ public class Controller_Song {
 
 
     /**
-     * 查询歌曲接口
+     * 查询歌曲
      * @param song
      * @return ResultEntity
      */

@@ -19,7 +19,6 @@ public interface Interface_Song_service {
     ResultEntity getRandom(Integer num);
 
 
-
     /**
      * 播放歌曲(song)
      * @param song

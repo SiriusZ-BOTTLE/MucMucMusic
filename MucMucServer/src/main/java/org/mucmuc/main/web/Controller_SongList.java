@@ -37,14 +37,36 @@ public class Controller_SongList {
     }
 
 
-
-
+    /**
+     * 获取歌单信息(根据ID)
+     * @param songList
+     * @return
+     */
     @RequestMapping(value = "/get",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity get(@RequestBody SongList songList)
     {
         return songListService.get(songList);
     }
 
+
+    /**
+     * 获得用户的全部歌单
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/getUserSongList",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getUserSongList(@RequestBody User user)
+    {
+        return songListService.getUserSongList(user);
+    }
+
+
+
+    /**
+     *
+     * @param map
+     * @return
+     */
     @RequestMapping(value = "/addSongToSL",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity addSongToSongList(@RequestBody Map<String,Object> map)
     {
@@ -55,6 +77,12 @@ public class Controller_SongList {
         return songListService.addSongToSongList(song,songList);
     }
 
+
+    /**
+     * 从歌单中删除歌曲
+     * @param map
+     * @return
+     */
     @RequestMapping(value = "/removeSongFromSL",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity removeSongFromSongList(@RequestBody Map<String,Object> map)
     {

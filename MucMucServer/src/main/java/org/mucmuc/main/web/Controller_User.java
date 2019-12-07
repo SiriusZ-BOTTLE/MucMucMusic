@@ -97,8 +97,8 @@ public class Controller_User {
     }
 
 
-    @RequestMapping(value = "/fuzzyGet",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity fuzzyGet(@RequestBody User user)
+    @RequestMapping(value = "/search",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search(@RequestBody User user)
     {
         return userService.getByAttribute(user);
     }
