@@ -37,7 +37,7 @@ public class DAO_User implements Interface_User_DAO {
     }
 
     @Override
-    public List<User> queryByAttribute(User user) {
+    public List<User> queryByName(User user) {
 
         String sql="select * from "+ Set_StringConstants.table_user;
 

@@ -5,11 +5,9 @@ package org.mucmuc.main.service.implement;
 import org.mucmuc.main.DAO.implement.DAO_Song;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
-import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.Interface_Song_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
 public class Service_Song implements Interface_Song_service {
 
     @Autowired
-    private DAO_Song dao_Song;
+    private DAO_Song songDao;
 
 
     @Override
@@ -35,12 +33,13 @@ public class Service_Song implements Interface_Song_service {
             return resultEntity;
         }
 
-        resultEntity.setObject(dao_Song.queryRandom(num));
+        resultEntity.setObject(songDao.queryRandom(num));
         resultEntity.setState(true);
         return resultEntity;
     }
 
     @Override
+    @Deprecated
     public ResultEntity play(Song song) {
 
         Boolean success = Boolean.FALSE;
@@ -50,7 +49,7 @@ public class Service_Song implements Interface_Song_service {
             errorMsg = "请求数据不能为空！";
         } else {
             //根据请求参数查询用户信息
-            song = dao_Song.queryByPK(song);
+            song = songDao.queryByPK(song);
             if (song == null){
                 opMsg = "歌曲不存在！";
             }else if(song.getFile_Song() == null){
@@ -62,6 +61,23 @@ public class Service_Song implements Interface_Song_service {
 
         //封装返回结果
         ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, song);
+        return resultEntity;
+    }
+
+    @Override
+    public ResultEntity search(Song song) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(song.getName_Song()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> name_Song is NULL");
+            return resultEntity;
+        }
+
+        List<Song> list=songDao.queryByName(song);
+
+        resultEntity.setState(true);
+        resultEntity.setObject(list);
         return resultEntity;
     }
 
@@ -79,7 +95,7 @@ public class Service_Song implements Interface_Song_service {
             errorMsg= "歌曲分数不能为负数";
         }
         else{
-            int resultRow = dao_Song.insertNew(song);
+            int resultRow = songDao.insertNew(song);
             if (resultRow < 1){
                 opMsg = "插入失败！";
             } else {
@@ -104,7 +120,7 @@ public class Service_Song implements Interface_Song_service {
             errorMsg = "用户编号不能为空！";
         } else {
             //删除用户信息
-            int resultRow = dao_Song.deleteByPK(song);
+            int resultRow = songDao.deleteByPK(song);
             if (resultRow < 1){
                 opMsg = "删除歌曲失败！";
             }else {
@@ -118,7 +134,7 @@ public class Service_Song implements Interface_Song_service {
     }
 
     @Override
-    public ResultEntity updateInfo(Song song) {
+    public ResultEntity update(Song song) {
 
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空
@@ -131,7 +147,7 @@ public class Service_Song implements Interface_Song_service {
             errorMsg = "分数不能为负数！";
         }else {
             //更新用户信息
-            int resultRow = dao_Song.update(song);
+            int resultRow = songDao.update(song);
             if (resultRow < 1){
                 opMsg = "更新用户失败！";
             }else {
@@ -146,19 +162,19 @@ public class Service_Song implements Interface_Song_service {
     }
 
     @Override
-    public ResultEntity queryBySong(Song song) {
+    public ResultEntity get(Song song) {
 
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空
         String opMsg="done";//操作信息默认为完成
-        if (song == null){
-            errorMsg = "请求数据不能为空！";
+        if (song.getId_Song()==null){
+            errorMsg = "<ERROR> id_Song is NULL";
         } else {
             //根据请求参数查询歌曲信息
-            song = dao_Song.queryByPK(song);
+            song = songDao.queryByPK(song);
 
             if (song == null){
-                opMsg = "歌曲信息不存在！";
+                opMsg = "歌曲信息不存在";
             } else {
                 success = Boolean.TRUE;
             }
@@ -169,28 +185,6 @@ public class Service_Song implements Interface_Song_service {
         return resultEntity;
     }
 
-    @Override
-    public ResultEntity queryTagBySong(Song song) {
-        List<Tag> tagList = null;
 
-        Boolean success = Boolean.FALSE;
-        String errorMsg = "";//错误信息默认为空
-        String opMsg="done";//操作信息默认为完成
-        if (song == null){
-            errorMsg = "请求数据不能为空！";
-        } else {
-            //根据请求参数查询歌曲信息
-            tagList = dao_Song.queryTagsbySong(song);
 
-            if (tagList == null || tagList.size() == 0){
-                opMsg = "标签信息不存在！";
-            }else {
-                success = Boolean.TRUE;
-            }
-        }
-
-        //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success,errorMsg, opMsg, tagList);
-        return resultEntity;
-    }
 }

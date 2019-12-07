@@ -11,6 +11,8 @@ import org.mucmuc.main.service.Interface_SongList_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service(value = "Service_SongList")
 public class Service_SongList implements Interface_SongList_service {
 
@@ -61,7 +63,20 @@ public class Service_SongList implements Interface_SongList_service {
 
     @Override
     public ResultEntity search(SongList songList) {
-        return null;
+
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(songList.getName_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> name_SL is NULL");
+            return resultEntity;
+        }
+
+        List<SongList> list=songListDao.queryByName(songList);
+
+        resultEntity.setObject(list);
+        resultEntity.setState(true);
+        return resultEntity;
     }
 
     @Override

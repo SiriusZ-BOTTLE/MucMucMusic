@@ -38,7 +38,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
         String sql="select * from "+ Set_StringConstants.table_tag +" where name_Tag = ? ";
         List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getName_Tag()}, new BeanPropertyRowMapper(Tag.class));
 
-        if(tagList==null||tagList.size()==0)
+        if(tagList==null||tagList.size()==0)//先检查容器是否为空
             return null;
         return tagList.get(0);
     }

@@ -25,6 +25,21 @@ public class Controller_SongList {
     @Resource
     private Service_SongList songListService;
 
+
+    /**
+     * 搜索(按歌单名模糊搜索)
+     * @param songList
+     * @return
+     */
+    @RequestMapping(value = "/search",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search(@RequestBody SongList songList)
+    {
+        return songListService.search(songList);
+    }
+
+
+
+
     /**
      * 随机获取,获取指定数量的记录
      * @param num

@@ -35,79 +35,78 @@ public class JsonUtil {
 
 
     //这是一个JSON使用示例
-    //老马你可以看看
-    public static void main(String []args) {
-//        //映射,键值对
-//        Map<String,Object> m=new HashMap<>();
+//    public static void main(String []args) {
+////        //映射,键值对
+////        Map<String,Object> m=new HashMap<>();
+////
+////        User u0=new User();
+////        User u1=new User();
+////
+////        u0.setId_User("u0");
+////        m.put("u0",u0);//添加一个项
+////
+////        u1.setId_User("u1");
+////        m.put("u1",u1);//添加一个项
+////
+////        String json=JSON.toJSONString(m);//转换为JSON字符串
+////        System.out.println(json);//打印字符串
+////
+////        Map<String,Object> m_parsed;//解析字符串得到的map
+////        m_parsed=JSON.parseObject(json,Map.class);//从刚才生成的字符串中解析键值对映射map
+////
+////        //注意, 解析之后任何对象都会被转换为JSONObject对象
+////        System.out.println(m_parsed.get("u0").getClass());//这条语句打印其对象类型
+////
+////        JSONObject o=(JSONObject)(m_parsed.get("u0"));//获取这个JSONObject
+////
+////        User u=o.toJavaObject(User.class);//转换为Java的对象(这里是转换到User对象)
+////
+////        System.out.println(u.getId_User());//打印User对象的ID
+////        Integer i = 5;
+////        String res = JSON.toJSONString(i);
+////        System.out.println(res);
+////
+////
+//        List<User> l = new ArrayList<User>();
+////
+//        User u = new User();
+//        u.setId_User("User");
+//        u.setIdiograph_User("asdfjklajsdfljasdh");
 //
-//        User u0=new User();
-//        User u1=new User();
+//        l.add(u);
+//        l.add(u);
+//        l.add(u);
+//        l.add(u);
+//        l.add(u);
 //
-//        u0.setId_User("u0");
-//        m.put("u0",u0);//添加一个项
+////        String str = JSON.toJSONString(l);//转换为JSON字符串
+////        System.out.println(str);
+////
+////        List<JSONObject> l_p = JSON.parseObject(str, List.class);//解析JSON字符串}
 //
-//        u1.setId_User("u1");
-//        m.put("u1",u1);//添加一个项
 //
-//        String json=JSON.toJSONString(m);//转换为JSON字符串
-//        System.out.println(json);//打印字符串
+//        ResultEntity resultEntity =new ResultEntity();
 //
-//        Map<String,Object> m_parsed;//解析字符串得到的map
-//        m_parsed=JSON.parseObject(json,Map.class);//从刚才生成的字符串中解析键值对映射map
 //
-//        //注意, 解析之后任何对象都会被转换为JSONObject对象
-//        System.out.println(m_parsed.get("u0").getClass());//这条语句打印其对象类型
 //
-//        JSONObject o=(JSONObject)(m_parsed.get("u0"));//获取这个JSONObject
 //
-//        User u=o.toJavaObject(User.class);//转换为Java的对象(这里是转换到User对象)
+//        resultEntity.setObject(l);
 //
-//        System.out.println(u.getId_User());//打印User对象的ID
-//        Integer i = 5;
-//        String res = JSON.toJSONString(i);
+//        //转换为字符串
+//        String res = JSON.toJSONString(resultEntity);
+//
 //        System.out.println(res);
 //
+//        //解析字符串
+//        ResultEntity resultEntity_parsed=JSON.parseObject(res,ResultEntity.class);
 //
-        List<User> l = new ArrayList<User>();
+//        JSONArray array=(JSONArray) (resultEntity_parsed.getObject());
 //
-        User u = new User();
-        u.setId_User("User");
-        u.setIdiograph_User("asdfjklajsdfljasdh");
-
-        l.add(u);
-        l.add(u);
-        l.add(u);
-        l.add(u);
-        l.add(u);
-
-//        String str = JSON.toJSONString(l);//转换为JSON字符串
-//        System.out.println(str);
+//        System.out.println(array.get(0).getClass());
 //
-//        List<JSONObject> l_p = JSON.parseObject(str, List.class);//解析JSON字符串}
-
-
-        ResultEntity resultEntity =new ResultEntity();
-
-
-
-
-        resultEntity.setObject(l);
-
-        //转换为字符串
-        String res = JSON.toJSONString(resultEntity);
-
-        System.out.println(res);
-
-        //解析字符串
-        ResultEntity resultEntity_parsed=JSON.parseObject(res,ResultEntity.class);
-
-        JSONArray array=(JSONArray) (resultEntity_parsed.getObject());
-
-        System.out.println(array.get(0).getClass());
-
-        User user=((JSONObject)(array.get(0))).toJavaObject(User.class);
-
-        System.out.println(user.getId_User());
-
-    }
+//        User user=((JSONObject)(array.get(0))).toJavaObject(User.class);
+//
+//        System.out.println(user.getId_User());
+//
+//    }
 }

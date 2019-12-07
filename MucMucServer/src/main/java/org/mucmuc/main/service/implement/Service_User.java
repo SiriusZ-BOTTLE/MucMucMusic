@@ -129,15 +129,15 @@ public class Service_User implements Interface_User_service {
     }
 
     @Override
-    public ResultEntity getByAttribute(User user) {
+    public ResultEntity search(User user) {
         ResultEntity resultEntity=new ResultEntity();
-        if(user.getNickname_User()==null||user.getId_User()==null)
+        if(user.getNickname_User()==null&&user.getId_User()==null)
         {
-            resultEntity.setInfo_error("<ERROR> nickName_User is NULL or id_User is NULL");
+            resultEntity.setInfo_error("<ERROR> both nickName_User is NULL and id_User is NULL");
             return resultEntity;
         }
 
-        List<User> list=userDAO.queryByAttribute(user);
+        List<User> list=userDAO.queryByName(user);
 
         resultEntity.setObject(list);//返回列表信息
 

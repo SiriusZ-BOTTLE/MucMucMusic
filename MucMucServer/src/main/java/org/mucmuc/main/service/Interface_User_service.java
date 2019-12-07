@@ -42,10 +42,10 @@ public interface Interface_User_service {
     ResultEntity getAll();
 
     /**
-     * 根据属性模糊查询(只支持用户昵称模糊查询)
+     * 根据属性模糊查找(只支持用户昵称模糊查询)
      * @return
      */
-    ResultEntity getByAttribute(User user);
+    ResultEntity search(User user);
 
     /**
      * 更新用户

@@ -17,6 +17,13 @@ public interface Interface_Tag_service {
     ResultEntity getRandom(Integer num);
 
     /**
+     * 按标签名模糊搜索
+     * @return
+     */
+    ResultEntity search(Tag tag);
+
+
+    /**
      * 获取标签
      * @param tag
      * @return
@@ -59,6 +66,12 @@ public interface Interface_Tag_service {
 
 
 
+    /**
+     * 获得歌曲的所有标签(song)
+     * @param song
+     * @return
+     */
+    ResultEntity getTagBySong(Song song);
 
 
 }

@@ -40,33 +40,29 @@ public class DAO_Song implements Interface_Song_DAO {
     }
 
     @Override
-    public List<Song> queryByAttribute(Song song) {
+    public List<Song> queryByName(Song song) {
 
         String sql="select * from "+ Set_StringConstants.table_song + " where ";
 
-        List<Object> list = song.objectList_notNull();//获取非空项
+//        List<Object> list = song.objectList_notNull();//获取非空项
 
         if(song.getName_Song()!=null)
             sql=sql+" Name_Song like ? and";
-        if(song.getSinger_Song()!=null)
-            sql=sql+" Singer like ? and";
-        if(song.getReleaseDate_Song()!=null)
-            sql=sql+" Date_Release like ? and";
-        if(song.getScore()!=null)
-            sql=sql+" Score = ? and";
-
-        if(sql.endsWith("where "))
-        {
+        else
             return null;
-        }
 
-        if(sql.endsWith("and"))
-        {
-            sql=sql.substring(0,sql.length()-3);//缩减
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
+//
+//        if(sql.endsWith("and"))
+//        {
+//            sql=sql.substring(0,sql.length()-3);//缩减
+//        }
 
         //查询
-        List<Song> songList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Song.class));
+        List<Song> songList=jdbc.query(sql,new Object[]{"%"+song.getName_Song()+"%"}, new BeanPropertyRowMapper(Song.class));
 
         return songList;
     }

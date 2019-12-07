@@ -20,7 +20,7 @@ public interface Interface_SongList_DAO {
      * @param sl
      * @return
      */
-    List<SongList> queryByAttribute(SongList sl);
+    List<SongList> queryByName(SongList sl);
 
 
     /**
