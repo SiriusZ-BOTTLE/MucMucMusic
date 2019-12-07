@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.music.play;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,9 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Util.GetDurationUtil;
 import com.example.myapplication.Util.MusicUtils;
-import com.example.myapplication.bean.MusicList;
-import com.example.myapplication.bean.Song;
+import com.example.myapplication.bean_new.Song;
 import com.example.myapplication.ui.music.ListAdapter;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class PlayAdapter extends BaseAdapter {
 
     private String Theme;
 
+    private SharedPreferences sp;
     public PlayAdapter(ListplayActivity listplayActivity, List<Song> list) {
         this.context = listplayActivity;
         this.list = list;
@@ -82,7 +84,7 @@ public class PlayAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         // 给控件赋值
-        String string_song = list.get(i).getSong();
+        String string_song = list.get(i).getName_Song();
 //		if (string_song.length() >= 5
 //				&& string_song.substring(string_song.length() - 4,
 //						string_song.length()).equals(".mp3")) {
@@ -136,9 +138,14 @@ public class PlayAdapter extends BaseAdapter {
             holder.position.setText(i + 1 + "");
         }
 
-        holder.singer.setText(list.get(i).getSinger().toString().trim());
+        holder.singer.setText(list.get(i).getSinger_Song().toString().trim());
         // 时间需要转换一下
-        int duration = list.get(i).getDuration();
+        GetDurationUtil.getduration(list.get(i).getFile_Song(),view.getContext());
+        int duration =0;
+        sp =view.getContext().getSharedPreferences("test", Context.MODE_PRIVATE);//初始化
+        if(sp.getInt("time",0)>0){
+            duration=sp.getInt("time",0);//获得歌曲时长
+        }
         String time = MusicUtils.formatTime(duration);
         holder.duration.setText(time);
 

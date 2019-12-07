@@ -28,8 +28,7 @@ public class MusicFragment extends Fragment {
     private MusicViewModel musicViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        musicViewModel =
-                ViewModelProviders.of(this).get(MusicViewModel.class);
+        musicViewModel = ViewModelProviders.of(this).get(MusicViewModel.class);
         View root = inflater.inflate(R.layout.fragment_music, container, false);
 
         TextView recent_play = (TextView) root.findViewById(R.id.recent_play_text);

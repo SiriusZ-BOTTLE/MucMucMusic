@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("gender",((JSONObject)result.getObject()).toJavaObject(User.class).getGender_User());
                                 editor.putString("level",((JSONObject)result.getObject()).toJavaObject(User.class).getLevel_User());
                                 editor.putString("state",((JSONObject)(result.getObject())).toJavaObject(User.class).getState_User());
-                                editor.putString("iograph",((JSONObject)(result.getObject())).toJavaObject(User.class).getIdiograph_User());
+                                editor.putString("idiograph",((JSONObject)(result.getObject())).toJavaObject(User.class).getIdiograph_User());
 								String music=((JSONObject)(result.getObject())).toJavaObject(User.class).getIconFile_User();
 								music=music.substring(music.indexOf(',')+1);
 //								music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
@@ -108,8 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                                 try{
                                     String body2= JSON.toJSONString(1);
 
-                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","4","UTF-8");
+                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","5","UTF-8");
                                     ResultEntity result2 = JSON.parseObject(res2, ResultEntity.class);
+                                    editor.putString("HomeFragmentSong",res2);
 
                                     String body3 = JSON.toJSONString(1);
                                     res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","2","UTF-8");

@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -34,8 +35,12 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.Base64Util;
+import com.example.myapplication.Util.HttpUtil;
+import com.example.myapplication.bean_new.User;
 import com.example.myapplication.ui.home.LoginActivity;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 
@@ -51,6 +56,8 @@ public class AccountFragment extends Fragment {
     private View bottomSheet;
     private BottomSheetLayout bottomSheetLayout;
     SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+
     private Uri imageUri;
     private ImageView image_head;
     public static final int TAKE_PHOTO =1;
@@ -63,6 +70,8 @@ public class AccountFragment extends Fragment {
 
 
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+        editor =  sp.edit();
+
         bottomSheetLayout = (BottomSheetLayout) root.findViewById(R.id.bottomSheetLayout);
         image_head = (ImageView) root.findViewById(R.id.h_head); //绑定用户头像控件
         byte[] data=Base64Util.decode(sp.getString("iconFile_User",""));
@@ -78,8 +87,8 @@ public class AccountFragment extends Fragment {
         TextView nickname = (TextView) root.findViewById(R.id.user_name);
         nickname.setText(sp.getString("nickname",""));
 
-        TextView iograph = (TextView) root.findViewById(R.id.user_iograph);
-        iograph.setText(sp.getString("iograph",""));
+        TextView idiograph = (TextView) root.findViewById(R.id.user_iograph);
+        idiograph.setText(sp.getString("idiograph",""));
 
         btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
             @Override
@@ -267,8 +276,31 @@ public class AccountFragment extends Fragment {
 
     private void displayImage(String imagePath){
         if(imagePath != null){
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            final Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             image_head.setImageBitmap(bitmap);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+                    String b=Base64Util.bitmapToBase64(bitmap);
+                    User user=new User();
+                    user.setGender_User(sp.getString("gender",""));
+                    user.setNickname_User(sp.getString("nickname",""));
+                    user.setId_User(sp.getString("name",""));
+                    user.setPassword_User(sp.getString("password",""));
+                    user.setIconFile_User(b);
+                    user.setIdiograph_User(sp.getString("idiograph",""));
+                    user.setLevel_User(sp.getString("level",""));
+                    user.setState_User(sp.getString("state",""));
+                    editor.putString("iconFile_User",b);
+                    String body= JSON.toJSONString(user);
+                    HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/update",body,"UTF-8");
+                    Looper.prepare();
+                    Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+
+                }
+            }).start();
         }else {
             Toast.makeText(getActivity(),"failed to get image",Toast.LENGTH_SHORT).show();
         }
