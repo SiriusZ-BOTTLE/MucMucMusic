@@ -139,6 +139,9 @@ public class Service_User implements Interface_User_service {
 
         List<User> list=userDAO.queryByName(user);
 
+        for(User item:list)
+            item.setIconFile_User(null);
+
         resultEntity.setObject(list);//返回列表信息
 
         resultEntity.setState(true);

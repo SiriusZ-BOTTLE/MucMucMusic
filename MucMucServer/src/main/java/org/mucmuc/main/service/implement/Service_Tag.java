@@ -185,14 +185,14 @@ public class Service_Tag implements Interface_Tag_service {
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空
         String opMsg = "done";//操作信息默认为完成
-        if (song == null) {
-            errorMsg = "请求数据不能为空！";
+        if (song.getId_Song()==null) {
+            errorMsg = "<ERROR> id_Song is NULL";
         } else {
             //根据请求参数查询歌曲信息
             tagList = songDAO.queryTagsbySong(song);
 
-            if (tagList == null || tagList.size() == 0) {
-                opMsg = "标签信息不存在！";
+            if (tagList.size() == 0) {
+                opMsg = "未找到任何标签";
             } else {
                 success = Boolean.TRUE;
             }

@@ -11,7 +11,7 @@ public interface Interface_Lyrics_service {
      * @param lyrics
      * @return
      */
-    ResultEntity getLyrics(Lyrics lyrics);
+    ResultEntity get(Lyrics lyrics);
 
 
     /**
