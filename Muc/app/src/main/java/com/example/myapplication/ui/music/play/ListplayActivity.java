@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.music.play;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -30,8 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.GetDurationUtil;
+import com.example.myapplication.Util.MessageBox;
 import com.example.myapplication.Util.MusicUtils;
-import com.example.myapplication.bean.Song;
+import com.example.myapplication.bean.Music;
+import com.example.myapplication.bean_new.Song;
+import com.example.myapplication.ui.home.MusicAdapter;
 import com.example.myapplication.ui.music.play.GradientTextView;
 import com.example.myapplication.ui.music.play.PlayAdapter;
 
@@ -68,7 +73,10 @@ public class ListplayActivity extends AppCompatActivity {
     private String string_theme;
     // 修改顶部状态栏颜色使用
 
-    @Override
+
+	private SharedPreferences sp;
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
@@ -77,6 +85,7 @@ public class ListplayActivity extends AppCompatActivity {
         }
         //获取权限
 //        getAuthority();
+        MessageBox.sendMessage(ListplayActivity.this,currentposition+"");
 
         sharedPreferences = getSharedPreferences("location", MODE_PRIVATE);
         // 主题设置
@@ -118,9 +127,8 @@ public class ListplayActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("song_name",
-                cut_song_name(list.get(currentposition).getSong()));
-        editor.putString("song_singer", list.get(currentposition).getSinger());
+        editor.putString("song_name", cut_song_name(list.get(currentposition).getName_Song()));
+        editor.putString("song_singer", list.get(currentposition).getSinger_Song());
         editor.putInt("currentposition", currentposition);
         editor.commit();
         if (mplayer.isPlaying()) {
@@ -306,7 +314,12 @@ public class ListplayActivity extends AppCompatActivity {
         listview = (ListView) this.findViewById(R.id.listveiw);
 
         list = new ArrayList<Song>();
-        list = MusicUtils.getMusicData(ListplayActivity.this);//查找本地歌曲
+		list.addAll(MusicUtils.list);//保存添加到播放列表的歌曲
+//        list = MusicUtils.getMusicData(ListplayActivity.this);//查找本地歌曲
+//		if(MusicAdapter.songtolist!=null){
+//			list.add(MusicAdapter.songtolist);
+//		}
+
         adapter = new PlayAdapter(ListplayActivity.this, list);
         // 标记正在播放的音乐条目为主题色
         adapter.setFlag(currentposition);
@@ -342,7 +355,7 @@ public class ListplayActivity extends AppCompatActivity {
                 currentposition = position;
                 musicplay(currentposition);
 
-                text_main.setText(cut_song_name(list.get(currentposition).getSong()));
+                text_main.setText(cut_song_name(list.get(currentposition).getName_Song()));
                 adapter.setFlag(currentposition);
                 adapter.notifyDataSetChanged();
             }
@@ -385,10 +398,14 @@ public class ListplayActivity extends AppCompatActivity {
 
     private void musicplay(int position) {
 
-        textView1.setText(cut_song_name(list.get(position).getSong()).trim());
-        textView2.setText(list.get(position).getSinger().trim());
-        text_main.setText(cut_song_name(list.get(currentposition).getSong()));
-        seekBar.setMax(list.get(position).getDuration());
+        textView1.setText(cut_song_name(list.get(position).getName_Song()).trim());
+        textView2.setText(list.get(position).getSinger_Song().trim());
+        text_main.setText(cut_song_name(list.get(currentposition).getName_Song()));
+        GetDurationUtil.getduration(list.get(position).getFile_Song(),ListplayActivity.this);
+        sp = ListplayActivity.this.getSharedPreferences("test", Context.MODE_PRIVATE);//初始化
+        if(sp.getInt("time",0)>0){
+            seekBar.setMax(sp.getInt("time",0));//获得歌曲时长
+        }
         imageview.startAnimation(AnimationUtils.loadAnimation(
                 ListplayActivity.this, R.anim.imageview_rotate));
         switch (string_theme) {
@@ -410,7 +427,7 @@ public class ListplayActivity extends AppCompatActivity {
 
         try {
             mplayer.reset();
-            mplayer.setDataSource(list.get(position).getPath());//把音频加入播放器
+            mplayer.setDataSource(list.get(position).getFile_Song());//把音频加入播放器
             mplayer.prepare();
             mplayer.start();
 
@@ -464,19 +481,24 @@ public class ListplayActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            while (!ischanging && mplayer.isPlaying()) {
-                // 将SeekBar位置设置到当前播放位置
-                seekBar.setProgress(mplayer.getCurrentPosition());
+            try{
+                while (!ischanging && mplayer.isPlaying()) {
+                    // 将SeekBar位置设置到当前播放位置
+                    seekBar.setProgress(mplayer.getCurrentPosition());
 
-                try {
-                    // 每500毫秒更新一次位置
-                    Thread.sleep(500);
-                    // 播放进度
+                    try {
+                        // 每500毫秒更新一次位置
+                        Thread.sleep(500);
+                        // 播放进度
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
             }
+
         }
     }
 

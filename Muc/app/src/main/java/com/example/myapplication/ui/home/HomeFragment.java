@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -52,6 +53,7 @@ import com.example.myapplication.bean_new.Song;
 import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
 import com.example.myapplication.bean_new.SongList;
 import com.example.myapplication.bean_new.User;
+import com.example.myapplication.ui.music.play.ListplayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +104,15 @@ public class HomeFragment extends Fragment {
         MusicListAdapter adapter1 = new MusicListAdapter(songlist);
         recyclerView1.setAdapter(adapter1);
 
+        ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
+        play.setOnClickListener(new View.OnClickListener() {//跳转到播放音乐界面
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListplayActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
             @Override
@@ -121,7 +132,9 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
-    private void initMusicList(){
+    private void initMusicList(){//初始化收藏
+        sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
+
 //        for(int i=0;i<3;i++){
 //            SongList three = new SongList("南山南",R.drawable.nanshannan,100,"马頔");
 //            musicList.add(three);
@@ -151,13 +164,13 @@ public class HomeFragment extends Fragment {
     };
     private void initMusic(){//初始化主页歌曲界面
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
-        String res=sp.getString("HomeFragment","");
+        String res=sp.getString("HomeFragmentSong","");
         if(res.isEmpty()){
             return;
         }
         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
         if(result.getState()==true){
-            for(int i=0;i<1;i++){
+            for(int i=0;i<((JSONArray)(result.getObject())).size();i++){
                 musiclist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
             }
         }

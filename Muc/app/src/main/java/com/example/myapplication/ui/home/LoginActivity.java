@@ -107,9 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                                 try{
                                     String body2= JSON.toJSONString(1);
 
-                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","1","UTF-8");
+                                    res2 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getRandom","5","UTF-8");
                                     ResultEntity result2 = JSON.parseObject(res2, ResultEntity.class);
-                                    editor.putString("HomeFragment",res2);
+                                    editor.putString("HomeFragmentSong",res2);
 
 //                                    MessageBox.sendMessage(LoginActivity.this,res2);
                                 }catch (Exception e){
