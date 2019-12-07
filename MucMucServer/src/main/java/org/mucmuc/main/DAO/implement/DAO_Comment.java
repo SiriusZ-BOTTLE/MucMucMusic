@@ -42,17 +42,17 @@ public class DAO_Comment implements Interface_Comment_DAO {
     @Override
     public List<Comment> queryOrderbyTime(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where Content != null and Content != ? and";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where Content_Comment != null and";
 
         List<Object> list=new ArrayList<Object>();
 
         if(comment1.getContent_Comment()!=null) {
-            sql=sql+" Content like ? and";
-            list.add(comment1.getContent_Comment());
+            sql=sql+" Content_Comment like ? and";
+            list.add("%"+comment1.getContent_Comment()+"%");
         }
 
         if(comment1.getDislikes_Comment()!=null){
-            sql=sql+" Dislikes >= ? and Dislikes < ? and";
+            sql=sql+" Dislikes_Comment >= ? and Dislikes_Comment < ? and";
             list.add(comment1.getDislikes_Comment());
             list.add(comment2.getDislikes_Comment());
         }
@@ -73,18 +73,18 @@ public class DAO_Comment implements Interface_Comment_DAO {
         }
 
         if(comment1.getLikes_Comment()!=null){
-            sql=sql+" Likes >= ? and Likes < ? and";
+            sql=sql+" Likes_Comment >= ? and Likes_Comment < ? and";
             list.add(comment1.getLikes_Comment());
             list.add(comment2.getLikes_Comment());
         }
 
         if(comment1.getReleaseTime_Comment()!=null){
-            sql=sql+" Time_Release = ? and";
+            sql=sql+" ReleaseTime_Comment = ? and";
             list.add(comment1.getReleaseTime_Comment());
         }
 
         if(comment1.getScore_Comment()!=null){
-            sql=sql+" Score >= ? and Score < ? and";
+            sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
         }
@@ -97,10 +97,10 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
         if(sql.endsWith("and"))
         {
-            sql=sql.substring(0,sql.length()-3) + " order by Time_Release DESC";//缩减
+            sql=sql.substring(0,sql.length()-3) + " order by ReleaseTime_Comment DESC";//缩减
         }
         //查询
-        List<Comment> commentList=jdbc.query(sql,new Object[]{"",list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
     }
@@ -108,17 +108,17 @@ public class DAO_Comment implements Interface_Comment_DAO {
     @Override
     public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where Content != null and Content != ? and";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where Content_Comment != null and Content_Comment != ? and";
 
         List<Object> list=new ArrayList<Object>();
 
         if(comment1.getContent_Comment()!=null) {
-            sql=sql+" Content like ? and";
-            list.add(comment1.getContent_Comment());
+            sql=sql+" Content_Comment like ? and";
+            list.add("%"+comment1.getContent_Comment()+"%");
         }
 
         if(comment1.getDislikes_Comment()!=null){
-            sql=sql+" Dislikes >= ? and Dislikes < ? and";
+            sql=sql+" Dislikes_Comment >= ? and Dislikes_Comment < ? and";
             list.add(comment1.getDislikes_Comment());
             list.add(comment2.getDislikes_Comment());
         }
@@ -139,18 +139,18 @@ public class DAO_Comment implements Interface_Comment_DAO {
         }
 
         if(comment1.getLikes_Comment()!=null){
-            sql=sql+" Likes >= ? and Likes < ? and";
+            sql=sql+" Likes_Comment >= ? and Likes_Comment < ? and";
             list.add(comment1.getLikes_Comment());
             list.add(comment2.getLikes_Comment());
         }
 
         if(comment1.getReleaseTime_Comment()!=null){
-            sql=sql+" Time_Release = ? and";
+            sql=sql+" ReleaseTime_Comment = ? and";
             list.add(comment1.getReleaseTime_Comment());
         }
 
         if(comment1.getScore_Comment()!=null){
-            sql=sql+" Score >= ? and Score < ? and";
+            sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
         }
@@ -163,7 +163,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
         if(sql.endsWith("and"))
         {
-            sql=sql.substring(0,sql.length()-3) + " order by Likes DESC";//缩减
+            sql=sql.substring(0,sql.length()-3) + " order by Likes_Comment DESC";//缩减
         }
 
         //查询
@@ -206,7 +206,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
         if(comment1.getContent_Comment()!=null) {
             sql=sql+" Content_Comment like ? and";
-            list.add(comment1.getContent_Comment());
+            list.add("%"+comment1.getContent_Comment()+"%");
         }
 
         if(comment1.getDislikes_Comment()!=null){

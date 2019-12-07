@@ -186,7 +186,7 @@ public class DAO_Song implements Interface_Song_DAO {
             return null;
 
         //查询
-        List<SL_S> sl_sList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(SL_S.class));
+        List<SL_S> sl_sList=jdbc.query(sql,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(SL_S.class));
 
 
         for(SL_S sl_s:sl_sList){
