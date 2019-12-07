@@ -21,7 +21,7 @@ public class ResultEntity implements Serializable {
     //错误信息(指示前端的调用错误)
     private String info_error="";
     //操作信息(执行操作的返回信息)
-    private String info_operation="Done";
+    private String info_operation="done";
     //返回对象(默认是null)
     private Object object=null;
 
@@ -66,6 +66,7 @@ public class ResultEntity implements Serializable {
     public ResultEntity(Boolean state, String info_error, String info_operation, Object object) {
         this.state = state;
         this.info_error = info_error;
+        this.info_operation=info_operation;
         this.object = object;
     }
 

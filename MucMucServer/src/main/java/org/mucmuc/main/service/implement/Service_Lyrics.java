@@ -21,7 +21,7 @@ public class Service_Lyrics implements Interface_Lyrics_service {
 
 
     @Override
-    public ResultEntity getLyrics(Lyrics lyrics) {
+    public ResultEntity get(Lyrics lyrics) {
 
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空

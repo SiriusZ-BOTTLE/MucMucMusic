@@ -12,6 +12,7 @@ import org.mucmuc.main.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,21 +35,32 @@ public class DAO_User implements Interface_User_DAO {
             return null;
 
         return userList.get(0);
-    }
+}
 
     @Override
     public List<User> queryByName(User user) {
 
-        String sql="select * from "+ Set_StringConstants.table_user;
+        String sql="select * from "+ Set_StringConstants.table_user+" where ";
 
-        if(user.getNickname_User()!=null&&user.getId_User()!=null)
-            sql=sql+" where Nickname_User like ? or id_User like ? ";
-        else
+        List<Object> list=new ArrayList<>();
+
+        if(user.getNickname_User()!=null)
+        {
+            sql=sql+" Nickname_User like ?";
+            list.add("%"+user.getNickname_User()+"%");
+        }
+        if(user.getId_User()!=null)
+        {
+            sql=sql+" or id_User like ? ";
+            list.add("%"+user.getId_User()+"%");
+        }
+        System.out.println(sql);
+        if(list.size()==0)
             return null;
 
         //查询
         List<User> userList=
-                jdbc.query(sql,new Object[]{"%"+user.getNickname_User()+"%","%"+user.getId_User()+"%"}, new BeanPropertyRowMapper(User.class));
+                jdbc.query(sql,list.toArray(), new BeanPropertyRowMapper(User.class));
 
         return userList;
     }
@@ -129,6 +141,7 @@ public class DAO_User implements Interface_User_DAO {
         {
             sql=sql.substring(0,sql.length()-1);//缩减
         }
+
         sql+=" where ID_User = ? ";
         System.out.println(sql);
         list.add(user.getId_User());

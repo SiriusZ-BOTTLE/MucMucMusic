@@ -154,12 +154,12 @@ public class DAO_Song implements Interface_Song_DAO {
         String sql="select * from "+ Set_StringConstants.view_song_tag;
 
         if(song.getId_Song()!=null)
-            sql=sql+"where ID_Song = ?";
+            sql=sql+" where ID_Song = ?";
         else
             return null;
 
         //查询
-        List<Song_Tag> song_tagList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Song_Tag.class));
+        List<Song_Tag> song_tagList=jdbc.query(sql,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(Song_Tag.class));
 
 
         for(Song_Tag song_tag:song_tagList){
