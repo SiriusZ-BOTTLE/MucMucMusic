@@ -37,4 +37,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation files('libs/fastjson-1.2.62.jar')
     implementation files('libs/commons-codec-1.13.jar')
+    implementation files('libs/jl-1.0.1.jar')
 }
