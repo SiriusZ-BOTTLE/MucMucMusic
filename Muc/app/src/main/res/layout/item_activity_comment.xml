@@ -33,6 +33,19 @@
             android:textColor="#000000"
             app:layout_constraintTop_toTopOf="@id/userimage"
             app:layout_constraintLeft_toRightOf="@id/userimage"/>
+        <RatingBar
+            android:id="@+id/comment_ratingbar"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:isIndicator="true"
+            android:progressTint="@color/colorgreen"
+            style="@style/myratingbar2"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintBottom_toTopOf="@id/username"
+            app:layout_constraintLeft_toRightOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/username"/>
         <TextView
             android:id="@+id/releasetime"
             android:layout_width="wrap_content"

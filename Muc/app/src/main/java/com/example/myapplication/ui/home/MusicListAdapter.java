@@ -62,8 +62,13 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     @Override
     public void onBindViewHolder(MusicListAdapter.ViewHolder holder, int position){
         SongList musiclist = mMusicList.get(position);
+//        musiclist.setDescription_SL();
+//        music.setIconFile_Song(music.getIconFile_Song().substring(music.getIconFile_Song().indexOf(',')+1));
+//
+//        byte[] b= Base64Util.decode(music.getIconFile_Song());
+//        musicViewHolder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
 //        holder.musiclistImage.setImageResource(musiclist.getId_SL());
-        holder.musiclistImage.setImageResource(MusicAdapter.MusicIdtoImage.get(musiclist.getId_SL()));
+        //holder.musiclistImage.setImageResource(MusicAdapter.MusicIdtoImage.get(musiclist.getId_SL()));
         holder.musiclistName.setText(musiclist.getName_SL());
     }
 

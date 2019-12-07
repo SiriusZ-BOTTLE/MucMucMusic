@@ -10,6 +10,21 @@ public class Music{
         this.imageId = Id;
         this.author = author;
     }
+    public Music(){
+
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
 
     public String getName(){
         return name;
