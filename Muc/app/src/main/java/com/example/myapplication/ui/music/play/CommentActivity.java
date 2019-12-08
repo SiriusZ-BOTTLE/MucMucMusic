@@ -38,7 +38,9 @@ import com.example.myapplication.bean.Comment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CommentActivity extends AppCompatActivity {
     private List<Comment> commentList = new ArrayList<>();
@@ -106,10 +108,33 @@ public class CommentActivity extends AppCompatActivity {
                     Comment comment = new Comment();
                     comment.setScore(score);
                     comment.setDetails(detail);
-                    User user = new User();
+                    final User user = new User();
                     sp = getSharedPreferences("test",Context.MODE_PRIVATE);
                     user.setNickname_User(sp.getString("nickname",""));
                     user.setIconFile_User(sp.getString("iconFile_User",""));
+                    user.setId_User(sp.getString("name",""));
+                    final Song song = new Song();
+                    Intent intent = getIntent();
+                    Id = intent.getIntExtra("song_id", 0);
+                    song.setId_Song(Id);
+                    final com.example.myapplication.bean_new.Comment cc = new com.example.myapplication.bean_new.Comment();
+                    cc.setContent_Comment(detail);
+                    cc.setScore_Comment((int) score);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String res = new String();
+                            Map<String,Object> map = new HashMap();
+                            map.put("comment",cc);
+                            map.put("user",user);
+                            map.put("song",song);
+                            String body = JSON.toJSONString(map);
+                            HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/write", body, "UTF-8");
+                            Looper.prepare();
+                            Toast.makeText(CommentActivity.this,"发表成功",Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+                    }).start();
                     comment.setUser(user);
                     commentList.add(comment);
                 }
@@ -136,12 +161,12 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String res = new String();
-                Song song = new Song();
+                com.example.myapplication.bean_new.Comment cc = new com.example.myapplication.bean_new.Comment();
                 Intent intent = getIntent();
                 Id = intent.getIntExtra("song_id", 0);
-                song.setId_Song(Id);
+                cc.setId_Song(Id);
                 try {
-                    String body = JSON.toJSONString(song);
+                    String body = JSON.toJSONString(cc);
                     res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/queryBySong", body, "UTF-8");
                     result = JSON.parseObject(res, ResultEntity.class);
                     if (result.getState() == true) {
@@ -159,7 +184,9 @@ public class CommentActivity extends AppCompatActivity {
                            commentList.add(comment);
                         }
                     } else {
+                        Looper.prepare();
                         Toast.makeText(CommentActivity.this, "获得歌曲失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     }
                 } catch (Exception e) {
                     Looper.prepare();
@@ -230,7 +257,7 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
         holder.userName.setText(comment.getUser().getNickname_User());
         holder.commentDetails.setText(comment.getDetails());
         holder.ratingBar.setRating(comment.getScore());
-        holder.likeNum.setText(comment.getLikes());
+        holder.likeNum.setText("1000");
 
         Date date = new Date();
         //设置要获取到什么样的时间

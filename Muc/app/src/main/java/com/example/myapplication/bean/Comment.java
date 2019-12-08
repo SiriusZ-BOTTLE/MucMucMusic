@@ -19,6 +19,7 @@ public class Comment {
         this.likes = 0;
     }
     public Comment() {
+        this.likes = 0;
     }
     public float getScore() {
         return score;

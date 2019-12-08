@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
     private SharedPreferences sp;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -118,16 +118,18 @@ public class HomeFragment extends Fragment {
             // 当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (!TextUtils.isEmpty(query)){
+                    Intent intent = new Intent(getActivity(),SearchActivity.class);
+                    intent.putExtra("Search",query);
+                    startActivity(intent);
+                }else{
+                    return false;
+                }
                 return false;
             }
             // 当搜索内容改变时触发该方法
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText)){
-                    Toast.makeText(getActivity(),"你使用了搜索",Toast.LENGTH_SHORT).show();
-                }else{
-                    return false;
-                }
                 return false;
             }
         });
