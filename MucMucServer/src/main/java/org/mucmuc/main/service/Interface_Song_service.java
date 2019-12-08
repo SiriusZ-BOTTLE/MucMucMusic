@@ -19,13 +19,21 @@ public interface Interface_Song_service {
     ResultEntity getRandom(Integer num);
 
 
-
     /**
      * 播放歌曲(song)
      * @param song
      * @return
      */
+    @Deprecated
     ResultEntity play(Song song);
+
+    /**
+     * 搜索歌曲(按名称)
+     * @param song
+     * @return
+     */
+    ResultEntity search(Song song);
+
 
     /**
      * 新增歌曲（管理员）(song)
@@ -46,29 +54,17 @@ public interface Interface_Song_service {
      * @param song
      * @return
      */
-    ResultEntity updateInfo(Song song);
+    ResultEntity update(Song song);
 
     /**
      * 查询(song)
      * @param song
      * @return
      */
-    ResultEntity queryBySong(Song song);
+    ResultEntity get(Song song);
 
 
 
-//    /**
-//     * 获得歌曲所在歌单
-//     * @param song
-//     * @return
-//     */
-//    ResultEntity querySLBySong(Song song);
 
-    /**
-     * 获得歌曲的所有标签(song)
-     * @param song
-     * @return
-     */
-    ResultEntity queryTagBySong(Song song);
 
 }

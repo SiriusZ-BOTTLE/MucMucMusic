@@ -38,7 +38,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
         String sql="select * from "+ Set_StringConstants.table_tag +" where name_Tag = ? ";
         List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getName_Tag()}, new BeanPropertyRowMapper(Tag.class));
 
-        if(tagList==null||tagList.size()==0)
+        if(tagList==null||tagList.size()==0)//先检查容器是否为空
             return null;
         return tagList.get(0);
     }
@@ -62,7 +62,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
             return null;
 
         //查询
-        List<Tag> tagList=jdbc.query(sql,new Object[]{tag.getName_Tag()}, new BeanPropertyRowMapper(Tag.class));
+        List<Tag> tagList=jdbc.query(sql,new Object[]{"%"+tag.getName_Tag()+"%"}, new BeanPropertyRowMapper(Tag.class));
 
         return tagList;
     }
@@ -142,7 +142,7 @@ public class DAO_Tag implements Interface_Tag_DAO {
             return null;
 
         //查询
-        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Tag_Song.class));
+        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{"%"+tag.getName_Tag()+"%"}, new BeanPropertyRowMapper(Tag_Song.class));
 
 
         for(Tag_Song tag_song:tag_songList){
@@ -150,9 +150,11 @@ public class DAO_Tag implements Interface_Tag_DAO {
 
             s.setId_Song(tag_song.getId_Song());
             s.setName_Song(tag_song.getName_Song());
-            s.setReleaseDate_Song(tag_song.getDate_Release());
-            s.setSinger_Song(tag_song.getSinger());
-            s.setFile_Song(tag_song.getContent_Song());
+            s.setReleaseDate_Song(tag_song.getReleaseDate_So());
+            s.setSinger_Song(tag_song.getSinger_Song());
+            s.setFile_Song(tag_song.getFile_Song());
+            s.setIconFile_Song(tag_song.getIconFile_Song());
+            s.setScore(tag_song.getScore_Song());
 
             songList.add(s);
         }

@@ -6,9 +6,12 @@ import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Map_SL_S;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.User;
 import org.mucmuc.main.service.Interface_SongList_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service(value = "Service_SongList")
 public class Service_SongList implements Interface_SongList_service {
@@ -59,8 +62,35 @@ public class Service_SongList implements Interface_SongList_service {
     }
 
     @Override
-    public ResultEntity getByAttribute(SongList songList) {
-        return null;
+    public ResultEntity search(SongList songList) {
+
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(songList.getName_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> name_SL is NULL");
+            return resultEntity;
+        }
+
+        List<SongList> list=songListDao.queryByName(songList);
+
+        resultEntity.setObject(list);
+        resultEntity.setState(true);
+        return resultEntity;
+    }
+
+    @Override
+    public ResultEntity getUserSongList(User user) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(user.getId_User()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_User is NULL");
+            return resultEntity;
+        }
+        resultEntity.setObject(songListDao.queryByUserID(user.getId_User()));
+        resultEntity.setState(true);
+        return resultEntity;
     }
 
     @Override

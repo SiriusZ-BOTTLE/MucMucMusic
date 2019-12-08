@@ -26,11 +26,11 @@ public interface Interface_Song_DAO {
 
 
     /**
-     * 根据属性(模糊)查询
+     * 根据歌曲名称和歌手名称(模糊)查询
      * @param song
      * @return
      */
-    List<Song> queryByAttribute(Song song);
+    List<Song> queryByName(Song song);
 
     /**
      * 查询全部

@@ -32,33 +32,35 @@ public class DAO_SongList implements Interface_SongList_DAO {
     }
 
     @Override
-    public List<SongList> queryByAttribute(SongList sl) {
+    public List<SongList> queryByName(SongList sl) {
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
 
         List<Object> list = sl.objectList_notNull();//获取非空项
 
-        if(sl.getId_User()!=null)
-            sql=sql+" ID_User like ? and";
+//        if(sl.getId_User()!=null)
+//            sql=sql+" ID_User like ? and";
         if(sl.getName_SL()!=null)
-            sql=sql+" Name_SL like ? and";
-        if(sl.getDate_SL()!=null)
-            sql=sql+" Date_SL = ? and";
-        if(sl.getDescription_SL()!=null)
-            sql=sql+" Description_SL like ? and";
-
-        if(sql.endsWith("where "))
-        {
+            sql=sql+" Name_SL like ? ";
+        else
             return null;
-        }
+//        if(sl.getDate_SL()!=null)
+//            sql=sql+" Date_SL = ? and";
+//        if(sl.getDescription_SL()!=null)
+//            sql=sql+" Description_SL like ? and";
 
-        if(sql.endsWith("and"))
-        {
-            sql=sql.substring(0,sql.length()-3);//缩减
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
+//
+//        if(sql.endsWith("and"))
+//        {
+//            sql=sql.substring(0,sql.length()-3);//缩减
+//        }
 
         //查询
-        List<SongList> slList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(SongList.class));
+        List<SongList> slList=jdbc.query(sql,new Object[]{"%"+sl.getName_SL()+"%"}, new BeanPropertyRowMapper(SongList.class));
 
         return slList;
     }
@@ -72,20 +74,39 @@ public class DAO_SongList implements Interface_SongList_DAO {
     }
 
     @Override
+    public List<SongList> queryByUserID(String id_User) {
+        String sql=" select * from "+Set_StringConstants.table_songlist+" where id_User = ?";
+
+        List<SongList> list=jdbc.query(sql,new Object[]{id_User},new BeanPropertyRowMapper(SongList.class));
+        return list;
+    }
+
+    @Override
     public List<SongList> preciousqueryByID_User(SongList sl){
 
         String sql="select * from "+ Set_StringConstants.table_songlist+" where ";
 
-        List<Object> list = sl.objectList_notNull();//获取非空项
+        List<Object> list = null;
+   //     List<Object> list = sl.objectList_notNull();//获取非空项
 
-        if(sl.getId_User()!=null)
+        if(sl.getId_User()!=null){
             sql=sql+" ID_User = ? and";
-        if(sl.getName_SL()!=null)
+            list.add(sl.getId_User());
+        }
+        if(sl.getName_SL()!=null){
             sql=sql+" Name_SL like ? and";
-        if(sl.getDate_SL()!=null)
-            sql=sql+" Date_SL = ? and";
-        if(sl.getDescription_SL()!=null)
+            list.add("%"+sl.getName_SL()+"%");
+        }
+
+        if(sl.getDate_SL()!=null) {
+            sql = sql + " Date_SL = ? and";
+            list.add(sl.getDate_SL());
+        }
+        if(sl.getDescription_SL()!=null){
             sql=sql+" Description_SL like ? and";
+            list.add("%"+sl.getDescription_SL()+"%");
+        }
+
 
         if(sql.endsWith("where "))
         {
@@ -186,7 +207,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
             return null;
 
         //查询
-        List<SL_S> sl_sList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(SL_S.class));
+        List<SL_S> sl_sList=jdbc.query(sql,new Object[]{"%"+sl.getId_SL()+"%"}, new BeanPropertyRowMapper(SL_S.class));
 
 
         for(SL_S sl_s:sl_sList){
@@ -194,12 +215,10 @@ public class DAO_SongList implements Interface_SongList_DAO {
 
             s.setId_Song(sl_s.getId_Song());
             s.setName_Song(sl_s.getName_Song());
-            s.setReleaseDate_Song(sl_s.getDate_Release());
-            s.setSinger_Song(sl_s.getSinger());
-
-            s.setFile_Song(sl_s.getContent_Song());
-
-            s.setScore(sl_s.getScore());
+            s.setReleaseDate_Song(sl_s.getReleaseDate_Song());
+            s.setSinger_Song(sl_s.getSinger_Song());
+            s.setFile_Song(sl_s.getFile_Song());
+            s.setScore(sl_s.getScore_Song());
 
             songList.add(s);
         }

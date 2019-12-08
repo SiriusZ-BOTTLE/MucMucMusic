@@ -40,33 +40,29 @@ public class DAO_Song implements Interface_Song_DAO {
     }
 
     @Override
-    public List<Song> queryByAttribute(Song song) {
+    public List<Song> queryByName(Song song) {
 
         String sql="select * from "+ Set_StringConstants.table_song + " where ";
 
-        List<Object> list = song.objectList_notNull();//获取非空项
+//        List<Object> list = song.objectList_notNull();//获取非空项
 
         if(song.getName_Song()!=null)
             sql=sql+" Name_Song like ? and";
-        if(song.getSinger_Song()!=null)
-            sql=sql+" Singer like ? and";
-        if(song.getReleaseDate_Song()!=null)
-            sql=sql+" Date_Release like ? and";
-        if(song.getScore()!=null)
-            sql=sql+" Score = ? and";
-
-        if(sql.endsWith("where "))
-        {
+        else
             return null;
-        }
 
-        if(sql.endsWith("and"))
-        {
-            sql=sql.substring(0,sql.length()-3);//缩减
-        }
+//        if(sql.endsWith("where "))
+//        {
+//            return null;
+//        }
+//
+//        if(sql.endsWith("and"))
+//        {
+//            sql=sql.substring(0,sql.length()-3);//缩减
+//        }
 
         //查询
-        List<Song> songList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Song.class));
+        List<Song> songList=jdbc.query(sql,new Object[]{"%"+song.getName_Song()+"%"}, new BeanPropertyRowMapper(Song.class));
 
         return songList;
     }
@@ -155,21 +151,22 @@ public class DAO_Song implements Interface_Song_DAO {
     public List<Tag> queryTagsbySong(Song song) {
         List<Tag> tagList = new ArrayList<Tag>();
 
-        String sql="select * from "+ Set_StringConstants.view_song_tag;
+        String sql="select * from "+ Set_StringConstants.view_tag_song;
 
         if(song.getId_Song()!=null)
-            sql=sql+"where ID_Song = ?";
+            sql=sql+" where ID_Song = ?";
         else
             return null;
 
         //查询
-        List<Song_Tag> song_tagList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(Song_Tag.class));
+        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(Tag_Song.class));
 
 
-        for(Song_Tag song_tag:song_tagList){
+        for(Tag_Song tag_song:tag_songList){
             Tag t = new Tag();
 
-            t.setName_Tag(song_tag.getName_Tag());
+            t.setId_Tag(tag_song.getId_Tag());
+            t.setName_Tag(tag_song.getName_Tag());
 
             tagList.add(t);
         }
@@ -181,7 +178,7 @@ public class DAO_Song implements Interface_Song_DAO {
     public List<SongList> querySongListsbySong(Song song){
         List<SongList> slList = new ArrayList<SongList>();
 
-        String sql="select * from "+ Set_StringConstants.view_s_sl;
+        String sql="select * from "+ Set_StringConstants.view_sl_s;
 
         if(song.getId_Song()!=null)
             sql=sql+"where ID_Song = ?";
@@ -189,17 +186,17 @@ public class DAO_Song implements Interface_Song_DAO {
             return null;
 
         //查询
-        List<S_SL> s_slList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(S_SL.class));
+        List<SL_S> sl_sList=jdbc.query(sql,new Object[]{song.getId_Song()}, new BeanPropertyRowMapper(SL_S.class));
 
 
-        for(S_SL s_sl:s_slList){
+        for(SL_S sl_s:sl_sList){
             SongList sl = new SongList();
 
-            sl.setId_SL(s_sl.getId_SL());
-            sl.setId_User(s_sl.getId_User());
-            sl.setName_SL(s_sl.getName_SL());
-            sl.setDate_SL(s_sl.getDate_SL());
-            sl.setDescription_SL(s_sl.getDescription_SL());
+            sl.setId_SL(sl_s.getId_SL());
+            sl.setId_User(sl_s.getId_User());
+            sl.setName_SL(sl_s.getName_SL());
+            sl.setDate_SL(sl_s.getDate_SL());
+            sl.setDescription_SL(sl_s.getDescription_SL());
 
             slList.add(sl);
         }

@@ -1,7 +1,6 @@
 package org.mucmuc.main.web;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.entity.User;
 import org.mucmuc.main.service.implement.*;
 import org.mucmuc.main.entity.InteractionEntity.*;
@@ -96,12 +95,25 @@ public class Controller_User {
         return userService.update(user);
     }
 
-
-    @RequestMapping(value = "/fuzzyGet",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity fuzzyGet(@RequestBody User user)
+    /**
+     * 按用户名模糊搜索用户
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/search",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search(@RequestBody User user)
     {
-        return userService.getByAttribute(user);
+        return userService.search(user);
     }
+
+
+
+
+
+
+
+
+
 
 
     //测试用接口
@@ -111,6 +123,8 @@ public class Controller_User {
     {
         return user0;
     }
+
+
 
 
 

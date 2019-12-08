@@ -1,6 +1,7 @@
 package org.mucmuc.main.service.implement;
 
 import org.mucmuc.main.DAO.implement.DAO_Map_S_T;
+import org.mucmuc.main.DAO.implement.DAO_Song;
 import org.mucmuc.main.DAO.implement.DAO_Tag;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Map_S_T;
@@ -10,6 +11,8 @@ import org.mucmuc.main.service.Interface_Tag_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service(value = "Service_Tag")
 public class Service_Tag implements Interface_Tag_service {
 
@@ -17,6 +20,8 @@ public class Service_Tag implements Interface_Tag_service {
     DAO_Tag tagDao;
     @Autowired
     DAO_Map_S_T map_S_T_Dao;
+    @Autowired
+    DAO_Song songDAO;
 
     @Override
     public ResultEntity getRandom(Integer num) {
@@ -29,6 +34,23 @@ public class Service_Tag implements Interface_Tag_service {
         }
 
         resultEntity.setObject(tagDao.queryRandom(num));
+        resultEntity.setState(true);
+        return resultEntity;
+    }
+
+    @Override
+    public ResultEntity search(Tag tag) {
+        ResultEntity resultEntity =new ResultEntity();
+
+        if(tag.getName_Tag()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> name_Tag is NULL");
+            return resultEntity;
+        }
+
+        Tag tag_db=tagDao.queryByName(tag);
+
+        resultEntity.setObject(tag_db);
         resultEntity.setState(true);
         return resultEntity;
     }
@@ -47,7 +69,7 @@ public class Service_Tag implements Interface_Tag_service {
 
         if(tag_db==null)
         {
-            resultEntity.setInfo_operation("未找到指定标签");
+            resultEntity.setInfo_operation("未找到指定Tag");
             return resultEntity;
         }
         resultEntity.setObject(tag_db);
@@ -151,5 +173,34 @@ public class Service_Tag implements Interface_Tag_service {
         resultEntity.setState(true);
         resultEntity.setState(true);
         return resultEntity;
+    }
+
+
+
+
+    @Override
+    public ResultEntity getTagBySong(Song song) {
+        List<Tag> tagList = null;
+
+        Boolean success = Boolean.FALSE;
+        String errorMsg = "";//错误信息默认为空
+        String opMsg = "done";//操作信息默认为完成
+        if (song.getId_Song()==null) {
+            errorMsg = "<ERROR> id_Song is NULL";
+        } else {
+            //根据请求参数查询歌曲信息
+            tagList = songDAO.queryTagsbySong(song);
+
+            if (tagList.size() == 0) {
+                opMsg = "未找到任何标签";
+            } else {
+                success = Boolean.TRUE;
+            }
+        }
+
+        //封装返回结果
+        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, tagList);
+        return resultEntity;
+
     }
 }
