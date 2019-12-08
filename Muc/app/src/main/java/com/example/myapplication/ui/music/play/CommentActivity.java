@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.Base64Util;
-import com.example.myapplication.bean.Comment;
+import com.example.myapplication.Util.HttpUtil;
 import com.example.myapplication.bean.Music;
-import com.example.myapplication.bean.Song;
+import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
+import com.example.myapplication.bean_new.Song;
 import com.example.myapplication.bean_new.User;
+import com.example.myapplication.bean.Comment;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,9 +42,12 @@ import java.util.List;
 
 public class CommentActivity extends AppCompatActivity {
     private List<Comment> commentList = new ArrayList<>();
+    private List<com.example.myapplication.bean_new.Comment> mCommentList = new ArrayList<>();
     private List<Music> musiclist = new ArrayList<>();
     private Music music = new Music();
     private SharedPreferences sp;
+    private int Id;
+    private ResultEntity result;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +68,18 @@ public class CommentActivity extends AppCompatActivity {
         Intent it = getIntent();
         String songname = it.getStringExtra("song_name");
         String songsinger = it.getStringExtra("song_singer");
+        String songimage = it.getStringExtra("song_icon");
         TextView s_name = (TextView) findViewById(R.id.comment_songname);
         TextView s_singer = (TextView) findViewById(R.id.comment_songsinger);
+        ImageView s_icon = (ImageView) findViewById(R.id.song_icon);
+        byte [] b = Base64Util.decode(songimage);
+        s_icon.setImageBitmap(BitmapFactory.decodeByteArray(b,0,b.length));
         s_name.setText(songname);
         s_singer.setText(songsinger);
         music.setAuthor(songsinger);
         music.setName(songname);
         initComment();
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         CommentshowAdapter adapter = new CommentshowAdapter(commentList);
@@ -95,7 +111,6 @@ public class CommentActivity extends AppCompatActivity {
                     user.setNickname_User(sp.getString("nickname",""));
                     user.setIconFile_User(sp.getString("iconFile_User",""));
                     comment.setUser(user);
-                    comment.setMusic(music);
                     commentList.add(comment);
                 }
                 break;
@@ -117,7 +132,42 @@ public class CommentActivity extends AppCompatActivity {
 
     }
     private void initComment(){
-        initMusic();
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                String res = new String();
+                Song song = new Song();
+                Intent intent = getIntent();
+                Id = intent.getIntExtra("song_id", 0);
+                song.setId_Song(Id);
+                try {
+                    String body = JSON.toJSONString(song);
+                    res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/queryBySong", body, "UTF-8");
+                    result = JSON.parseObject(res, ResultEntity.class);
+                    if (result.getState() == true) {
+                        for (int i = 0; i < 2; i++) {
+                           com.example.myapplication.bean_new.Comment c = ((JSONObject) (((JSONArray) (result.getObject())).get(i))).toJavaObject(com.example.myapplication.bean_new.Comment.class);
+                           Comment comment = new Comment();
+                           comment.setScore(c.getScore_Comment());
+                           comment.setDetails(c.getContent_Comment());
+                           comment.setLikes(c.getLikes_Comment());
+                           User user = new User();
+                           sp = getSharedPreferences("test",Context.MODE_PRIVATE);
+                           user.setNickname_User(sp.getString("nickname",""));
+                           user.setIconFile_User(sp.getString("iconFile_User",""));
+                           comment.setUser(user);
+                           commentList.add(comment);
+                        }
+                    } else {
+                        Toast.makeText(CommentActivity.this, "获得歌曲失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(CommentActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }
+        }).start();
     }
 }
 
@@ -180,7 +230,7 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
         holder.userName.setText(comment.getUser().getNickname_User());
         holder.commentDetails.setText(comment.getDetails());
         holder.ratingBar.setRating(comment.getScore());
-        holder.likeNum.setText("1000");
+        holder.likeNum.setText(comment.getLikes());
 
         Date date = new Date();
         //设置要获取到什么样的时间
