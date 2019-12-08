@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
         }
         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
         if(result.getState()==true){
-            for(int i=0;i<1;i++){
+            for(int i=0;i<((JSONArray)(result.getObject())).size();i++){
                 songlist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(SongList.class));
             }
         }

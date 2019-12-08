@@ -28,6 +28,7 @@ import com.example.myapplication.ui.music.play.ListplayActivity;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class MusicAdapter extends RecyclerView.Adapter implements View.OnClickLi
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
-    public static Song songtolist=new Song();//点击将要加入播放列表的歌曲
+    private  Song songtolist;//点击将要加入播放列表的歌曲
 
     static class  MusicViewHolder extends RecyclerView.ViewHolder{
         ImageView musicImage;
@@ -74,15 +75,11 @@ public class MusicAdapter extends RecyclerView.Adapter implements View.OnClickLi
                 int position = holder.getAdapterPosition();
                 Song music = mMusicList.get(position);
                 Intent intent = new Intent(v.getContext(), ListplayActivity.class);
-                songtolist.setName_Song(music.getName_Song());
-                songtolist.setFile_Song(music.getFile_Song());
-                songtolist.setSinger_Song(music.getSinger_Song());
-                songtolist.setIconFile_Song(music.getIconFile_Song());
-                songtolist.setId_Song(music.getId_Song());
-                songtolist.setReleaseDate_Song(music.getReleaseDate_Song());
-                songtolist.setScore(music.getScore());
-                MusicUtils.list.add(songtolist);
-                MusicUtils.list=new ArrayList<Song>(new LinkedHashSet<Song>(MusicUtils.list));
+                MusicUtils.list.add(music);
+                HashSet h = new HashSet(MusicUtils.list);
+                MusicUtils.list.clear();
+                MusicUtils.list.addAll(h);
+//                MusicUtils.list=new ArrayList<Song>(new LinkedHashSet<Song>(MusicUtils.list));//删去重复
 
                 v.getContext().startActivity(intent);
                 Toast.makeText(v.getContext(),"you clicked image "+music.getName_Song(),Toast.LENGTH_SHORT).show();
@@ -102,6 +99,7 @@ public class MusicAdapter extends RecyclerView.Adapter implements View.OnClickLi
 //        holder.musicImage.setImageResource(music.getId_Song());
         musicViewHolder.musicName.setText(music.getName_Song());
     }
+
 	private static Bitmap createBitmapFromByteData(byte[] data , BitmapFactory.Options options){
     	Bitmap bitmap = null;
 		if(options == null){
@@ -116,23 +114,7 @@ public class MusicAdapter extends RecyclerView.Adapter implements View.OnClickLi
     public int getItemCount(){
         return mMusicList.size();
     }
-//    /**
-//     * 输入ID获取图片ID
-//     * @param image
-//     * @return int
-//     */
-//    public static int getImage(String image){
-//        int res_ID=0;
-//        Class drawable = R.drawable.class;
-//        Field field = null;
-//        try{
-//            field = drawable.getField(image);
-//            res_ID = field.getInt(field.getName());
-//        }catch (Exception e){
-//
-//        }
-//        return res_ID;
-//    }
+
     public void OnRecycleItemClickListener(MusicAdapter.OnRecycleItemClickListener v) {
         onRecycleItemClickListener = v;
     }
