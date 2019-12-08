@@ -1,31 +1,18 @@
 package com.example.myapplication.ui.forum;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Looper;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
-import com.example.myapplication.Util.HttpUtil;
 import com.example.myapplication.bean.Comment;
 import com.example.myapplication.bean.Music;
-import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
-import com.example.myapplication.bean_new.Song;
-import com.example.myapplication.ui.home.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +21,6 @@ public class ForumFragment extends Fragment {
     private ForumViewModel forumViewModel;
     private List<Comment> commentList = new ArrayList<>();
     private List<Music> musiclist = new ArrayList<>();
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
     public View onCreateView(@NonNull  LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         forumViewModel =
@@ -48,56 +33,6 @@ public class ForumFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         CommentAdapter adapter = new CommentAdapter(commentList);
         recyclerView.setAdapter(adapter);
-        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            // 当点击搜索按钮时触发该方法
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-                if (!TextUtils.isEmpty(query)){
-                    Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    intent.putExtra("Search",query);
-                    new Thread(new Runnable(){
-                        @Override
-                        public void run() {
-                            try {
-                                sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
-                                editor =  sp.edit();
-                                Song song=new Song();
-                                song.setName_Song(query);
-                                String body= JSON.toJSONString(song);
-                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
-                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-                                if(result.getState()==true){
-                                    editor.putString("search_result",res);
-                                    editor.commit();
-                                }
-                                else{
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-                                }
-                            }catch (Exception e){
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                            }
-
-                        }
-                    }).start();
-
-
-                    startActivity(intent);
-                }else{
-                    return false;
-                }
-                return false;
-            }
-            // 当搜索内容改变时触发该方法
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
         return root;
     }
 
