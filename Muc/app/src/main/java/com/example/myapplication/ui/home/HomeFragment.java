@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment {
     private List<SongList> songlist= new ArrayList<>();//歌单数组
 
     private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
 
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment {
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("歌曲").setContent(R.id.tab_music));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("歌单").setContent(R.id.tab_musiclist));
 
-        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
+
         TextView tv = null;
         TabWidget tabWidget = tabHost.getTabWidget();
         for (int i = 0, count = tabWidget.getChildCount(); i < count; i++) {
@@ -114,13 +115,44 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
                 if (!TextUtils.isEmpty(query)){
                     Intent intent = new Intent(getActivity(),SearchActivity.class);
                     intent.putExtra("Search",query);
+                    new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+                            try {
+                                sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+                                editor =  sp.edit();
+                                Song song=new Song();
+                                song.setName_Song(query);
+                                String body=JSON.toJSONString(song);
+                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
+                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+                                if(result.getState()==true){
+                                    editor.putString("search_result",res);
+                                    editor.commit();
+                                }
+                                else{
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }catch (Exception e){
+                                Looper.prepare();
+                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
+
+                        }
+                    }).start();
+
+
                     startActivity(intent);
                 }else{
                     return false;
@@ -136,6 +168,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
     private void initMusicList(){
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化
         String res=sp.getString("Home_SongList","");
@@ -144,7 +177,7 @@ public class HomeFragment extends Fragment {
         }
         ResultEntity result = JSON.parseObject(res, ResultEntity.class);
         if(result.getState()==true){
-            for(int i=0;i<1;i++){
+            for(int i=0;i<((JSONArray)(result.getObject())).size();i++){
                 songlist.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(SongList.class));
             }
         }

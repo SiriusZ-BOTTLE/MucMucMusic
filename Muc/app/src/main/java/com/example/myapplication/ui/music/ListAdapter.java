@@ -10,13 +10,14 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bean.MusicList;
+import com.example.myapplication.Util.MessageBox;
+import com.example.myapplication.bean_new.SongList;
 
 import java.util.List;
 
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private List<MusicList> mMusicList;
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {//音乐
+    private List<SongList> mMusicList;
     private ListAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
 
     static class  ViewHolder extends RecyclerView.ViewHolder{
@@ -24,6 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         TextView musiclistName;
         TextView musiclistAuthor;
         TextView musiclistSize;
+        ImageView musiclistDelete;
         View musicView;
 
         public  ViewHolder(View view){
@@ -33,10 +35,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             musiclistName = (TextView) view.findViewById(R.id.list_name);
             musiclistAuthor = (TextView) view.findViewById(R.id.list_author);
             musiclistSize = (TextView) view.findViewById(R.id.list_size);
+            musiclistDelete=(ImageView)view.findViewById(R.id.tv_item_menu);
         }
     }
 
-    public ListAdapter(List<MusicList> MusicList){
+    public ListAdapter(List<SongList> MusicList){
         mMusicList = MusicList;
     }
     @Override
@@ -47,16 +50,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                MusicList musiclist = mMusicList.get(position);
-                Toast.makeText(v.getContext(),"you clicked image "+musiclist.getName(),Toast.LENGTH_SHORT).show();
+                SongList musiclist = mMusicList.get(position);
+                Toast.makeText(v.getContext(),"you clicked image "+musiclist.getName_SL(),Toast.LENGTH_SHORT).show();
             }
         });
         holder.musiclistAuthor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                MusicList musiclist = mMusicList.get(position);
-                Toast.makeText(v.getContext(),"you clicked author "+musiclist.getAuthor(),Toast.LENGTH_SHORT).show();
+                SongList musiclist = mMusicList.get(position);
+                Toast.makeText(v.getContext(),"you clicked author "+musiclist.getId_User(),Toast.LENGTH_SHORT).show();
             }
         });
         return  holder;
@@ -64,11 +67,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position){
-        MusicList musiclist = mMusicList.get(position);
-        holder.musiclistImage.setImageResource(musiclist.getImageID());
-        holder.musiclistName.setText(musiclist.getName());
-        holder.musiclistSize.setText(String.valueOf(musiclist.getSize()));
-        holder.musiclistAuthor.setText(musiclist.getAuthor());
+        final SongList musiclist = mMusicList.get(position);
+        holder.musiclistImage.setImageResource(R.drawable.nanshannan);
+        holder.musiclistName.setText(musiclist.getName_SL());
+//        holder.musiclistSize.setText(String.valueOf(musiclist.getSize()));//显示歌单里歌的数量
+        holder.musiclistAuthor.setText(musiclist.getId_User());
+        holder.musiclistDelete.setOnClickListener(new View.OnClickListener() {//删除歌单按钮
+            @Override
+            public void onClick(View v) {
+                MessageBox.sendMessage(v.getContext(),"是否要删除这个歌单",musiclist);
+            }
+        });
         holder.musicView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

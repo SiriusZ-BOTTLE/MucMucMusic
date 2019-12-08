@@ -87,7 +87,6 @@ public class ListplayActivity extends AppCompatActivity {
         }
         //获取权限
 //        getAuthority();
-        MessageBox.sendMessage(ListplayActivity.this,currentposition+"");
 
         sharedPreferences = getSharedPreferences("location", MODE_PRIVATE);
         // 主题设置
@@ -128,16 +127,18 @@ public class ListplayActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("song_name", cut_song_name(list.get(currentposition).getName_Song()));
-        editor.putString("song_singer", list.get(currentposition).getSinger_Song());
-        editor.putInt("currentposition", currentposition);
-        editor.commit();
-        if (mplayer.isPlaying()) {
-            mplayer.stop();
-        }
-        mplayer.release();
-        super.onDestroy();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("song_name_", cut_song_name(list.get(currentposition).getName_Song()));
+            editor.putString("song_singer_", list.get(currentposition).getSinger_Song());
+            editor.putInt("currentposition", currentposition);
+            editor.commit();
+            if (mplayer.isPlaying()) {
+                mplayer.stop();
+            }
+            mplayer.release();
+            super.onDestroy();
+
+
     }
 
 
@@ -313,8 +314,8 @@ public class ListplayActivity extends AppCompatActivity {
 
     private void initText() {
 
-        textView1.setText(sharedPreferences.getString("song_name", "歌曲名").trim());
-        textView2.setText(sharedPreferences.getString("song_singer", "歌手").trim());
+        textView1.setText(sharedPreferences.getString("_", "歌曲名").trim());
+        textView2.setText(sharedPreferences.getString("song_singer_", "歌手").trim());
     }
 
     private void setListView() {//把数据库的歌曲加入list

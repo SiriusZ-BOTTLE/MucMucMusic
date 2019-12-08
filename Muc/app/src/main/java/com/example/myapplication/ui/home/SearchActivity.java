@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.home;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +17,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
+import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
 import com.example.myapplication.bean_new.Song;
 
 import java.util.ArrayList;
@@ -22,6 +29,8 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
     private List<Song> mMusicList = new ArrayList<>();
+    private SharedPreferences sp;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -47,14 +56,33 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void OnRecycleItemClickListener(int position) {
 
+        adapter.OnRecycleItemClickListener(new SearchshowAdapter.OnRecycleItemClickListener() {//点击歌曲跳转到播放界面
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                sp = SearchActivity.this.getSharedPreferences("test", Context.MODE_PRIVATE);//初始化
+                String res=sp.getString("search_result","");
+                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+                if(result.getState()==true){
+                    for(int i = 0; i<((JSONArray)(result.getObject())).size(); i++){
+                        mMusicList.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
+                    }
+                }
+                else{
+                    Toast.makeText(SearchActivity.this, "获得歌曲失败", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
     }
+    public String getSearchResult(){
+        Intent intent = getIntent();
+        String query = intent.getStringExtra("Search");
+        return query;
+    }
 }
 class SearchshowAdapter extends RecyclerView.Adapter<SearchshowAdapter.ViewHolder> {
     private List<Song> mMusicList;
-    private SearchshowAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
+    private OnRecycleItemClickListener onRecycleItemClickListener=null;
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView Num;
         TextView songName;

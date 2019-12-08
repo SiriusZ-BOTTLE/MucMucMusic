@@ -12,6 +12,8 @@ import java.util.List;
 
 public class MusicUtils {
     public static List<Song> list = new ArrayList<>();
+
+
     /**
      * 扫描系统里面的音频文件，返回一个list集合
      * 变更为保存播放列表的歌曲

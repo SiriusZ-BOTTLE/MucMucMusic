@@ -115,8 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                                     String body3 = JSON.toJSONString(1);
                                     res3 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getRandom","2","UTF-8");
 
-                                    editor.putString("HomeFragment",res2);
                                     editor.putString("Home_SongList",res3);
+
+                                    String body4=JSON.toJSONString(user);
+									String res4 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getUserSongList",body4,"UTF-8");
+									editor.putString("MySongList",res4);
 //                                    MessageBox.sendMessage(LoginActivity.this,res2);
                                 }catch (Exception e){
                                     Looper.prepare();
