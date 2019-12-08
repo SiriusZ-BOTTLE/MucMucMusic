@@ -189,10 +189,9 @@ public class DAO_SongList implements Interface_SongList_DAO {
 
     @Override
     public int insertNew(SongList sl) {
-        String sql="insert into "+Set_StringConstants.table_songlist+" values (?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_songlist+" values (null,?,?,CURRENT_DATE,?) ";
 
-
-        return jdbc.update(sql,sl.getId_User(),sl.getName_SL(),sl.getDate_SL(),sl.getDescription_SL());
+        return jdbc.update(sql,sl.getId_User(),sl.getName_SL(),sl.getDescription_SL());
     }
 
     @Override
