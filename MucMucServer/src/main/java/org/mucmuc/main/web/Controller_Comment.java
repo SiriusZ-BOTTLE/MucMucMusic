@@ -68,7 +68,7 @@ public class Controller_Comment {
     @RequestMapping(value = "/modifyContent",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity modifyContent(@RequestBody Comment comment)
     {
-        return commentService.modifyContent(comment);
+        return commentService.update(comment);
     }
 
     /**
@@ -104,7 +104,7 @@ public class Controller_Comment {
     @RequestMapping(value = "/modifyscore",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity modifyscore(@RequestBody Comment comment)
     {
-        return commentService.modifyContent(comment);
+        return commentService.update(comment);
     }
 
     /**
@@ -140,7 +140,7 @@ public class Controller_Comment {
     @RequestMapping(value = "/queryBySong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity queryBySong(@RequestBody Comment comment)
     {
-        return commentService.queryBySong(comment);
+        return commentService.getCommentsUnderSong(comment);
     }
 
 

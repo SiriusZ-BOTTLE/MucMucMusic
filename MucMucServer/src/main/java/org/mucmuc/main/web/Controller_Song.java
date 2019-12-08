@@ -3,6 +3,7 @@ package org.mucmuc.main.web;
 
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
+import org.mucmuc.main.entity.SongList;
 import org.mucmuc.main.service.implement.Service_Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,6 +98,19 @@ public class Controller_Song {
     {
         return songService.update(song);
     }
+
+    /**
+     * 获取歌单下的歌曲
+     * @param songList
+     * @return
+     */
+
+    @RequestMapping(value = "/getSongInSongList",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getSongInSongList(SongList songList)
+    {
+        return songService.getSongInSongList(songList);
+    }
+
 
 
     /**

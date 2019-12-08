@@ -196,6 +196,9 @@ public class Service_SongList implements Interface_SongList_service {
             return resultEntity;
         }
         //删除
+
+        //先删除中间映射
+        map_S_SL_DAO.deleteBySongListID(songList.getId_SL());
         songListDao.deleteByPK(songList);
         resultEntity.setState(true);
         return resultEntity;

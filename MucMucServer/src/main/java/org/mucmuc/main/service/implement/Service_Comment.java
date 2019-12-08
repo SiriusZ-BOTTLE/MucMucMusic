@@ -51,9 +51,7 @@ public class Service_Comment implements Interface_Comment_service {
         Boolean success = Boolean.FALSE;
         String errorMsg = "";
         String opMsg="done";
-        if(comment == null || song == null || user == null) {
-            errorMsg = "请求数据不能为空";
-        }else if(comment.getScore_Comment()!=null && (comment.getScore_Comment() >100 || comment.getScore_Comment() <0)){
+        if(comment.getScore_Comment()!=null && (comment.getScore_Comment() >100 || comment.getScore_Comment() <0)){
             errorMsg = "分数格式不符合，需在0～100";
         }else if ( song.getId_Song() ==null){
             errorMsg = "歌曲编号不能为空";
@@ -83,7 +81,6 @@ public class Service_Comment implements Interface_Comment_service {
                 count++;
                 sum += comment.getScore_Comment();
             }
-
             song.setScore(sum/count);
 
             //更新评论信息
@@ -108,7 +105,7 @@ public class Service_Comment implements Interface_Comment_service {
     }
 
     @Override
-    public ResultEntity modifyContent(Comment comment) {
+    public ResultEntity update(Comment comment) {
 
         Boolean success = Boolean.FALSE;
         String errorMsg ="";
@@ -168,15 +165,13 @@ public class Service_Comment implements Interface_Comment_service {
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空
         String opMsg="done";//操作信息默认为完成
-        if (comment == null){
-            errorMsg = "请求数据不能为空";
-        } else if (comment.getId_Comment() == null ){
+        if (comment.getId_Comment() == null ){
             errorMsg = "评论id不能为空";
-        } else if(comment.getLikes_Comment() == null || comment.getLikes_Comment() < 0){
+        } else if(comment.getDislikes_Comment() == null || comment.getDislikes_Comment() < 0){
             errorMsg = "踩数小于0或为空";
         }else {
 
-            comment.setScore_Comment(comment.getScore_Comment() + 1);
+            comment.setDislikes_Comment(comment.getDislikes_Comment() + 1);
             //更新用户信息
             int resultRow = dao_Comment.update(comment);
             if (resultRow < 1){
@@ -310,15 +305,13 @@ public class Service_Comment implements Interface_Comment_service {
     }
 
     @Override
-    public ResultEntity queryBySong(Comment comment) {
+    public ResultEntity getCommentsUnderSong(Comment comment) {
         List<Comment> commentList = null;
 
         Boolean success = Boolean.FALSE;
         String errorMsg = "";//错误信息默认为空
         String opMsg="done";//操作信息默认为完成
-        if (comment == null){
-            errorMsg = "请求数据不能为空";
-        } else if(comment.getId_Song() == null){
+        if(comment.getId_Song() == null){
             errorMsg = "相应歌曲编号不能为空";
         }else {
             //根据请求参数查询歌曲信息

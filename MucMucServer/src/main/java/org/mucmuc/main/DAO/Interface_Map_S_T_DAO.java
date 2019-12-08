@@ -44,4 +44,20 @@ public interface Interface_Map_S_T_DAO {
      * @return
      */
     int insertNew(Map_S_T map_s_t);
+
+
+    /**
+     * 根据标签ID删除所有映射
+     * @return
+     */
+    int deleteByTagID(Integer id_Tag);
+
+    /**
+     * 根据歌曲ID删除所有映射
+     * @param id_Song
+     * @return
+     */
+    int deleteBySongID(Integer id_Song);
+
+
 }

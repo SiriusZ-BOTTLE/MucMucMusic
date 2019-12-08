@@ -55,6 +55,19 @@ public class DAO_Map_SL_S implements Interface_Map_SL_S_DAO {
         return jdbc.update(sql_d);
     }
 
+    @Override
+    public int deleteBySongListID(Integer id_SongList) {
+        String sql="delete from "+ Set_StringConstants.table_map_sl_s+" where ID_SL = ? ";
+
+        return jdbc.update(sql,new Object[]{id_SongList});
+    }
+
+    @Override
+    public int deleteBySongID(Integer id_Song) {
+        String sql="delete from "+ Set_StringConstants.table_map_sl_s+" where ID_Song = ? ";
+
+        return jdbc.update(sql,new Object[]{id_Song});
+    }
 
 
     @Override

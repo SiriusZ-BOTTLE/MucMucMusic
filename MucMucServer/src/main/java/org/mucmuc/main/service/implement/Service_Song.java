@@ -2,9 +2,13 @@ package org.mucmuc.main.service.implement;
 
 
 
+import org.mucmuc.main.DAO.implement.DAO_Map_SL_S;
+import org.mucmuc.main.DAO.implement.DAO_Map_S_T;
 import org.mucmuc.main.DAO.implement.DAO_Song;
+import org.mucmuc.main.DAO.implement.DAO_SongList;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
+import org.mucmuc.main.entity.SongList;
 import org.mucmuc.main.service.Interface_Song_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +25,12 @@ public class Service_Song implements Interface_Song_service {
 
     @Autowired
     private DAO_Song songDao;
-
+    @Autowired
+    private DAO_Map_SL_S map_sl_s_Dao;
+    @Autowired
+    private DAO_Map_S_T map_s_t_Dao;
+    @Autowired
+    private DAO_SongList songListDao;
 
     @Override
     public ResultEntity getRandom(Integer num) {
@@ -120,6 +129,10 @@ public class Service_Song implements Interface_Song_service {
             errorMsg = "用户编号不能为空！";
         } else {
             //删除用户信息
+
+            //先删除中间映射
+            map_sl_s_Dao.deleteBySongID(song.getId_Song());
+            map_s_t_Dao.deleteBySongID(song.getId_Song());
             int resultRow = songDao.deleteByPK(song);
             if (resultRow < 1){
                 opMsg = "删除歌曲失败！";
@@ -185,6 +198,24 @@ public class Service_Song implements Interface_Song_service {
         return resultEntity;
     }
 
+    @Override
+    public ResultEntity getSongInSongList(SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        if(songList.getId_SL()==null)
+        {
+            resultEntity.setInfo_error("<ERROR> id_SL is NULL");
+            return resultEntity;
+        }
+
+        List<Song> list=songListDao.queryAllSongBySL(songList);
+
+        for(Song item:list)
+            item.setIconFile_Song(null);
+        resultEntity.setState(true);
+
+        return resultEntity;
+    }
 
 
 }
