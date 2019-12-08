@@ -3,6 +3,7 @@ package org.mucmuc.main.service;
 import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
+import org.mucmuc.main.entity.SongList;
 
 /**
  * @Author: Mjj
@@ -63,7 +64,11 @@ public interface Interface_Song_service {
      */
     ResultEntity get(Song song);
 
-
+    /**
+     * 获取歌单中的歌曲
+     * @return
+     */
+    ResultEntity getSongInSongList(SongList songList);
 
 
 

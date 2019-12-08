@@ -50,6 +50,13 @@ public class Service_Tag implements Interface_Tag_service {
 
         Tag tag_db=tagDao.queryByName(tag);
 
+        if(tag_db==null)
+        {
+            resultEntity.setState(false);
+            resultEntity.setInfo_operation("没找到指定标签");
+            return resultEntity;
+        }
+
         resultEntity.setObject(tag_db);
         resultEntity.setState(true);
         return resultEntity;
@@ -79,33 +86,46 @@ public class Service_Tag implements Interface_Tag_service {
 
     @Override
     public ResultEntity create(Song song, Tag tag) {
+
         ResultEntity resultEntity =new ResultEntity();
-        if(song.getId_Song()==null||tag.getId_Tag()==null)
+        try
         {
-            resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
+
+            if(song.getId_Song()==null||(tag.getName_Tag()==null))
+            {
+                resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
+                return resultEntity;
+            }
+
+            //按标签名查询
+            Tag tag_db=tagDao.queryByName(tag);
+
+            if(tag_db==null)//标签不存在
+            {
+
+                tagDao.insertNew(tag);//插入新的标签
+                //重新查询标签(获取主键)
+                tag_db=tagDao.queryByName(tag);
+            }
+
+            Map_S_T map_S_T=new Map_S_T();
+
+            map_S_T.setNum(1);//第一次创建
+            map_S_T.setId_Song(song.getId_Song());
+            map_S_T.setId_Tag(tag_db.getId_Tag());
+            //插入到数据库
+
+            map_S_T_Dao.insertNew(map_S_T);
+
+            resultEntity.setState(true);
+            resultEntity.setObject(map_S_T);//返回创建的标签映射对象
             return resultEntity;
         }
-
-        //按标签名查询
-        Tag tag_db=tagDao.queryByName(tag);
-
-        if(tag_db==null)//标签不存在
+        catch(Exception e)
         {
-            tagDao.insertNew(tag);//插入新的标签
-            //重新查询标签(获取主键)
-            tag_db=tagDao.queryByName(tag);
+            resultEntity.setInfo_operation("创建该歌曲下的标签失败,可能是已经存在");
+            return resultEntity;
         }
-
-        Map_S_T map_S_T=new Map_S_T();
-
-        map_S_T.setNum(1);//第一次创建
-        map_S_T.setId_Song(song.getId_Song());
-        map_S_T.setId_Tag(tag_db.getId_Tag());
-        //插入到数据库
-        map_S_T_Dao.insertNew(map_S_T);
-        resultEntity.setState(true);
-        resultEntity.setObject(map_S_T);//返回创建的标签映射对象
-        return resultEntity;
     }
 
     @Override
@@ -137,6 +157,17 @@ public class Service_Tag implements Interface_Tag_service {
         map_S_T_Dao.update(map_s_t_db);//更新数据库
         resultEntity.setState(true);
         return resultEntity;
+
+        try
+        {
+
+        }
+        catch(Exception e)
+        {
+            resultEntity.setInfo_operation("创建该歌曲下的标签失败,可能是已经存在");
+            return resultEntity;
+        }
+
     }
 
     @Override
@@ -193,8 +224,7 @@ public class Service_Tag implements Interface_Tag_service {
 
             if (tagList.size() == 0) {
                 opMsg = "未找到任何标签";
-            } else {
-                success = Boolean.TRUE;
+                success=true;
             }
         }
 

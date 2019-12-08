@@ -75,7 +75,7 @@ public class Controller_Tag {
      * Object:返回的映射对象
      */
     @RequestMapping(value = "/create",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity create(Map<String,Object> map)
+    public ResultEntity create(@RequestBody Map<String,Object> map)
     {
         Song song=JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
         Tag tag=JSON.parseObject(JSON.toJSONString(map.get("tag")), Tag.class);
@@ -90,7 +90,7 @@ public class Controller_Tag {
      * Object:null
      */
     @RequestMapping(value = "/tagCountPlusOne",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity tagCountPlusOne(Map<String,Object> map)
+    public ResultEntity tagCountPlusOne(@RequestBody Map<String,Object> map)
     {
         Song song=JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
         Tag tag=JSON.parseObject(JSON.toJSONString(map.get("tag")), Tag.class);
@@ -105,7 +105,7 @@ public class Controller_Tag {
      * Object:null
      */
     @RequestMapping(value = "/tagCountMinusOne",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity tagCountMinusOne(Map<String,Object> map)
+    public ResultEntity tagCountMinusOne(@RequestBody Map<String,Object> map)
     {
         Song song=JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
         Tag tag=JSON.parseObject(JSON.toJSONString(map.get("tag")), Tag.class);

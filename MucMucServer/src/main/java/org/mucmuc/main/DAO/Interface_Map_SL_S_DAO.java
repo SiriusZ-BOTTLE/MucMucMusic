@@ -36,6 +36,19 @@ public interface Interface_Map_SL_S_DAO {
     int deleteByPK(Map_SL_S map_sl_s);
 
 
+    /**
+     * 根据歌单的ID删除所有映射
+     * @return
+     */
+    int deleteBySongListID(Integer id_SongList);
+
+    /**
+     * 根据歌曲ID删除所有映射
+     * @param id_Song
+     * @return
+     */
+    int deleteBySongID(Integer id_Song);
+
 
 
     /**

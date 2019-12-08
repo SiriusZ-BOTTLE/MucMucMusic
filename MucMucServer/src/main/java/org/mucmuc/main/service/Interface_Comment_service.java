@@ -25,7 +25,7 @@ public interface Interface_Comment_service {
     /**
      * 修改自己评论内容，以及更新歌曲score
      */
-    ResultEntity modifyContent(Comment comment);
+    ResultEntity update(Comment comment);
 
     /**
      * 点赞
@@ -63,11 +63,11 @@ public interface Interface_Comment_service {
     ResultEntity queryByReply(Comment comment);
 
     /**
-     * 显示当前歌曲的评论(song)
+     * 获得当前歌曲的评论(song)
      * @param comment
      * @return
      */
-    ResultEntity queryBySong(Comment comment);
+    ResultEntity getCommentsUnderSong(Comment comment);
 
     /**
      * 获得最新评论(song)
