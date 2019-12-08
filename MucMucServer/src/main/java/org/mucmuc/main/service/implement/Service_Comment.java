@@ -74,29 +74,28 @@ public class Service_Comment implements Interface_Comment_service {
                 comment.setId_User(user.getId_User());
                 comment.setId_Song(song.getId_Song());
 
-                Comment comment2 = new Comment();
-                comment2.setId_Song(comment.getId_Song());
-                List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
-                int count = 0;
-                Double sum =0.0;
-                for(Comment c :commentList){
-                    if(c.getScore_Comment()!=null && c.getScore_Comment() >=0 ){
-                        count++;
-                        sum += c.getScore_Comment();
-                    }
 
-                }
-                if(comment.getScore_Comment()!=null){
-                    count++;
-                    sum += comment.getScore_Comment();
-                }
-                song.setScore(sum/count);
 
                 //更新评论信息
                 int resultRow = dao_Comment.insertNew(comment);
                 if (resultRow < 1){
                     errorMsg = "更新评论失败";
                 }else {
+                    Comment comment2 = new Comment();
+                    comment2.setId_Song(comment.getId_Song());
+                    List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
+                    int count = 0;
+                    Double sum =0.0;
+                    for(Comment c :commentList){
+                        if(c.getScore_Comment()!=null && c.getScore_Comment() >=0 ){
+                            count++;
+                            sum += c.getScore_Comment();
+                        }
+
+                    }
+
+                    song.setScore(sum/count);
+
                     resultRow = dao_Song.update(song);
                     if (resultRow < 1){
                         errorMsg = "更新歌曲分数失败";
@@ -243,14 +242,35 @@ public class Service_Comment implements Interface_Comment_service {
             } else if(comment.getScore_Comment() <0 || comment.getLikes_Comment() > 100){
                 errorMsg = "评论score格式不对";
             }else {
-
-
                 //更新用户信息
                 int resultRow = dao_Comment.update(comment);
                 if (resultRow < 1){
                     opMsg = "更新评论score失败";
                 }else {
-                    success = Boolean.TRUE;
+                    Comment comment2 = new Comment();
+                    comment2.setId_Song(comment.getId_Song());
+                    List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
+                    int count = 0;
+                    Double sum =0.0;
+                    for(Comment c :commentList){
+                        if(c.getScore_Comment()!=null && c.getScore_Comment() >=0 ){
+                            count++;
+                            sum += c.getScore_Comment();
+                        }
+
+                    }
+
+                    Song song = new Song();
+                    song.setScore(sum/count);
+                    song.setId_Song(comment.getId_Song());
+
+                    resultRow = dao_Song.update(song);
+                    if (resultRow < 1){
+                        errorMsg = "更新歌曲分数失败";
+                    }else{
+                        success = Boolean.TRUE;
+                    }
+
                 }
             }
 
@@ -289,30 +309,27 @@ public class Service_Comment implements Interface_Comment_service {
                     Song song = new Song();
 
                     song.setId_Song(comment.getId_Song());
-                    Comment comment3 = new Comment();
-                    comment2.setId_Song(comment.getId_Song());
-                    List<Comment> commentList2= dao_Comment.queryOrderbyLikes(comment2, null);
-                    int count = 0;
-                    Double sum =0.0;
-                    for(Comment c :commentList){
-
-                        if(c.getScore_Comment()!=null && (c.getScore_Comment() >=0 || c.getScore_Comment() <=100)){
-                            count ++;
-                            sum += c.getScore_Comment();
-                        }
-
-                    }
-                    if(comment.getScore_Comment()!=null && (comment.getScore_Comment() >=0 || comment.getScore_Comment() <=100)){
-                        sum -= comment.getScore_Comment();
-                        count--;
-                    }
-                    song.setScore(sum/count);
 
                     //删除评论信息
                     int resultRow = dao_Comment.deleteByPK(comment);
                     if (resultRow < 1){
                         opMsg = "删除评论失败";
                     }else {
+                        Comment comment3 = new Comment();
+                        comment3.setId_Song(comment.getId_Song());
+                        List<Comment> commentList2= dao_Comment.queryOrderbyLikes(comment3, null);
+                        int count = 0;
+                        Double sum =0.0;
+                        for(Comment c :commentList2){
+
+                            if(c.getScore_Comment()!=null && (c.getScore_Comment() >=0 || c.getScore_Comment() <=100)){
+                                count ++;
+                                sum += c.getScore_Comment();
+                            }
+
+                        }
+
+                        song.setScore(sum/count);
                         resultRow = dao_Song.update(song);
                         if (resultRow < 1){
                             opMsg = "更新歌曲分数失败";
