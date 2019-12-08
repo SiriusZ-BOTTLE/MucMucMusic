@@ -23,6 +23,14 @@ public interface Interface_SongList_service {
 
 
     /**
+     * 创建歌单
+     * @param songList
+     * @return
+     */
+    ResultEntity create(SongList songList);
+
+
+    /**
      * 获取歌单(信息)
      * @param songList
      * @return

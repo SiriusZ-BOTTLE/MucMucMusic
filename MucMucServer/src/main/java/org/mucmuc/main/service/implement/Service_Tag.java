@@ -26,62 +26,90 @@ public class Service_Tag implements Interface_Tag_service {
     @Override
     public ResultEntity getRandom(Integer num) {
         ResultEntity resultEntity =new ResultEntity();
-
-        if(num<=0||num>100)
+        try
         {
-            resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+            if(num<=0||num>100)
+            {
+                resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+                return resultEntity;
+            }
+
+            resultEntity.setObject(tagDao.queryRandom(num));
+            resultEntity.setState(true);
             return resultEntity;
         }
-
-        resultEntity.setObject(tagDao.queryRandom(num));
-        resultEntity.setState(true);
-        return resultEntity;
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("随机获取失败; 捕获到异常");
+            return resultEntity;
+        }
     }
 
     @Override
     public ResultEntity search(Tag tag) {
         ResultEntity resultEntity =new ResultEntity();
-
-        if(tag.getName_Tag()==null)
+        try
         {
-            resultEntity.setInfo_error("<ERROR> name_Tag is NULL");
+            if(tag.getName_Tag()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> name_Tag is NULL");
+                return resultEntity;
+            }
+
+            Tag tag_db=tagDao.queryByName(tag);
+
+            if(tag_db==null)
+            {
+                resultEntity.setState(false);
+                resultEntity.setInfo_operation("没找到指定标签");
+                return resultEntity;
+            }
+
+            resultEntity.setObject(tag_db);
+            resultEntity.setState(true);
             return resultEntity;
         }
-
-        Tag tag_db=tagDao.queryByName(tag);
-
-        if(tag_db==null)
+        catch(Exception e)
         {
+            e.printStackTrace();
             resultEntity.setState(false);
-            resultEntity.setInfo_operation("没找到指定标签");
+            resultEntity.setInfo_error("搜索失败; 捕获到异常");
             return resultEntity;
         }
-
-        resultEntity.setObject(tag_db);
-        resultEntity.setState(true);
-        return resultEntity;
     }
 
     @Override
     public ResultEntity get(Tag tag) {
         ResultEntity resultEntity =new ResultEntity();
 
-        if(tag.getId_Tag()==null)
+        try
         {
-            resultEntity.setInfo_error("<ERROR> id_Tag is NULL");
+            if(tag.getId_Tag()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_Tag is NULL");
+                return resultEntity;
+            }
+
+            Tag tag_db=tagDao.queryByPK(tag);
+
+            if(tag_db==null)
+            {
+                resultEntity.setInfo_operation("未找到指定Tag");
+                return resultEntity;
+            }
+            resultEntity.setObject(tag_db);
+            resultEntity.setState(true);
             return resultEntity;
         }
-
-        Tag tag_db=tagDao.queryByPK(tag);
-
-        if(tag_db==null)
+        catch(Exception e)
         {
-            resultEntity.setInfo_operation("未找到指定Tag");
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("获取Tag信息失败; 捕获到异常");
             return resultEntity;
         }
-        resultEntity.setObject(tag_db);
-        resultEntity.setState(true);
-        return resultEntity;
     }
 
     @Override
@@ -123,7 +151,9 @@ public class Service_Tag implements Interface_Tag_service {
         }
         catch(Exception e)
         {
-            resultEntity.setInfo_operation("创建该歌曲下的标签失败,可能是已经存在");
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("创建该歌曲下的标签失败,可能是已经存在; 捕获到异常");
             return resultEntity;
         }
     }
@@ -137,34 +167,34 @@ public class Service_Tag implements Interface_Tag_service {
     public ResultEntity tagCountPlusOne(Song song, Tag tag) {
 
         ResultEntity resultEntity=new ResultEntity();
-
-        if(song.getId_Song()==null||tag.getId_Tag()==null)
-        {
-            resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
-            return resultEntity;
-        }
-        Map_S_T map_s_t=new Map_S_T();
-        map_s_t.setId_Song(song.getId_Song());
-        map_s_t.setId_Tag(tag.getId_Tag());
-        //从数据库中查询
-        Map_S_T map_s_t_db=map_S_T_Dao.queryByPK(map_s_t);
-        if(map_s_t_db==null)
-        {
-            resultEntity.setInfo_operation("未找到歌曲指定的标签");
-            return resultEntity;
-        }
-        map_s_t_db.setNum(map_s_t_db.getNum()+1);//该标签数自增1
-        map_S_T_Dao.update(map_s_t_db);//更新数据库
-        resultEntity.setState(true);
-        return resultEntity;
-
         try
         {
+            if(song.getId_Song()==null||tag.getId_Tag()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
+                return resultEntity;
+            }
+            Map_S_T map_s_t=new Map_S_T();
+            map_s_t.setId_Song(song.getId_Song());
+            map_s_t.setId_Tag(tag.getId_Tag());
+            //从数据库中查询
+            Map_S_T map_s_t_db=map_S_T_Dao.queryByPK(map_s_t);
+            if(map_s_t_db==null)
+            {
+                resultEntity.setInfo_operation("未找到歌曲指定的标签");
+                return resultEntity;
+            }
+            map_s_t_db.setNum(map_s_t_db.getNum()+1);//该标签数自增1
+            map_S_T_Dao.update(map_s_t_db);//更新数据库
+            resultEntity.setState(true);
+            return resultEntity;
 
         }
         catch(Exception e)
         {
-            resultEntity.setInfo_operation("创建该歌曲下的标签失败,可能是已经存在");
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("标签数自增1失败; 捕获到异常");
             return resultEntity;
         }
 
@@ -174,63 +204,80 @@ public class Service_Tag implements Interface_Tag_service {
     public ResultEntity tagCountMinusOne(Song song, Tag tag) {
         ResultEntity resultEntity=new ResultEntity();
 
-        if(song.getId_Song()==null||tag.getId_Tag()==null)
+        try
         {
-            resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
-            return resultEntity;
-        }
-        Map_S_T map_s_t=new Map_S_T();
-        map_s_t.setId_Song(song.getId_Song());
-        map_s_t.setId_Tag(tag.getId_Tag());
-        //从数据库中查询
-        Map_S_T map_s_t_db=map_S_T_Dao.queryByPK(map_s_t);
-        if(map_s_t_db==null)
-        {
-            resultEntity.setInfo_operation("未找到歌曲指定的标签");
-            return resultEntity;
-        }
+            if(song.getId_Song()==null||tag.getId_Tag()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_Song or id_Tag is NULL");
+                return resultEntity;
+            }
+            Map_S_T map_s_t=new Map_S_T();
+            map_s_t.setId_Song(song.getId_Song());
+            map_s_t.setId_Tag(tag.getId_Tag());
+            //从数据库中查询
+            Map_S_T map_s_t_db=map_S_T_Dao.queryByPK(map_s_t);
+            if(map_s_t_db==null)
+            {
+                resultEntity.setInfo_operation("未找到歌曲指定的标签");
+                return resultEntity;
+            }
 
-        if(map_s_t_db.getNum()==0)
-        {
-            resultEntity.setInfo_operation("状态错误!标签数不可能为0,联系管理员");
+            if(map_s_t_db.getNum()==0)
+            {
+                resultEntity.setInfo_operation("状态错误!标签数不可能为0,联系管理员");
+                return resultEntity;
+            }
+            map_s_t_db.setNum(map_s_t_db.getNum()-1);//该标签数自减1
+
+            if(map_s_t_db.getNum()==0)
+                map_S_T_Dao.deleteByPK(map_s_t_db);//删除标签
+            else
+                map_S_T_Dao.update(map_s_t_db);//更新数据库
+            resultEntity.setState(true);
+            resultEntity.setState(true);
             return resultEntity;
         }
-        map_s_t_db.setNum(map_s_t_db.getNum()-1);//该标签数自减1
-
-        if(map_s_t_db.getNum()==0)
-            map_S_T_Dao.deleteByPK(map_s_t_db);//删除标签
-        else
-            map_S_T_Dao.update(map_s_t_db);//更新数据库
-        resultEntity.setState(true);
-        resultEntity.setState(true);
-        return resultEntity;
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("标签数自减1失败; 捕获到异常");
+            return resultEntity;
+        }
     }
-
-
 
 
     @Override
     public ResultEntity getTagBySong(Song song) {
-        List<Tag> tagList = null;
-
-        Boolean success = Boolean.FALSE;
-        String errorMsg = "";//错误信息默认为空
-        String opMsg = "done";//操作信息默认为完成
-        if (song.getId_Song()==null) {
-            errorMsg = "<ERROR> id_Song is NULL";
-        } else {
-            //根据请求参数查询歌曲信息
-            tagList = songDAO.queryTagsbySong(song);
-
-            if (tagList.size() == 0) {
-                opMsg = "未找到任何标签";
-                success=true;
-            }
-        }
 
         //封装返回结果
-        ResultEntity resultEntity = new ResultEntity(success, errorMsg, opMsg, tagList);
-        return resultEntity;
+        ResultEntity resultEntity = new ResultEntity();
+        try
+        {
+            List<Tag> tagList = null;
 
+            Boolean success = Boolean.FALSE;
+
+            if (song.getId_Song()==null) {
+                resultEntity.setInfo_error("<ERROR> id_Song is NULL");
+            } else {
+                //根据请求参数查询歌曲信息
+                tagList = songDAO.queryTagsbySong(song);
+
+                if (tagList.size() == 0) {
+                    resultEntity.setInfo_operation("未找到任何标签");
+                    success=true;
+                }
+            }
+
+            return resultEntity;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("获取歌曲下的Tag失败; 捕获到异常");
+            return resultEntity;
+        }
     }
 }
