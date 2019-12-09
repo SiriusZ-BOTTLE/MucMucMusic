@@ -102,7 +102,8 @@ public class AccountFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"you clicked shezhi",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(),PasswordActivity.class);
+                startActivity(intent);
             }
         });
         Button btn3 = root.findViewById(R.id.concerning);//关于
