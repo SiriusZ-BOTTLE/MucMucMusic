@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.found;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.bean.Music;
+import com.example.myapplication.ui.home.AddSongActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,63 +73,63 @@ public class TagActivity extends AppCompatActivity {
         Music two4 = new Music("论坛", R.drawable.luntan,"数据");
         SongList.add(two4);
     }
-}
 
-class TagSongAdapter extends RecyclerView.Adapter<TagSongAdapter.ViewHolder>{
-    private List<Music> SongList;
-    static class  ViewHolder extends RecyclerView.ViewHolder{
-        ImageView songIcon;
-        TextView songName;
-        TextView songSinger;
-        ImageView songAdd;
-        View songView;
+    class TagSongAdapter extends RecyclerView.Adapter<TagSongAdapter.ViewHolder>{
+        private List<Music> SongList;
+        class  ViewHolder extends RecyclerView.ViewHolder{
+            ImageView songIcon;
+            TextView songName;
+            TextView songSinger;
+            ImageView songAdd;
+            View songView;
 
-        public  ViewHolder(View view){
-            super(view);
-            songView = view;
-            songIcon = (ImageView) view.findViewById(R.id.songicon);
-            songName = (TextView) view.findViewById(R.id.songname);
-            songSinger = (TextView) view.findViewById(R.id.songsinger);
-            songAdd = (ImageView) view.findViewById(R.id.songadd);
+            public  ViewHolder(View view){
+                super(view);
+                songView = view;
+                songIcon = (ImageView) view.findViewById(R.id.songicon);
+                songName = (TextView) view.findViewById(R.id.songname);
+                songSinger = (TextView) view.findViewById(R.id.songsinger);
+                songAdd = (ImageView) view.findViewById(R.id.songadd);
+            }
+        }
+
+        public TagSongAdapter(List<Music> MusicList){
+            SongList = MusicList;
+        }
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categorydetails, parent ,false);
+            final ViewHolder holder = new ViewHolder(view);
+            holder.songView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    Music song = SongList.get(position);
+                    Toast.makeText(v.getContext(),"you clicked view "+song.getName(),Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.songAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TagActivity.this, AddSongActivity.class);
+                    startActivity(intent);
+                }
+            });
+            return  holder;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position){
+            Music song = SongList.get(position);
+            holder.songIcon.setImageResource(song.getImageId());
+            holder.songName.setText(song.getName());
+            holder.songSinger.setText(song.getAuthor());
+        }
+
+        @Override
+        public int getItemCount(){
+            return SongList.size();
         }
     }
-
-    public TagSongAdapter(List<Music> MusicList){
-        SongList = MusicList;
-    }
-    @Override
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categorydetails, parent ,false);
-        final ViewHolder holder = new ViewHolder(view);
-        holder.songView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Music song = SongList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+song.getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.songAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Music song = SongList.get(position);
-                Toast.makeText(v.getContext(),"you add this song to my favorite"+song.getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        return  holder;
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
-        Music song = SongList.get(position);
-        holder.songIcon.setImageResource(song.getImageId());
-        holder.songName.setText(song.getName());
-        holder.songSinger.setText(song.getAuthor());
-    }
-
-    @Override
-    public int getItemCount(){
-        return SongList.size();
-    }
 }
+
