@@ -93,13 +93,13 @@ public class DAO_Song implements Interface_Song_DAO {
 
     @Override
     public int update(Song song) {
-        String sql="update "+Set_StringConstants.table_song+"set ";
+        String sql="update "+Set_StringConstants.table_song+" set ";
 
         List<Object> list=song.objectList_notNull();//获取非空项
 
         if(song.getName_Song()!=null)
         {
-            sql+="Name_Song = ? ,";
+            sql+=" Name_Song = ? ,";
 //            list.add(user.getPassword_User());
         }
         if(song.getSinger_Song()!=null)
