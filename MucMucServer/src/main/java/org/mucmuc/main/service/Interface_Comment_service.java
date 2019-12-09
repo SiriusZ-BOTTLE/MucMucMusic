@@ -1,7 +1,6 @@
 package org.mucmuc.main.service;
 
 import org.mucmuc.main.entity.Comment;
-import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
@@ -64,10 +63,10 @@ public interface Interface_Comment_service {
 
     /**
      * 获得当前歌曲的评论(song)
-     * @param comment
-     * @return
+     *
+     * @param song@return
      */
-    ResultEntity getCommentsUnderSong(Comment comment);
+    ResultEntity getCommentsUnderSong(Song song);
 
     /**
      * 获得最新评论(song)

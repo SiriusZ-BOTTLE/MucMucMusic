@@ -66,9 +66,9 @@ public class Service_Comment implements Interface_Comment_service {
                 errorMsg = "歌曲编号不能为空";
             } else if(user.getId_User() == null || user.getId_User().equals("")){
                 errorMsg = "用户编号不能为空";
-            } else if(comment.getReleaseTime_Comment()==null){
+            } /*else if(comment.getReleaseTime_Comment()==null){
                 errorMsg = "评论的发布日期不能为空";
-            } else{
+            }*/ else{
                 comment.setDislikes_Comment(0);
                 comment.setLikes_Comment(0);
                 comment.setId_User(user.getId_User());
@@ -394,7 +394,7 @@ public class Service_Comment implements Interface_Comment_service {
     }
 
     @Override
-    public ResultEntity getCommentsUnderSong(Comment comment) {
+    public ResultEntity getCommentsUnderSong(Song song) {
 
         try {
             List<Comment> commentList = null;
@@ -402,11 +402,12 @@ public class Service_Comment implements Interface_Comment_service {
             Boolean success = Boolean.FALSE;
             String errorMsg = "";//错误信息默认为空
             String opMsg="done";//操作信息默认为完成
-            if(comment.getId_Song() == null){
+            if(song.getId_Song() == null){
                 errorMsg = "相应歌曲编号不能为空";
             }else {
                 //根据请求参数查询歌曲信息
-                commentList = dao_Comment.queryOrderbyTime(comment, null);
+//                commentList = dao_Comment.queryOrderbyTime(comment, null);
+                commentList=dao_Comment.queryAllUnderSong(song);
                 success = Boolean.TRUE;
                 if (commentList.size()==0){
                     opMsg = "评论信息不存在";

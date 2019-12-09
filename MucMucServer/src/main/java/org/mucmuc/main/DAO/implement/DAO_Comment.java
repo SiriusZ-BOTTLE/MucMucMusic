@@ -3,6 +3,7 @@ package org.mucmuc.main.DAO.implement;
 import org.mucmuc.main.DAO.Interface_Comment_DAO;
 import org.mucmuc.main.DAO.Set_StringConstants;
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -103,6 +104,15 @@ public class DAO_Comment implements Interface_Comment_DAO {
         List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
+    }
+
+    @Override
+    public List<Comment> queryAllUnderSong(Song song) {
+        String sql="select * from "+ Set_StringConstants.table_comment+"  where ID_Song = ? order by ReleaseTime_Comment DESC";
+
+        List<Comment> list=jdbc.query(sql,new Object[]{song.getId_Song()},new BeanPropertyRowMapper(Comment.class));
+
+        return list;
     }
 
     @Override
@@ -321,9 +331,8 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
     @Override
     public int insertNew(Comment comment) {
-        String sql="insert into "+Set_StringConstants.table_comment+" values (?,?,?,?,?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?) ";
 
-        //以下两句效果相同
-        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getContent_Comment(),comment.getReleaseTime_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
     }
 }
