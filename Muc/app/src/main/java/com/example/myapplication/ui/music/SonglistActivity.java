@@ -3,6 +3,7 @@ package com.example.myapplication.ui.music;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.Util.MusicUtils;
 import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
 import com.example.myapplication.bean_new.Song;
@@ -154,8 +156,15 @@ class SonglistAdapter extends RecyclerView.Adapter<SonglistAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Song song = SongList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+song.getName_Song(),Toast.LENGTH_SHORT).show();
+                Song music = SongList.get(position);
+                Intent intent = new Intent(v.getContext(), ListplayActivity.class);
+                MusicUtils.list.add(music);
+                HashSet h = new HashSet(MusicUtils.list);
+                MusicUtils.list.clear();
+                MusicUtils.list.addAll(h);
+//                MusicUtils.list=new ArrayList<Song>(new LinkedHashSet<Song>(MusicUtils.list));//删去重复
+
+                v.getContext().startActivity(intent);
             }
         });
         holder.musicFavorite.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +181,11 @@ class SonglistAdapter extends RecyclerView.Adapter<SonglistAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Song song = SongList.get(position);
+
+//        song.setIconFile_Song(song.getIconFile_Song().substring(song.getIconFile_Song().indexOf(',')+1));
+//        byte[] b= Base64Util.decode(song.getIconFile_Song());
+//        holder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
+
 //        holder.musicImage.setImageResource(song.getImageId());
         holder.musicName.setText(song.getName_Song());
         holder.musicAuthor.setText(song.getSinger_Song());

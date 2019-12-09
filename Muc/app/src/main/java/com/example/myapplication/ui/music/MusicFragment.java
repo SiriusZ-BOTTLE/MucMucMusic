@@ -46,7 +46,7 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
-
+	private String Search = new String();
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         musicViewModel = ViewModelProviders.of(this).get(MusicViewModel.class);
@@ -84,8 +84,9 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 						try{
 							String body = JSON.toJSONString(musicLists1.get(position));
 							String res = new String();
-							res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getSongInSongList", body, "UTF-8");
+							res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getSongInSongList_noMedia", body, "UTF-8");
 							ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+
 							if (result.getState() == true) {
 								editor.putString("SongList'sSong",res);
 								editor.commit();
@@ -93,6 +94,8 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 								Looper.prepare();
 								Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
 								Looper.loop();
+								editor.putString("SongList'sSong",res);
+								editor.commit();
 							}
 						}catch (Exception e){
 							Looper.prepare();
@@ -129,28 +132,33 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 				onBackPressed();
 			}
 		});
-		SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
+		final SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
 		mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			// 当点击搜索按钮时触发该方法
 			@Override
-			public boolean onQueryTextSubmit(final String query) {
+			public boolean onQueryTextSubmit(String query) {
 				if (!TextUtils.isEmpty(query)){
 					Intent intent = new Intent(getActivity(), SearchActivity.class);
-					intent.putExtra("Search",query);
+					SearchView search=getActivity().findViewById(R.id.title_sousuo);
+					Search=search.getQuery().toString();
+
 					new Thread(new Runnable(){
 						@Override
 						public void run() {
 							try {
-								sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
+								sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
 								editor =  sp.edit();
 								Song song=new Song();
-								song.setName_Song(query);
-								String body= JSON.toJSONString(song);
+								song.setName_Song(Search);
+								String body=JSON.toJSONString(song);
 								String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
 								ResultEntity result = JSON.parseObject(res, ResultEntity.class);
 								if(result.getState()==true){
 									editor.putString("search_result",res);
 									editor.commit();
+//                                    Looper.prepare();
+//                                    Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
+//                                    Looper.loop();
 								}
 								else{
 									Looper.prepare();
@@ -195,19 +203,30 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 						TextView editText=layout.findViewById(R.id.etname);
 						String inputText=editText.getText().toString();
 						sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);//初始化
-						EditText songlistname=layout.findViewById(R.id.userid);
-						final SongList songlist=new SongList();
+						EditText songlistname=layout.findViewById(R.id.etname);
+						SongList songlist=new SongList();
 						songlist.setName_SL(songlistname.getText().toString());
+						songlist.setId_User(sp.getString("name",""));
 						musicLists1.add(songlist);
+						final String body=JSON.toJSONString(songlist);
 						new Thread(new Runnable(){
 							@Override
 							public void run() {
 								try {
-									String body=JSON.toJSONString(songlist);
-									String res=new String();
-									res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/login",body,"UTF-8");
-									ResultEntity result = JSON.parseObject(res, ResultEntity.class);
 
+									String res=new String();
+									res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/create",body,"UTF-8");
+									ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+									if(result.getState()==true){
+										Looper.prepare();
+										Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+										Looper.loop();
+									}
+									else{
+										Looper.prepare();
+										Toast.makeText(getActivity(), "创建失败", Toast.LENGTH_SHORT).show();
+										Looper.loop();
+									}
 								}catch (Exception e){
 									Looper.prepare();
 									Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();

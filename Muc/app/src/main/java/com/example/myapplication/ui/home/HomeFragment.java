@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -66,6 +67,7 @@ public class HomeFragment extends Fragment {
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+    private String Search = new String();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,14 +116,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
+        final SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
             @Override
-            public boolean onQueryTextSubmit(final String query) {
+            public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query)){
-                    Intent intent = new Intent(getActivity(),SearchActivity.class);
-                    intent.putExtra("Search",query);
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    SearchView search=getActivity().findViewById(R.id.title_sousuo);
+                    Search=search.getQuery().toString();
+
                     new Thread(new Runnable(){
                         @Override
                         public void run() {
@@ -129,13 +133,16 @@ public class HomeFragment extends Fragment {
                                 sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
                                 editor =  sp.edit();
                                 Song song=new Song();
-                                song.setName_Song(query);
+                                song.setName_Song(Search);
                                 String body=JSON.toJSONString(song);
                                 String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
                                 ResultEntity result = JSON.parseObject(res, ResultEntity.class);
                                 if(result.getState()==true){
                                     editor.putString("search_result",res);
                                     editor.commit();
+//                                    Looper.prepare();
+//                                    Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
+//                                    Looper.loop();
                                 }
                                 else{
                                     Looper.prepare();

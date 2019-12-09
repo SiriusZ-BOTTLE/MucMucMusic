@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite">
+<!--    <view-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+
+<!--        android:background="#090808"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="50dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
+    <ImageView
+        android:id="@+id/addsonglist_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <!--        app:layout_constraintLeft_toRightOf="@id/list_image"-->
+<!--        app:layout_constraintTop_toTopOf="@id/list_image"/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/list_size"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:textSize="12dp"-->
+<!--        android:text="歌曲数"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/list_image"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/list_image"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/list_by"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:textSize="12dp"-->
+<!--        android:text="by"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/list_size"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/list_image"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/list_author"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:textSize="12dp"-->
+<!--        android:text="作者"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/list_by"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/list_image"/>-->
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/tv_item_menu"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:background="@drawable/shanchu"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="5dp"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:layout_editor_absoluteX="376dp"-->
+<!--        tools:layout_editor_absoluteY="5dp">-->
+<!--        -->
+<!--    </ImageView>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <!--        <view-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="1dp"-->
+
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            tools:ignore="MissingConstraints" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/addsonglist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:text="歌单名"
+        app:layout_constraintLeft_toRightOf="@id/addsonglist_image"
+        app:layout_constraintTop_toTopOf="@id/addsonglist_image"/>
+
+
+    <!--    </ImageView>-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/list_by"/>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
