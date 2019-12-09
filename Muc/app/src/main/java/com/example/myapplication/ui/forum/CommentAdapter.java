@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.forum;
 
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,14 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.bean.Comment;
 
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{ //评论（安利墙）适配器
     private List<Comment> mCommentList;
-
+    private CommentAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
 
     static class  ViewHolder extends RecyclerView.ViewHolder{
         ImageView musicImage;
@@ -28,6 +31,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentFrom;
         TextView authorName;
         View commentView;
+        TextView num;
 
         public  ViewHolder(View view){
             super(view);
@@ -39,6 +43,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentFrom = (TextView) view.findViewById(R.id.comment_from);
             authorName = (TextView) view.findViewById(R.id.comment_authorname);
             ratingBar = (RatingBar) view.findViewById(R.id.forum_ratingbar);
+            num = (TextView) view.findViewById(R.id.comment_num);
         }
     }
 
@@ -50,37 +55,39 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public CommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment,parent,false);
         final CommentAdapter.ViewHolder holder = new CommentAdapter.ViewHolder(view);
-        holder.commentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { // 点击评论 将评论所属歌曲加载到播放歌曲链表（List<song>） 并播放
-                int position = holder.getAdapterPosition();
-                Comment comment = mCommentList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+comment.getMusic().getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.commentDianzan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {// 评论点赞数量+1
-                int position = holder.getAdapterPosition();
-                Comment comment = mCommentList.get(position);
-                Toast.makeText(v.getContext(),"you clicked Dianzan+1",Toast.LENGTH_SHORT).show();
-            }
-        });
         return  holder;
     }
 
     @Override
-    public void onBindViewHolder(CommentAdapter.ViewHolder holder, int position){
+    public void onBindViewHolder(CommentAdapter.ViewHolder holder, final int position){
         Comment comment = mCommentList.get(position);
-        holder.musicName.setText(comment.getMusic().getName());
-        holder.musicImage.setImageResource(comment.getMusic().getImageId());
-        holder.authorName.setText(comment.getAuthor_name());
+        comment.getSong().setIconFile_Song(comment.getSong().getIconFile_Song().substring(comment.getSong().getIconFile_Song().indexOf(',')+1));
+        byte[] data= Base64Util.decode(comment.getSong().getIconFile_Song());
+        holder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(data,0,data.length));
+        holder.musicName.setText(comment.getSong().getName_Song());
+        holder.authorName.setText(comment.getUser().getNickname_User());
         holder.commentDetails.setText(comment.getDetails());
         holder.ratingBar.setRating(comment.getScore());
+        holder.num.setText(String.valueOf(comment.getLikes()));
+        holder.commentDianzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onRecycleItemClickListener!=null)
+                    onRecycleItemClickListener.OnRecycleItemClickListener(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount(){
         return mCommentList.size();
+    }
+
+    public  void  OnRecycleItemClickListener(CommentAdapter.OnRecycleItemClickListener v){
+        onRecycleItemClickListener = v;
+    }
+
+    public interface OnRecycleItemClickListener{
+        void OnRecycleItemClickListener(int position);
     }
 }

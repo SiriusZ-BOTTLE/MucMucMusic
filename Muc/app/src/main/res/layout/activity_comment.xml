@@ -42,8 +42,9 @@
             android:id="@+id/comment_songname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginLeft="20dp"
-            android:textSize="40dp"
+            android:textSize="20dp"
             android:text="消愁"
             app:layout_constraintLeft_toRightOf="@id/song_icon"
             app:layout_constraintTop_toTopOf="@id/song_icon"/>
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:layout_gravity="left"
             android:textSize="20dp"
             android:text="毛不易"
             android:textColor="@color/colorgreen"
