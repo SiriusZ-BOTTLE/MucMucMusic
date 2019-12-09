@@ -103,6 +103,8 @@ public class Service_Song implements Interface_Song_service {
 
             List<Song> list=songDao.queryByName(song);
 
+            for(Song item:list)
+                item.setIconFile_Song(null);
             resultEntity.setState(true);
             resultEntity.setObject(list);
             return resultEntity;
