@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -69,8 +70,7 @@ public class HomeFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private String Search = new String();
 
-
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -126,11 +126,12 @@ public class HomeFragment extends Fragment {
                     SearchView search=getActivity().findViewById(R.id.title_sousuo);
                     Search=search.getQuery().toString();
 
+                    intent.putExtra("Search",query);
                     new Thread(new Runnable(){
                         @Override
                         public void run() {
                             try {
-                                sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+                                sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
                                 editor =  sp.edit();
                                 Song song=new Song();
                                 song.setName_Song(Search);
@@ -154,11 +155,8 @@ public class HomeFragment extends Fragment {
                                 Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
-
                         }
                     }).start();
-
-
                     startActivity(intent);
                 }else{
                     return false;
@@ -171,9 +169,43 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+        TextView tv = null;
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0, count = tabWidget.getChildCount(); i < count; i++) {
+            View v = tabWidget.getChildAt(i);
+            v.setBackgroundResource(R.drawable.tab_selector);
+            tv = ((TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title));
+            tv.setTextColor(Color.rgb(255,255,255));
+        }
+
+        initMusic();
+
+        initMusicList();
+
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        MusicAdapter adapter = new MusicAdapter(musiclist,getActivity());
+        recyclerView.setAdapter(adapter);
+
+
+        RecyclerView recyclerView1 =root.findViewById(R.id.recycler_view_musiclist);
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(),2);
+        recyclerView1.setLayoutManager(layoutManager1);
+        MusicListAdapter adapter1 = new MusicListAdapter(songlist);
+        recyclerView1.setAdapter(adapter1);
+
+        ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
+        play.setOnClickListener(new View.OnClickListener() {//跳转到播放音乐界面
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListplayActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
-
 
     private void initMusicList(){
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);//初始化

@@ -149,7 +149,7 @@ class SearchshowAdapter extends RecyclerView.Adapter<SearchshowAdapter.ViewHolde
     public int getItemCount() {
         return mMusicList.size();
     }
-    public  void  OnRecycleItemClickListener(OnRecycleItemClickListener v){
+    public  void  OnRecycleItemClickListener(SearchshowAdapter.OnRecycleItemClickListener v){
         onRecycleItemClickListener = v;
     }
 

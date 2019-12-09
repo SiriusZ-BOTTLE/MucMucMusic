@@ -42,10 +42,10 @@ public class FoundFragment extends Fragment {
     private int[] ImageArray=new int[]{R.drawable.nanshannan, R.drawable.xiaochou, R.drawable.faxian, R.drawable.luntan};
     private ImageView[] DotArray;
     private  List<View> ViewList = new ArrayList<View>();
-    private  int[] ids = {R.id.dot1, R.id.dot2, R.id.dot3, R.id.dot4};
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String Search = new String();
+    private  int[] ids = {R.id.dot1, R.id.dot2, R.id.dot3, R.id.dot4};
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         foundViewModel =
@@ -144,11 +144,8 @@ public class FoundFragment extends Fragment {
                                 Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
-
                         }
                     }).start();
-
-
                     startActivity(intent);
                 }else{
                     return false;

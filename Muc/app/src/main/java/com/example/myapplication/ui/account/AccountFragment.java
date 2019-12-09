@@ -18,9 +18,12 @@ import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -66,11 +70,7 @@ public class AccountFragment extends Fragment {
         accountViewModel1 = ViewModelProviders.of(this).get(AccountViewModel.class);
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
-        Button btn1 = root.findViewById(R.id.xiugai);
-
-
         sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
-        editor =  sp.edit();
 
         bottomSheetLayout = (BottomSheetLayout) root.findViewById(R.id.bottomSheetLayout);
         image_head = (ImageView) root.findViewById(R.id.h_head); //绑定用户头像控件
@@ -90,18 +90,20 @@ public class AccountFragment extends Fragment {
         TextView idiograph = (TextView) root.findViewById(R.id.user_iograph);
         idiograph.setText(sp.getString("idiograph",""));
 
-        btn1.setOnClickListener(new View.OnClickListener() { //修改用户资料
+        Button btn1 = root.findViewById(R.id.xiugai);//设置
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showBottomSheet();
+                Intent intent = new Intent(getActivity(),ModifyActivity.class);
+                startActivity(intent);
             }
         });
-
         Button btn2 = root.findViewById(R.id.shezhi);//设置
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"you clicked shezhi",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(),PasswordActivity.class);
+                startActivity(intent);
             }
         });
         Button btn3 = root.findViewById(R.id.concerning);//关于
@@ -215,7 +217,10 @@ public class AccountFragment extends Fragment {
                     try{
                         Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(imageUri));
                         image_head.setImageBitmap(bitmap);
-                    }catch (FileNotFoundException e){
+                        ThreadUpdateicon thread1 = new ThreadUpdateicon(bitmap);
+                        thread1.start();
+                        thread1.join();
+                    }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
@@ -273,39 +278,56 @@ public class AccountFragment extends Fragment {
         }
         return path;
     }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Log.d("Updateicon", "handleMessage: " );
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    private class  ThreadUpdateicon extends Thread {
+        private Bitmap bit;
+        public ThreadUpdateicon(Bitmap bit) {
+            this.bit=bit;
+        }
+        @Override
+        public void run() {
+            sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+            editor =  sp.edit();
+            String b=Base64Util.bitmapToBase64(bit);
+            User user=new User();
+            user.setId_User(sp.getString("name",""));
+            user.setIconFile_User(b);
+            editor.putString("iconFile_User",b);
+            editor.commit();
+            String body= JSON.toJSONString(user);
+            HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/update",body,"UTF-8");
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
 
+    }
     private void displayImage(String imagePath){
         if(imagePath != null){
             final Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             image_head.setImageBitmap(bitmap);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
-                    String b=Base64Util.bitmapToBase64(bitmap);
-                    User user=new User();
-                    user.setGender_User(sp.getString("gender",""));
-                    user.setNickname_User(sp.getString("nickname",""));
-                    user.setId_User(sp.getString("name",""));
-                    user.setPassword_User(sp.getString("password",""));
-                    user.setIconFile_User(b);
-                    user.setIdiograph_User(sp.getString("idiograph",""));
-                    user.setLevel_User(sp.getString("level",""));
-                    user.setState_User(sp.getString("state",""));
-                    editor.putString("iconFile_User",b);
-                    String body= JSON.toJSONString(user);
-                    HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/update",body,"UTF-8");
-                    Looper.prepare();
-                    Toast.makeText(getActivity(),"修改成功",Toast.LENGTH_SHORT).show();
-                    Looper.loop();
+            try{
+                ThreadUpdateicon thread1 = new ThreadUpdateicon(bitmap);
+                thread1.start();
+                thread1.join();
+            }catch (Exception e){
 
-                }
-            }).start();
+            }
         }else {
             Toast.makeText(getActivity(),"failed to get image",Toast.LENGTH_SHORT).show();
         }
     }
-
 
     public void onBackPressed() {
         new AlertDialog.Builder( getActivity() )

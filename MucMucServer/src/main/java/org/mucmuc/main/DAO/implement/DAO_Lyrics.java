@@ -26,7 +26,6 @@ public class DAO_Lyrics implements Interface_Lyrics_DAO {
 
         if(lyricsList==null||lyricsList.size()==0)
             return null;
-
         return lyricsList.get(0);
     }
 

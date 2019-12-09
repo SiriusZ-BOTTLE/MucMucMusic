@@ -214,6 +214,8 @@ public class ListplayActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListplayActivity.this,CommentActivity.class);
                 intent.putExtra("song_name",list.get(currentposition).getName_Song());
                 intent.putExtra("song_singer",list.get(currentposition).getSinger_Song());
+                intent.putExtra("song_icon",list.get(currentposition).getIconFile_Song());
+                intent.putExtra("song_id",list.get(currentposition).getId_Song());
                 startActivity(intent);
             }
         });
@@ -326,6 +328,7 @@ public class ListplayActivity extends AppCompatActivity {
                 mplayer.seekTo(seekBar.getProgress());
                 thread = new Thread(new SeekBarThread());
                 thread.start();
+
             }
 
             @Override
@@ -437,8 +440,8 @@ public class ListplayActivity extends AppCompatActivity {
 
     private void musicplay(int position) {
 
-//        byte[] b= Base64Util.decode(list.get(position).getIconFile_Song());
-//        imageview.setImageBitmap(BitmapFactory.decodeByteArray(b,0,b.length));
+	    byte[] b= Base64Util.decode(list.get(position).getIconFile_Song());
+	    imageview.setImageBitmap(BitmapFactory.decodeByteArray(b,0,b.length));
         textView1.setText(cut_song_name(list.get(position).getName_Song()).trim());
         textView2.setText(list.get(position).getSinger_Song().trim());
         text_main.setText(cut_song_name(list.get(currentposition).getName_Song()));
@@ -536,6 +539,7 @@ public class ListplayActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }

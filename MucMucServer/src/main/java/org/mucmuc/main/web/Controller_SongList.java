@@ -37,7 +37,16 @@ public class Controller_SongList {
         return songListService.search(songList);
     }
 
-
+    /**
+     * 创建歌单(需要包含歌单名)
+     * @param songList
+     * @return
+     */
+    @RequestMapping(value = "/create",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity create(@RequestBody SongList songList)
+    {
+        return songListService.create(songList);
+    }
 
 
     /**
@@ -78,7 +87,7 @@ public class Controller_SongList {
 
 
     /**
-     *
+     * 添加歌曲至歌单
      * @param map
      * @return
      */
