@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.forum;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +26,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.HttpUtil;
 import com.example.myapplication.bean.Comment;
 import com.example.myapplication.bean.Music;
 import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
@@ -46,26 +52,6 @@ public class ForumFragment extends Fragment {
         forumViewModel =
                 ViewModelProviders.of( this).get(ForumViewModel.class);
         View root = inflater.inflate(R.layout.fragment_forum, container, false);
-
-        //initComment();
-        init();
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_forum);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new CommentAdapter(commentList);
-        adapter.OnRecycleItemClickListener(new CommentAdapter.OnRecycleItemClickListener() {
-            @Override
-            public void OnRecycleItemClickListener(int position) {
-                try {
-                    ThreadLikes thread1=new ThreadLikes(commentList.get(position),position);
-                    thread1.start();
-                    thread1.join();
-                    Log.d("id",String.valueOf(commentList.get(position).getLikes()));
-                }catch (Exception e){
-                }
-            }
-        });
-        recyclerView.setAdapter(adapter);
         SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
@@ -99,7 +85,6 @@ public class ForumFragment extends Fragment {
                                 Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
-
                         }
                     }).start();
                     startActivity(intent);
@@ -114,6 +99,25 @@ public class ForumFragment extends Fragment {
                 return false;
             }
         });
+        //initComment();
+        init();
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_forum);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CommentAdapter(commentList);
+        adapter.OnRecycleItemClickListener(new CommentAdapter.OnRecycleItemClickListener() {
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                try {
+                    ThreadLikes thread1=new ThreadLikes(commentList.get(position),position);
+                    thread1.start();
+                    thread1.join();
+                    Log.d("id",String.valueOf(commentList.get(position).getLikes()));
+                }catch (Exception e){
+                }
+            }
+        });
+        recyclerView.setAdapter(adapter);
         return root;
     }
     private void init(){

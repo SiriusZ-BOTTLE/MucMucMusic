@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.forum;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Util.Base64Util;
+import com.example.myapplication.Util.MusicUtils;
 import com.example.myapplication.bean.Comment;
+import com.example.myapplication.bean_new.Song;
+import com.example.myapplication.ui.music.play.ListplayActivity;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{ //评论（安利墙）适配器
@@ -60,9 +65,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(CommentAdapter.ViewHolder holder, final int position){
-        Comment comment = mCommentList.get(position);
+        final Comment comment = mCommentList.get(position);
         comment.getSong().setIconFile_Song(comment.getSong().getIconFile_Song().substring(comment.getSong().getIconFile_Song().indexOf(',')+1));
         byte[] data= Base64Util.decode(comment.getSong().getIconFile_Song());
+        holder.commentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song music = comment.getSong();
+                Intent intent = new Intent(v.getContext(), ListplayActivity.class);
+                MusicUtils.list.add(music);
+                HashSet h = new HashSet(MusicUtils.list);
+                MusicUtils.list.clear();
+                MusicUtils.list.addAll(h);
+//                MusicUtils.list=new ArrayList<Song>(new LinkedHashSet<Song>(MusicUtils.list));//删去重复
+
+                v.getContext().startActivity(intent);
+            }
+        });
         holder.musicImage.setImageBitmap(BitmapFactory.decodeByteArray(data,0,data.length));
         holder.musicName.setText(comment.getSong().getName_Song());
         holder.authorName.setText(comment.getUser().getNickname_User());

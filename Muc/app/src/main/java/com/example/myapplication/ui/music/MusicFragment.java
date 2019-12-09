@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
 import com.example.myapplication.bean_new.Song;
 import com.example.myapplication.bean_new.SongList;
 import com.example.myapplication.bean_new.User;
+import com.example.myapplication.ui.home.SearchActivity;
 import com.example.myapplication.ui.music.play.ListplayActivity;
 
 import java.util.ArrayList;
@@ -61,6 +64,54 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
                 startActivity(intent);
             }
         });
+        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 当点击搜索按钮时触发该方法
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                if (!TextUtils.isEmpty(query)){
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    intent.putExtra("Search",query);
+                    new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+                            try {
+                                sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
+                                editor =  sp.edit();
+                                Song song=new Song();
+                                song.setName_Song(query);
+                                String body= JSON.toJSONString(song);
+                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
+                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+                                if(result.getState()==true){
+                                    editor.putString("search_result",res);
+                                    editor.commit();
+                                }
+                                else{
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }catch (Exception e){
+                                Looper.prepare();
+                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
+                        }
+                    }).start();
+                    startActivity(intent);
+                }else{
+                    return false;
+                }
+                return false;
+            }
+            // 当搜索内容改变时触发该方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         initList1();
         RecyclerView recyclerView1 = (RecyclerView) root.findViewById(R.id.My_create_recycler);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
