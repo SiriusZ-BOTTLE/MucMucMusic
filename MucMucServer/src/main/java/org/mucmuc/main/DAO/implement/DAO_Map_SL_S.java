@@ -51,7 +51,7 @@ public class DAO_Map_SL_S implements Interface_Map_SL_S_DAO {
         if(map_sl_sList==null||map_sl_sList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_map_sl_s+"where ID_SL = "+map_sl_s.getId_SL()+" and ID_Song = "+map_sl_s.getId_Song();
+        String sql_d="delete from "+Set_StringConstants.table_map_sl_s+" where ID_SL = "+map_sl_s.getId_SL()+" and ID_Song = "+map_sl_s.getId_Song();
         return jdbc.update(sql_d);
     }
 
@@ -72,7 +72,7 @@ public class DAO_Map_SL_S implements Interface_Map_SL_S_DAO {
 
     @Override
     public int insertNew(Map_SL_S map_sl_s) {
-        String sql="insert into "+Set_StringConstants.table_lyrics+" values (?,?) ";
+        String sql="insert into "+Set_StringConstants.table_map_sl_s+" values (?,?) ";
 
         //以下两句效果相同
         return jdbc.update(sql,map_sl_s.getId_SL(),map_sl_s.getId_Song());//这个简洁点

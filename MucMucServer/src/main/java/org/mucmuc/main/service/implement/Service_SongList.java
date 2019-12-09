@@ -177,7 +177,7 @@ public class Service_SongList implements Interface_SongList_service {
         }catch (Exception e){
             e.printStackTrace();
             resultEntity.setState(false);
-            resultEntity.setInfo_error("往歌单中添加歌曲失败！");
+            resultEntity.setInfo_error("往歌单中添加歌曲失败; 捕获到异常");
             return resultEntity;
         }
 
