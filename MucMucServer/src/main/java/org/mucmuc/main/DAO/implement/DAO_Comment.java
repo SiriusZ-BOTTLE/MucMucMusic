@@ -58,9 +58,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -116,6 +116,14 @@ public class DAO_Comment implements Interface_Comment_DAO {
     }
 
     @Override
+    public List<Comment> queryReply(Comment comment) {
+        String sql="select * from "+ Set_StringConstants.table_comment+" where id_Reply = ? ";
+
+        List<Comment> list=jdbc.query(sql,new Object[]{comment.getId_Comment()},new BeanPropertyRowMapper(Comment.class));
+        return list;
+    }
+
+    @Override
     public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
 
         String sql="select * from "+ Set_StringConstants.table_comment + " where Content_Comment != null and Content_Comment != ? and";
@@ -133,9 +141,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -225,9 +233,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -281,7 +289,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
     @Override
     public int update(Comment comment) {
-        String sql="update "+Set_StringConstants.table_comment+"set ";
+        String sql="update "+Set_StringConstants.table_comment+" set ";
 
         List<Object> list=comment.objectList_notNull();//获取非空项
 
@@ -295,7 +303,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             sql+="ID_User = ? ,";
 //            list.add(lyrics.getContent_Lyrics());
         }
-        if(comment.getId_ReplyComment()!=null)
+        if(comment.getId_Reply()!=null)
         {
             sql+="ID_Reply = ? ,";
 //            list.add(lyrics.getFlag_Pure_Lyrics());
@@ -331,8 +339,8 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
     @Override
     public int insertNew(Comment comment) {
-        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?,?) ";
 
-        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_Reply(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
     }
 }

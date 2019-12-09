@@ -39,7 +39,12 @@ public interface Interface_Comment_DAO {
      */
     List<Comment> queryAllUnderSong(Song song);
 
-
+    /**
+     * 查询回复
+     * @param comment
+     * @return
+     */
+    List<Comment> queryReply(Comment comment);
 
     /**
      * 根据属性(模糊)查询，按Likes顺序降序排列

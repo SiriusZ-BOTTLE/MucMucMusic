@@ -60,8 +60,8 @@ public class Service_Comment implements Interface_Comment_service {
             Boolean success = Boolean.FALSE;
             String errorMsg = "";
             String opMsg="done";
-            if(comment.getScore_Comment()!=null && (comment.getScore_Comment() >100 || comment.getScore_Comment() <0)){
-                errorMsg = "分数格式不符合，需在0～100";
+            if(comment.getScore_Comment()==null|| (comment.getScore_Comment() >5 || comment.getScore_Comment() <0)){
+                errorMsg = "分数格式不符合, 需在[0,5], 且不得为空";
             }else if ( song.getId_Song() ==null){
                 errorMsg = "歌曲编号不能为空";
             } else if(user.getId_User() == null || user.getId_User().equals("")){
@@ -74,16 +74,13 @@ public class Service_Comment implements Interface_Comment_service {
                 comment.setId_User(user.getId_User());
                 comment.setId_Song(song.getId_Song());
 
-
-
                 //更新评论信息
                 int resultRow = dao_Comment.insertNew(comment);
                 if (resultRow < 1){
                     errorMsg = "更新评论失败";
                 }else {
-                    Comment comment2 = new Comment();
-                    comment2.setId_Song(comment.getId_Song());
-                    List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
+//                    List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null)
+                    List<Comment> commentList= dao_Comment.queryAllUnderSong(song);
                     int count = 0;
                     Double sum =0.0;
                     for(Comment c :commentList){
@@ -91,7 +88,6 @@ public class Service_Comment implements Interface_Comment_service {
                             count++;
                             sum += c.getScore_Comment();
                         }
-
                     }
 
                     song.setScore(sum/count);
@@ -124,13 +120,12 @@ public class Service_Comment implements Interface_Comment_service {
     public ResultEntity update(Comment comment) {
 
         try{
+            Comment comment_db=null;
             Boolean success = Boolean.FALSE;
             String errorMsg ="";
             String opMsg="done";
-            if (comment == null){
-                errorMsg = "请求数据不能为空";
-            } else if (comment.getContent_Comment() == null ){
-                errorMsg = "评论内容不能为空";
+            if (comment.getId_Comment() == null ){
+                errorMsg = "<ERROR> 评论ID为空";
             } else {
                 //更新用户信息
                 int resultRow = dao_Comment.update(comment);
@@ -138,21 +133,41 @@ public class Service_Comment implements Interface_Comment_service {
                     opMsg = "更新评论内容失败";
                 }else {
                     success = Boolean.TRUE;
+                    //从数据库中获取
+                    comment_db=dao_Comment.queryByPK(comment);
+                    Song song=new Song();
+                    song.setId_Song(comment_db.getId_Song());
+                    List<Comment> commentList= dao_Comment.queryAllUnderSong(song);
+                    int count = 0;
+                    Double sum =0.0;
+                    for(Comment c :commentList){
+                        if(c.getScore_Comment()!=null && c.getScore_Comment() >=0 ){
+                            count++;
+                            sum += c.getScore_Comment();
+                        }
+                    }
+
+                    song.setScore(sum/count);
+
+                    resultRow = dao_Song.update(song);
+                    if (resultRow < 1){
+                        errorMsg = "更新歌曲分数失败";
+                    }else{
+                        success = Boolean.TRUE;
+                    }
+
                 }
             }
-
-            //封装返回结果
-            ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg, null);
+            ResultEntity resultEntity = new ResultEntity(success, errorMsg,opMsg, comment_db);
             return resultEntity;
+
         }catch (Exception e){
             ResultEntity resultEntity = new ResultEntity();
             e.printStackTrace();
             resultEntity.setState(false);
-            resultEntity.setInfo_error("修改评论内容失败！");
+            resultEntity.setInfo_error("更新评论内容失败; 捕获到异常");
             return resultEntity;
         }
-
-
     }
 
     @Override
@@ -301,8 +316,9 @@ public class Service_Comment implements Interface_Comment_service {
                 errorMsg = "评论编号不能为空";
             }else{
                 Comment comment2 = new Comment();
-                comment2.setId_ReplyComment(comment.getId_ReplyComment());
-                List<Comment> commentList = dao_Comment.queryOrderbyLikes(comment2, null);
+                comment2.setId_Reply(comment.getId_Reply());
+//                List<Comment> commentList = dao_Comment.queryOrderbyLikes(comment2, null);
+                List<Comment> commentList = dao_Comment.queryReply(comment);
                 if(commentList.size()>0){
                     errorMsg = "仍存在子评论";
                 }else{
@@ -317,7 +333,8 @@ public class Service_Comment implements Interface_Comment_service {
                     }else {
                         Comment comment3 = new Comment();
                         comment3.setId_Song(comment.getId_Song());
-                        List<Comment> commentList2= dao_Comment.queryOrderbyLikes(comment3, null);
+//                        List<Comment> commentList2= dao_Comment.queryOrderbyLikes(comment3, null);
+                        List<Comment> commentList2= dao_Comment.queryAllUnderSong(song);
                         int count = 0;
                         Double sum =0.0;
                         for(Comment c :commentList2){
@@ -328,8 +345,10 @@ public class Service_Comment implements Interface_Comment_service {
                             }
 
                         }
-
-                        song.setScore(sum/count);
+                        if(count!=0)
+                            song.setScore(sum/count);
+                        else
+                            song.setScore(0.0);
                         resultRow = dao_Song.update(song);
                         if (resultRow < 1){
                             opMsg = "更新歌曲分数失败";
@@ -370,7 +389,7 @@ public class Service_Comment implements Interface_Comment_service {
             }else {
                 Comment comment2 = new Comment();
 
-                comment2.setId_ReplyComment(comment.getId_Comment());
+                comment2.setId_Reply(comment.getId_Comment());
                 //根据请求参数查询子评论
                 commentList = dao_Comment.queryOrderbyTime(comment2, null);
                 if (commentList == null && commentList.size()<0){

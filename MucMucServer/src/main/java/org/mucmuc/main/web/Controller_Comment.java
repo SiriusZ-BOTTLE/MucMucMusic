@@ -61,7 +61,7 @@ public class Controller_Comment {
     }
 
     /**
-     * 写评论接口
+     * 写评论接口(和上面的接口功能一样,只不过是把信息全封装在comment里面了)
      * @param comment:写评论所需信息comment(包含歌曲ID,用户ID)
      * @return ResultEntity
      * 登录成功后用户对象会放入ResultEntity.object中
@@ -81,12 +81,12 @@ public class Controller_Comment {
 
 
     /**
-     * 修改评论内容接口
+     * 更新()修改评论内容接口
      * @param comment
      * @return ResultEntity
      */
-    @RequestMapping(value = "/modifyContent",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity modifyContent(@RequestBody Comment comment)
+    @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity update(@RequestBody Comment comment)
     {
         return commentService.update(comment);
     }
@@ -120,7 +120,9 @@ public class Controller_Comment {
      * 修改评论score接口
      * @param comment
      * @return ResultEntity
+     * 废弃了!!!!!!!不要使用
      */
+    @Deprecated
     @RequestMapping(value = "/modifyscore",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity modifyscore(@RequestBody Comment comment)
     {
@@ -144,8 +146,8 @@ public class Controller_Comment {
      * @return
      */
 
-    @RequestMapping(value = "/queryByReply",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity queryByReply(@RequestBody Comment comment)
+    @RequestMapping(value = "/getReply",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getReply(@RequestBody Comment comment)
     {
         return commentService.queryByReply(comment);
     }
