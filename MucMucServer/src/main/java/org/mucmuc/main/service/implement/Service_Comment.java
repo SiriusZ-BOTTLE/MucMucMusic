@@ -177,17 +177,17 @@ public class Service_Comment implements Interface_Comment_service {
             Boolean success = Boolean.FALSE;
             String errorMsg = "";//错误信息默认为空
             String opMsg="done";//操作信息默认为完成
-            if (comment == null){
-                errorMsg = "请求数据不能为空";
-            } else if (comment.getId_Comment() == null ){
+            if (comment.getId_Comment() == null ){
                 errorMsg = "评论id不能为空";
-            } else if(comment.getLikes_Comment() == null || comment.getLikes_Comment() < 0){
+            } /*else if(comment.getLikes_Comment() == null || comment.getLikes_Comment() < 0){
                 errorMsg = "点赞数小于0或为空";
-            }else {
+            }*/else {
 
-                comment.setScore_Comment(comment.getScore_Comment() + 1);
+                //先从数据库中查询
+                Comment comment_db=dao_Comment.queryByPK(comment);
+                comment_db.setLikes_Comment(comment_db.getLikes_Comment() + 1);
                 //更新用户信息
-                int resultRow = dao_Comment.update(comment);
+                int resultRow = dao_Comment.update(comment_db);
                 if (resultRow < 1){
                     opMsg = "更新评论点赞数失败";
                 }else {
@@ -216,13 +216,14 @@ public class Service_Comment implements Interface_Comment_service {
             String opMsg="done";//操作信息默认为完成
             if (comment.getId_Comment() == null ){
                 errorMsg = "评论id不能为空";
-            } else if(comment.getDislikes_Comment() == null || comment.getDislikes_Comment() < 0){
+            }/* else if(comment.getDislikes_Comment() == null || comment.getDislikes_Comment() < 0){
                 errorMsg = "踩数小于0或为空";
-            }else {
-
-                comment.setDislikes_Comment(comment.getDislikes_Comment() + 1);
+            }*/else {
+                //先从数据库中查询
+                Comment comment_db=dao_Comment.queryByPK(comment);
+                comment_db.setDislikes_Comment(comment_db.getDislikes_Comment() + 1);
                 //更新用户信息
-                int resultRow = dao_Comment.update(comment);
+                int resultRow = dao_Comment.update(comment_db);
                 if (resultRow < 1){
                     opMsg = "更新评论踩失败";
                 }else {
@@ -388,10 +389,8 @@ public class Service_Comment implements Interface_Comment_service {
             Boolean success = Boolean.FALSE;
             String errorMsg = "";//错误信息默认为空
             String opMsg="done";//操作信息默认为完成
-            if (comment == null){
-                errorMsg = "请求数据不能为空";
-            }else if (comment.getId_Comment() == null){
-                errorMsg = "评论编号不能为空";
+           if (comment.getId_Comment() == null){
+                errorMsg = "<ERROR >评论编号不能为空";
             }else {
                 Comment comment2 = new Comment();
 

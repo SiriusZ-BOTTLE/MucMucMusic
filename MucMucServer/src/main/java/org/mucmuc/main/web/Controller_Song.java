@@ -100,13 +100,23 @@ public class Controller_Song {
     }
 
     /**
-     * 获取歌单下的歌曲
+     * 获取歌单下的歌曲(无图)
      * @param songList
      * @return
      */
+    @RequestMapping(value = "/getSongInSongList_noMedia",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getSongInSongList_noMedia(@RequestBody SongList songList)
+    {
+        return songService.getSongInSongList_noMeida(songList);
+    }
 
+    /**
+     * 获取歌单下的歌曲(无图)
+     * @param songList
+     * @return
+     */
     @RequestMapping(value = "/getSongInSongList",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity getSongInSongList(SongList songList)
+    public ResultEntity getSongInSongList(@RequestBody SongList songList)
     {
         return songService.getSongInSongList(songList);
     }

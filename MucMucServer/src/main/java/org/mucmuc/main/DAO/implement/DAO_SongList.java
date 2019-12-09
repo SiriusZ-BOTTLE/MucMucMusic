@@ -201,7 +201,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
         String sql="select * from "+ Set_StringConstants.view_sl_s;
 
         if(sl.getId_SL()!=null)
-            sql=sql+"where ID_SL like ?";
+            sql=sql+" where ID_SL like ?";
         else
             return null;
 
@@ -221,7 +221,6 @@ public class DAO_SongList implements Interface_SongList_DAO {
 
             songList.add(s);
         }
-
 
         return songList;
     }

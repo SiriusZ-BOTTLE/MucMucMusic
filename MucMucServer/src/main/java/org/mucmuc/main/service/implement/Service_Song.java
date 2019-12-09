@@ -260,7 +260,7 @@ public class Service_Song implements Interface_Song_service {
     }
 
     @Override
-    public ResultEntity getSongInSongList(SongList songList) {
+    public ResultEntity getSongInSongList_noMeida(SongList songList) {
         ResultEntity resultEntity=new ResultEntity();
 
         try{
@@ -275,6 +275,8 @@ public class Service_Song implements Interface_Song_service {
             for(Song item:list)
                 item.setIconFile_Song(null);
             resultEntity.setState(true);
+            resultEntity.setObject(list);
+
 
             return resultEntity;
         }catch (Exception e){
@@ -284,6 +286,33 @@ public class Service_Song implements Interface_Song_service {
             return resultEntity;
         }
 
+    }
+
+    @Override
+    public ResultEntity getSongInSongList(SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        try{
+            if(songList.getId_SL()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_SL is NULL");
+                return resultEntity;
+            }
+
+            List<Song> list=songListDao.queryAllSongBySL(songList);
+
+//            for(Song item:list)
+//                item.setIconFile_Song(null);
+            resultEntity.setState(true);
+            resultEntity.setObject(list);
+
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("根据歌单获取歌曲信息失败！");
+            return resultEntity;
+        }
     }
 
 

@@ -65,7 +65,13 @@ public interface Interface_Song_service {
     ResultEntity get(Song song);
 
     /**
-     * 获取歌单中的歌曲
+     * 获取歌单中的歌曲(无图片)
+     * @return
+     */
+    ResultEntity getSongInSongList_noMeida(SongList songList);
+
+    /**
+     * 获取歌单中的歌曲(有图片)
      * @return
      */
     ResultEntity getSongInSongList(SongList songList);
