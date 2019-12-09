@@ -144,7 +144,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
         if(slList==null||slList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_songlist+"where ID_SL = "+sl.getId_SL();
+        String sql_d="delete from "+Set_StringConstants.table_songlist+" where ID_SL = "+sl.getId_SL();
         return jdbc.update(sql_d);
     }
 

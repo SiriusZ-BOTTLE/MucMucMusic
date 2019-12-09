@@ -19,6 +19,12 @@ public interface Interface_Song_service {
      */
     ResultEntity getRandom(Integer num);
 
+    /**
+     * 获取随机记录(无媒体)
+     * @param num
+     * @return
+     */
+    public ResultEntity getRandom_noMedia(Integer num);
 
     /**
      * 播放歌曲(song)

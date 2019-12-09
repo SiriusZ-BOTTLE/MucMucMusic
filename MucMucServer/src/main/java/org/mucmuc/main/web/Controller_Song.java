@@ -50,6 +50,17 @@ public class Controller_Song {
         return songService.getRandom(num);
     }
 
+    /**
+     * 随机获取,获取指定数量的记录
+     * @param num
+     * @return
+     */
+    @RequestMapping(value = "/getRandom_noMedia",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getRandom_noMeida(@RequestBody int num)
+    {
+        return songService.getRandom_noMedia(num);
+    }
+
 
 
     /**

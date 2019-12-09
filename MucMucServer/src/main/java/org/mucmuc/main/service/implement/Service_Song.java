@@ -55,6 +55,36 @@ public class Service_Song implements Interface_Song_service {
 
     }
 
+
+    public ResultEntity getRandom_noMedia(Integer num)
+    {
+        ResultEntity resultEntity =new ResultEntity();
+
+        try {
+            if(num<=0||num>100)
+            {
+                resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+                return resultEntity;
+            }
+
+            List<Song> list=songDao.queryRandom(num);
+
+            for(Song item:list)
+                item.setIconFile_Song(null);
+            resultEntity.setObject(list);
+            resultEntity.setState(true);
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("随机获得歌曲失败！");
+            return resultEntity;
+        }
+    }
+
+
+
+
     @Override
     @Deprecated
     public ResultEntity play(Song song) {
