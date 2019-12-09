@@ -138,11 +138,8 @@ public class FoundFragment extends Fragment {
                                 Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
-
                         }
                     }).start();
-
-
                     startActivity(intent);
                 }else{
                     return false;

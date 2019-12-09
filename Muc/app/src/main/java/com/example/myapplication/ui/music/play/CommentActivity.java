@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +54,7 @@ public class CommentActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private int Id;
     private ResultEntity result;
+    private CommentshowAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +89,22 @@ public class CommentActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        CommentshowAdapter adapter = new CommentshowAdapter(commentList);
+        adapter = new CommentshowAdapter(commentList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        adapter.OnRecycleItemClickListener(new CommentshowAdapter.OnRecycleItemClickListener() {
+            @Override
+            public void OnRecycleItemClickListener(int position) {
+                Toast.makeText(CommentActivity.this,String.valueOf(position),Toast.LENGTH_SHORT).show();
+                try {
+                    ThreadLikes thread1=new ThreadLikes(commentList.get(position),position);
+                    thread1.start();
+                    thread1.join();
+                    Log.d("id",String.valueOf(commentList.get(position).getLikes()));
+                }catch (Exception e){
+                }
+            }
+    });
 
         TextView add = (TextView) findViewById(R.id.comment_add2);
         add.setOnClickListener(new View.OnClickListener() {
@@ -145,61 +163,115 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
-    private void initMusic(){
-        Music three = new Music("南山南", R.drawable.nanshannan,"数据");
-        musiclist.add(three);
-        Music one = new Music("消愁", R.drawable.xiaochou,"数据");
-        musiclist.add(one);
-        Music two = new Music("论坛", R.drawable.luntan,"数据");
-        musiclist.add(two);
-        Music one1 = new Music("发现", R.drawable.faxian,"数据");
-        musiclist.add(one1);
-
-    }
-    private void initComment(){
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                String res = new String();
-                com.example.myapplication.bean_new.Comment cc = new com.example.myapplication.bean_new.Comment();
-                Intent intent = getIntent();
-                Id = intent.getIntExtra("song_id", 0);
-                cc.setId_Song(Id);
-                try {
-                    String body = JSON.toJSONString(cc);
-                    res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/queryBySong", body, "UTF-8");
-                    result = JSON.parseObject(res, ResultEntity.class);
-                    if (result.getState() == true) {
-                        for (int i = 0; i < 2; i++) {
-                           com.example.myapplication.bean_new.Comment c = ((JSONObject) (((JSONArray) (result.getObject())).get(i))).toJavaObject(com.example.myapplication.bean_new.Comment.class);
-                           Comment comment = new Comment();
-                           comment.setScore(c.getScore_Comment());
-                           comment.setDetails(c.getContent_Comment());
-                           comment.setLikes(c.getLikes_Comment());
-                           User user = new User();
-                           sp = getSharedPreferences("test",Context.MODE_PRIVATE);
-                           user.setNickname_User(sp.getString("nickname",""));
-                           user.setIconFile_User(sp.getString("iconFile_User",""));
-                           comment.setUser(user);
-                           commentList.add(comment);
-                        }
-                    } else {
-                        Looper.prepare();
-                        Toast.makeText(CommentActivity.this, "获得歌曲失败", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-                } catch (Exception e) {
-                    Looper.prepare();
-                    Toast.makeText(CommentActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Looper.loop();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Log.d("getComment", "handleMessage: " );
+                    break;
+                case 2:
+                    Log.d("getUser", "handleMessage: " );
+                    break;
+                case 3:
+                    adapter.notifyDataSetChanged();
+                default:
+                    break;
+            }
+        }
+    };
+    private class  ThreadgetComment extends Thread {
+        @Override
+        public void run() {
+            String res = new String();
+            Song song = new Song();
+            Intent intent = getIntent();
+            Id = intent.getIntExtra("song_id", 0);
+            song.setId_Song(Id);
+            String body = JSON.toJSONString(song);
+            res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/getCommentsUnderSong", body, "UTF-8");
+            ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+            if (result.getState() == true) {
+                for (int i = 0; i < ((JSONArray)(result.getObject())).size(); i++) {
+                    com.example.myapplication.bean_new.Comment c = ((JSONObject) (((JSONArray) (result.getObject())).get(i))).toJavaObject(com.example.myapplication.bean_new.Comment.class);
+                    Comment comment = new Comment();
+                    comment.setScore(c.getScore_Comment());
+                    comment.setDetails(c.getContent_Comment());
+                    comment.setLikes(c.getLikes_Comment());
+                    comment.setReleaseTime_Comment(c.getReleaseTime_Comment());
+                    comment.setId_Comment(c.getId_Comment());
+                    User user = new User();
+                    user.setId_User(c.getId_User());
+                    comment.setUser(user);
+                    commentList.add(comment);
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
                 }
             }
-        }).start();
+        }
+    }
+    private class ThreadgetUser extends Thread {
+        private User user;
+        private int i;
+        public ThreadgetUser(User u,int position){
+            this.user = u;
+            this.i = position;
+        }
+        @Override
+        public void run() {
+            String body = JSON.toJSONString(user);
+            String res = new String();
+            res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/user/get", body, "UTF-8");
+            ResultEntity result2 = JSON.parseObject(res, ResultEntity.class);
+            User u = ((JSONObject) result2.getObject()).toJavaObject(User.class);
+            commentList.get(i).setUser(u);
+            Message message = new Message();
+            message.what = 2;
+            handler.sendMessage(message);
+        }
+    }
+    private class  ThreadLikes extends Thread {
+        private int i;
+        private Comment comment;
+        public ThreadLikes(Comment comment,int position){
+            this.i = position;
+            this.comment = comment;
+        }
+        @Override
+        public void run() {
+            com.example.myapplication.bean_new.Comment cc = new com.example.myapplication.bean_new.Comment();
+            cc.setId_Comment(comment.getId_Comment());
+            cc.setLikes_Comment(comment.getLikes());
+            String body = JSON.toJSONString(cc);
+            String res = new String();
+            res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/comment/likes", body, "UTF-8");
+            ResultEntity result2 = JSON.parseObject(res, ResultEntity.class);
+//            com.example.myapplication.bean_new.Comment c = ((JSONObject) result2.getObject()).toJavaObject(com.example.myapplication.bean_new.Comment.class);
+            commentList.get(i).setLikes(comment.getLikes()+1);
+            Message message = new Message();
+            message.what = 3;
+            handler.sendMessage(message);
+        }
+    }
+    private void initComment(){
+        try {
+            ThreadgetComment thread1=new ThreadgetComment();
+            thread1.start();
+            thread1.join();
+            for(int i=0;i<commentList.size();i++) {
+                ThreadgetUser thread2=new ThreadgetUser(commentList.get(i).getUser(),i);
+                thread2.start();
+                thread2.join();
+            }
+        }catch (Exception e){
+        }
     }
 }
 
 class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHolder>{
     private List<Comment> commentList;
+    private CommentshowAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
     static class  ViewHolder extends RecyclerView.ViewHolder{
         ImageView userIcon;
         TextView userName;
@@ -230,45 +302,50 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
     public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activity_comment, parent ,false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.commentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Comment comment = commentList.get(position);
-                Toast.makeText(v.getContext(),"you clicked view "+comment.getAuthor_name(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Comment comment = commentList.get(position);
-                Toast.makeText(v.getContext(),"you favorited this song "+comment.getAuthor_name(),Toast.LENGTH_SHORT).show();
-            }
-        });
         return  holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, final int position){
         Comment comment = commentList.get(position);
         byte [] b = Base64Util.decode(comment.getUser().getIconFile_User());
         holder.userIcon.setImageBitmap(BitmapFactory.decodeByteArray(b,0,b.length));
         holder.userName.setText(comment.getUser().getNickname_User());
         holder.commentDetails.setText(comment.getDetails());
         holder.ratingBar.setRating(comment.getScore());
-        holder.likeNum.setText("1000");
-
-        Date date = new Date();
-        //设置要获取到什么样的时间
+        Log.d("num",String.valueOf((int)comment.getScore()));
+        holder.likeNum.setText(String.valueOf((int)comment.getLikes()));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //获取String类型的时间
-        String createdate = sdf.format(date);
-        holder.releaseTime.setText(createdate);
+        String releaseTime = sdf.format(comment.getReleaseTime_Comment());
+        holder.releaseTime.setText(releaseTime);
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onRecycleItemClickListener!=null)
+                    onRecycleItemClickListener.OnRecycleItemClickListener(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount(){
         return commentList.size();
+    }
+
+    public  void  OnRecycleItemClickListener(CommentshowAdapter.OnRecycleItemClickListener v){
+        onRecycleItemClickListener = v;
+    }
+
+    public interface OnRecycleItemClickListener{
+        void OnRecycleItemClickListener(int position);
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

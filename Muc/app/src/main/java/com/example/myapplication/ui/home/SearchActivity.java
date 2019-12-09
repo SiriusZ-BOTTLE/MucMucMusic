@@ -52,10 +52,6 @@ public class SearchActivity extends AppCompatActivity {
         SearchshowAdapter adapter = new SearchshowAdapter(mMusicList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.OnRecycleItemClickListener(new SearchshowAdapter.OnRecycleItemClickListener() {
-            @Override
-            public void OnRecycleItemClickListener(int position) {
-
         adapter.OnRecycleItemClickListener(new SearchshowAdapter.OnRecycleItemClickListener() {//点击歌曲跳转到播放界面
             @Override
             public void OnRecycleItemClickListener(int position) {
