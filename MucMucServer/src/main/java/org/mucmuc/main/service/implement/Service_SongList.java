@@ -45,6 +45,28 @@ public class Service_SongList implements Interface_SongList_service {
     }
 
     @Override
+    public ResultEntity create(SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        try{
+            if(songList.getName_SL()==null||songList.getName_SL().length()==0||songList.getId_User()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> 歌单名为null或为空串或者id_User为空");
+                return resultEntity;
+            }
+            songListDao.insertNew(songList);//插入
+            resultEntity.setState(true);
+
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("获取歌单信息失败！");
+            return resultEntity;
+        }
+    }
+
+    @Override
     public ResultEntity get(SongList songList) {
         ResultEntity resultEntity=new ResultEntity();
 

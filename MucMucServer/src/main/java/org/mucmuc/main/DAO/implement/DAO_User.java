@@ -55,8 +55,6 @@ public class DAO_User implements Interface_User_DAO {
             list.add("%"+user.getId_User()+"%");
         }
         System.out.println(sql);
-        if(list.size()==0)
-            return null;
 
         //查询
         List<User> userList=

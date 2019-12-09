@@ -93,7 +93,7 @@ public class DAO_Song implements Interface_Song_DAO {
 
     @Override
     public int update(Song song) {
-        String sql="update "+Set_StringConstants.table_song+"set ";
+        String sql="update "+Set_StringConstants.table_song+" set ";
 
         List<Object> list=song.objectList_notNull();//获取非空项
 

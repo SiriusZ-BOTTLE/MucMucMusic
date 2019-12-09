@@ -1,6 +1,7 @@
 package org.mucmuc.main.DAO;
 
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
 
 import java.util.List;
@@ -29,6 +30,21 @@ public interface Interface_Comment_DAO {
      * @return
      */
     List<Comment> queryOrderbyTime(Comment comment1,Comment comment2);
+
+
+    /**
+     * 查询歌曲下的评论, 按时间排序
+     * @param song
+     * @return
+     */
+    List<Comment> queryAllUnderSong(Song song);
+
+    /**
+     * 查询回复
+     * @param comment
+     * @return
+     */
+    List<Comment> queryReply(Comment comment);
 
     /**
      * 根据属性(模糊)查询，按Likes顺序降序排列
