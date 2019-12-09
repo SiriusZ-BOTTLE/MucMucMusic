@@ -3,6 +3,7 @@ package org.mucmuc.main.DAO.implement;
 import org.mucmuc.main.DAO.Interface_Comment_DAO;
 import org.mucmuc.main.DAO.Set_StringConstants;
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -57,9 +58,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -107,6 +108,23 @@ public class DAO_Comment implements Interface_Comment_DAO {
     }
 
     @Override
+    public List<Comment> queryAllUnderSong(Song song) {
+        String sql="select * from "+ Set_StringConstants.table_comment+"  where ID_Song = ? order by ReleaseTime_Comment DESC";
+
+        List<Comment> list=jdbc.query(sql,new Object[]{song.getId_Song()},new BeanPropertyRowMapper(Comment.class));
+
+        return list;
+    }
+
+    @Override
+    public List<Comment> queryReply(Comment comment) {
+        String sql="select * from "+ Set_StringConstants.table_comment+" where id_Reply = ? ";
+
+        List<Comment> list=jdbc.query(sql,new Object[]{comment.getId_Comment()},new BeanPropertyRowMapper(Comment.class));
+        return list;
+    }
+
+    @Override
     public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
 
         String sql="select * from "+ Set_StringConstants.table_comment + " where";
@@ -124,9 +142,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -218,9 +236,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment2.getDislikes_Comment());
         }
 
-        if(comment1.getId_ReplyComment()!=null){
+        if(comment1.getId_Reply()!=null){
             sql=sql+" ID_Reply = ? and";
-            list.add(comment1.getId_ReplyComment());
+            list.add(comment1.getId_Reply());
         }
 
         if(comment1.getId_Song()!=null){
@@ -288,7 +306,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             sql+="ID_User = ? ,";
 //            list.add(lyrics.getContent_Lyrics());
         }
-        if(comment.getId_ReplyComment()!=null)
+        if(comment.getId_Reply()!=null)
         {
             sql+="ID_Reply = ? ,";
 //            list.add(lyrics.getFlag_Pure_Lyrics());
@@ -327,9 +345,10 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
     @Override
     public int insertNew(Comment comment) {
-        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,?,?,?,?,?) ";
 
-        //以下两句效果相同
-        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getReleaseTime_Comment(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?,?) ";
+
+        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_Reply(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+
     }
 }

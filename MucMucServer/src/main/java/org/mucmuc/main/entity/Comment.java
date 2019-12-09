@@ -9,7 +9,7 @@ public class Comment {
     private Integer id_Comment;//评论ID
     private Integer id_Song;//歌曲ID
     private String id_User;//用户ID
-    private Integer id_ReplyComment;//回复的评论ID
+    private Integer id_Reply;//回复的评论ID
     private String content_Comment;//内容
     private Date releaseTime_Comment;//发布时间ID_Reply
     private Integer likes_Comment;//点赞数
@@ -23,7 +23,7 @@ public class Comment {
         list.add(id_Comment);
         list.add(id_Song);
         list.add(id_User);
-        list.add(id_ReplyComment);
+        list.add(id_Reply);
         list.add(content_Comment);
         list.add(releaseTime_Comment);
         list.add(likes_Comment);
@@ -44,8 +44,8 @@ public class Comment {
             list.add(id_Song);
         if(id_User!=null)
             list.add(id_User);
-        if(id_ReplyComment!=null)
-            list.add(id_ReplyComment);
+        if(id_Reply !=null)
+            list.add(id_Reply);
         if(content_Comment!=null)
             list.add(content_Comment);
         if(releaseTime_Comment!=null)
@@ -68,7 +68,7 @@ public class Comment {
         array[0]=id_Comment;
         array[1]=id_Song;
         array[2]=id_User;
-        array[3]=id_ReplyComment;
+        array[3]= id_Reply;
         array[4]=content_Comment;
         array[5]=releaseTime_Comment;
         array[6]=likes_Comment;
@@ -102,12 +102,12 @@ public class Comment {
         this.id_User = id_User;
     }
 
-    public Integer getId_ReplyComment() {
-        return id_ReplyComment;
+    public Integer getId_Reply() {
+        return id_Reply;
     }
 
-    public void setId_ReplyComment(Integer id_ReplyComment) {
-        this.id_ReplyComment = id_ReplyComment;
+    public void setId_Reply(Integer id_Reply) {
+        this.id_Reply = id_Reply;
     }
 
     public String getContent_Comment() {

@@ -50,6 +50,7 @@ public class Controller_Comment {
      * @param map:写评论所需信息comment user song
      * @return ResultEntity
      * 登录成功后用户对象会放入ResultEntity.object中
+     * 不需传入日期, 自动设置
      */
     @RequestMapping(value = "/write",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity write(@RequestBody Map<String, Object> map)
@@ -58,17 +59,36 @@ public class Controller_Comment {
         User user = JSON.parseObject(JSON.toJSONString(map.get("user")), User.class);
         Song song = JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
 
-
         return commentService.write(comment,song,user);
     }
 
     /**
-     * 修改评论内容接口
+     * 写评论接口(和上面的接口功能一样,只不过是把信息全封装在comment里面了)
+     * @param comment:写评论所需信息comment(包含歌曲ID,用户ID)
+     * @return ResultEntity
+     * 登录成功后用户对象会放入ResultEntity.object中
+     */
+    @RequestMapping(value = "/write2",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity write2(@RequestBody Comment comment)
+    {
+        User user = new User();
+        user.setId_User(comment.getId_User());
+        Song song = new Song();
+        song.setId_Song(comment.getId_Song());
+
+        return commentService.write(comment,song,user);
+    }
+
+
+
+
+    /**
+     * 更新()修改评论内容接口
      * @param comment
      * @return ResultEntity
      */
-    @RequestMapping(value = "/modifyContent",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity modifyContent(@RequestBody Comment comment)
+    @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity update(@RequestBody Comment comment)
     {
         return commentService.update(comment);
     }
@@ -102,7 +122,9 @@ public class Controller_Comment {
      * 修改评论score接口
      * @param comment
      * @return ResultEntity
+     * 废弃了!!!!!!!不要使用
      */
+    @Deprecated
     @RequestMapping(value = "/modifyscore",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity modifyscore(@RequestBody Comment comment)
     {
@@ -126,23 +148,23 @@ public class Controller_Comment {
      * @return
      */
 
-    @RequestMapping(value = "/queryByReply",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity queryByReply(@RequestBody Comment comment)
+    @RequestMapping(value = "/getReply",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getReply(@RequestBody Comment comment)
     {
         return commentService.queryByReply(comment);
     }
 
     /**
-     * 显示当前歌曲的评论(song)
-     * @param comment
+     * 获取当前歌曲的评论(song)
+     * @param song 传入的歌曲对象
      * @return
      * 注意事项, 两个User对象必须命名为"user0","user1"
      */
 
-    @RequestMapping(value = "/queryBySong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity queryBySong(@RequestBody Comment comment)
+    @RequestMapping(value = "/getCommentsUnderSong",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getCommentsUnderSong(@RequestBody Song song)
     {
-        return commentService.getCommentsUnderSong(comment);
+        return commentService.getCommentsUnderSong(song);
     }
 
 
