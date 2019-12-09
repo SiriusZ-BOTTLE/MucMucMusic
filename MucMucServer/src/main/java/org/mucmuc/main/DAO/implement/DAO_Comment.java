@@ -42,7 +42,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
     @Override
     public List<Comment> queryOrderbyTime(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where Content_Comment != null and";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where";
 
         List<Object> list=new ArrayList<Object>();
 
@@ -98,9 +98,10 @@ public class DAO_Comment implements Interface_Comment_DAO {
         if(sql.endsWith("and"))
         {
             sql=sql.substring(0,sql.length()-3) + " order by ReleaseTime_Comment DESC";//缩减
+            System.out.println(sql);
         }
         //查询
-        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+        List<Comment> commentList=jdbc.query(sql,new Object[]{comment1.getId_Song()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
     }
@@ -108,7 +109,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
     @Override
     public List<Comment> queryOrderbyLikes(Comment comment1,Comment comment2) {
 
-        String sql="select * from "+ Set_StringConstants.table_comment + " where Content_Comment != null and Content_Comment != ? and";
+        String sql="select * from "+ Set_StringConstants.table_comment + " where";
 
         List<Object> list=new ArrayList<Object>();
 
@@ -138,7 +139,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment1.getId_User());
         }
 
-        if(comment1.getLikes_Comment()!=null){
+        if(comment1.getLikes_Comment()!=null&&comment2!=null&&comment2.getLikes_Comment()!=null){
             sql=sql+" Likes_Comment >= ? and Likes_Comment < ? and";
             list.add(comment1.getLikes_Comment());
             list.add(comment2.getLikes_Comment());
@@ -149,7 +150,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment1.getReleaseTime_Comment());
         }
 
-        if(comment1.getScore_Comment()!=null){
+        if(comment1.getScore_Comment()!=null&&comment2!=null&&comment2.getScore_Comment()!=null){
             sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
@@ -166,8 +167,10 @@ public class DAO_Comment implements Interface_Comment_DAO {
             sql=sql.substring(0,sql.length()-3) + " order by Likes_Comment DESC";//缩减
         }
 
+        System.out.println("Likes");
+        System.out.println(sql);
         //查询
-        List<Comment> commentList=jdbc.query(sql,new Object[]{"", list.toArray()}, new BeanPropertyRowMapper(Comment.class));
+        List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
         return commentList;
     }
@@ -271,7 +274,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
 
     @Override
     public int update(Comment comment) {
-        String sql="update "+Set_StringConstants.table_comment+"set ";
+        String sql="update "+Set_StringConstants.table_comment+" set ";
 
         List<Object> list=comment.objectList_notNull();//获取非空项
 
@@ -316,14 +319,17 @@ public class DAO_Comment implements Interface_Comment_DAO {
         list.add(comment.getId_Comment());
         //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
+        System.out.println(sql);
+        System.out.println(list.get(0));
+        System.out.println(list.get(2));
         return jdbc.update(sql,list.toArray());//执行更新
     }
 
     @Override
     public int insertNew(Comment comment) {
-        String sql="insert into "+Set_StringConstants.table_comment+" values (?,?,?,?,?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,?,?,?,?,?) ";
 
         //以下两句效果相同
-        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getContent_Comment(),comment.getReleaseTime_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_ReplyComment(),comment.getReleaseTime_Comment(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
     }
 }

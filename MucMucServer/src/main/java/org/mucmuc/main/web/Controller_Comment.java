@@ -2,7 +2,9 @@ package org.mucmuc.main.web;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.entity.Comment;
+import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.User;
@@ -104,7 +106,7 @@ public class Controller_Comment {
     @RequestMapping(value = "/modifyscore",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity modifyscore(@RequestBody Comment comment)
     {
-        return commentService.update(comment);
+        return commentService.modifyscore(comment);
     }
 
     /**
@@ -146,12 +148,11 @@ public class Controller_Comment {
 
     /**
      * 获得最新评论
-     * @param comment
      * @return
      */
 
     @RequestMapping(value = "/queryNew",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity queryNew(@RequestBody Comment comment)
+    public ResultEntity queryNew()
     {
         return commentService.queryNew();
     }

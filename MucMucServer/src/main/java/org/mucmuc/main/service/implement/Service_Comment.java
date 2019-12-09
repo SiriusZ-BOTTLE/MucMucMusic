@@ -239,7 +239,7 @@ public class Service_Comment implements Interface_Comment_service {
                 errorMsg = "请求数据不能为空";
             } else if (comment.getId_Comment() == null ){
                 errorMsg = "评论编号不能为空";
-            } else if(comment.getScore_Comment() <0 || comment.getLikes_Comment() > 100){
+            } else if(comment.getScore_Comment() <0 || comment.getScore_Comment() > 100){
                 errorMsg = "评论score格式不对";
             }else {
                 //更新用户信息
@@ -249,7 +249,7 @@ public class Service_Comment implements Interface_Comment_service {
                 }else {
                     Comment comment2 = new Comment();
                     comment2.setId_Song(comment.getId_Song());
-                    List<Comment> commentList= dao_Comment.queryOrderbyLikes(comment2, null);
+                    List<Comment> commentList= dao_Comment.queryOrderbyTime(comment2, null);
                     int count = 0;
                     Double sum =0.0;
                     for(Comment c :commentList){
@@ -259,9 +259,15 @@ public class Service_Comment implements Interface_Comment_service {
                         }
 
                     }
-
+                    System.out.println(count);
                     Song song = new Song();
-                    song.setScore(sum/count);
+                    if(count == 0){
+                        song.setScore(0.0);
+                    }
+                    else{
+                        song.setScore(sum/count);
+                    }
+
                     song.setId_Song(comment.getId_Song());
 
                     resultRow = dao_Song.update(song);

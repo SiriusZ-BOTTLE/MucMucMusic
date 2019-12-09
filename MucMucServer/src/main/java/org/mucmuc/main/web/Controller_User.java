@@ -1,6 +1,7 @@
 package org.mucmuc.main.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.mucmuc.main.entity.User;
 import org.mucmuc.main.service.implement.*;
 import org.mucmuc.main.entity.InteractionEntity.*;
@@ -37,6 +38,7 @@ public class Controller_User {
     @RequestMapping(value = "/login",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity login(@RequestBody User user)
     {
+
         return userService.login(user);
     }
 
