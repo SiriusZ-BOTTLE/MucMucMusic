@@ -30,15 +30,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.Base64Util;
 import com.example.myapplication.Util.GetDurationUtil;
+import com.example.myapplication.Util.HttpUtil;
 import com.example.myapplication.Util.MessageBox;
 import com.example.myapplication.Util.MusicUtils;
 import com.example.myapplication.bean.Music;
+import com.example.myapplication.bean_new.InteractionEntity.ResultEntity;
 import com.example.myapplication.bean_new.Song;
+import com.example.myapplication.bean_new.User;
 import com.example.myapplication.ui.home.MusicAdapter;
+import com.example.myapplication.ui.music.AddSongActivity;
 import com.example.myapplication.ui.music.play.GradientTextView;
 import com.example.myapplication.ui.music.play.PlayAdapter;
 
@@ -49,6 +54,9 @@ import java.util.List;
 import java.util.Random;
 
 public class ListplayActivity extends AppCompatActivity {
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+
     private SharedPreferences sharedPreferences;
     private ListView listview;
     private List<Song> list;//加入歌
@@ -76,7 +84,6 @@ public class ListplayActivity extends AppCompatActivity {
     // 修改顶部状态栏颜色使用
 
 
-	private SharedPreferences sp;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,16 +134,19 @@ public class ListplayActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("song_name_", cut_song_name(list.get(currentposition).getName_Song()));
-            editor.putString("song_singer_", list.get(currentposition).getSinger_Song());
-            editor.putInt("currentposition", currentposition);
-            editor.commit();
-            if (mplayer.isPlaying()) {
-                mplayer.stop();
-            }
-            mplayer.release();
-            super.onDestroy();
+
+	    SharedPreferences.Editor editor = sharedPreferences.edit();
+	    editor.putString("song_name_", cut_song_name(list.get(currentposition).getName_Song()));
+	    editor.putString("song_singer_", list.get(currentposition).getSinger_Song());
+	    editor.putInt("currentposition", currentposition);
+	    editor.commit();
+	    if (mplayer.isPlaying()) {
+	        mplayer.stop();
+	    }
+	    mplayer.release();
+	    super.onDestroy();
+
+
 
 
     }
@@ -206,6 +216,30 @@ public class ListplayActivity extends AppCompatActivity {
                 intent.putExtra("song_singer",list.get(currentposition).getSinger_Song());
                 intent.putExtra("song_icon",list.get(currentposition).getIconFile_Song());
                 intent.putExtra("song_id",list.get(currentposition).getId_Song());
+                startActivity(intent);
+            }
+        });
+        imageview_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListplayActivity.this, AddSongActivity.class);
+                intent.putExtra("song_id_c",list.get(currentposition).getId_Song());
+
+
+                new Thread(new Runnable(){
+                    @Override
+                    public void run() {
+                        sp = getSharedPreferences("test",Context.MODE_PRIVATE);
+                        editor =  sp.edit();
+                        User user=new User();
+                        user.setId_User(sp.getString("name",""));
+                        String body4=JSON.toJSONString(user);
+                        String res4 = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/getUserSongList",body4,"UTF-8");
+                        editor.putString("MySongList",res4);
+                        editor.commit();
+                    }
+                }).start();
+
                 startActivity(intent);
             }
         });

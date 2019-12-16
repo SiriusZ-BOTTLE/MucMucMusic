@@ -37,6 +37,10 @@
         <activity android:name=".ui.found.TagActivity"></activity>
         <activity android:name=".ui.music.play.AddCommentActivity"></activity>
         <activity android:name=".ui.music.play.CommentActivity"></activity>
+        <activity android:name=".ui.home.SearchActivity"></activity>
+        <activity android:name=".ui.music.AddSongActivity"></activity>
+        <activity android:name=".ui.account.ModifyActivity"></activity>
+        <activity android:name=".ui.account.PasswordActivity"></activity>
     </application>
 
 </manifest>
