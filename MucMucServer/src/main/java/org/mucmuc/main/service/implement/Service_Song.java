@@ -2,13 +2,11 @@ package org.mucmuc.main.service.implement;
 
 
 
-import org.mucmuc.main.DAO.implement.DAO_Map_SL_S;
-import org.mucmuc.main.DAO.implement.DAO_Map_S_T;
-import org.mucmuc.main.DAO.implement.DAO_Song;
-import org.mucmuc.main.DAO.implement.DAO_SongList;
+import org.mucmuc.main.DAO.implement.*;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.Interface_Song_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,8 @@ public class Service_Song implements Interface_Song_service {
     private DAO_Map_S_T map_s_t_Dao;
     @Autowired
     private DAO_SongList songListDao;
+    @Autowired
+    private DAO_Tag tagDao;
 
     @Override
     public ResultEntity getRandom(Integer num) {
@@ -54,6 +54,36 @@ public class Service_Song implements Interface_Song_service {
         }
 
     }
+
+
+    public ResultEntity getRandom_noMedia(Integer num)
+    {
+        ResultEntity resultEntity =new ResultEntity();
+
+        try {
+            if(num<=0||num>100)
+            {
+                resultEntity.setInfo_error("<ERROR> num must be in range[1,100]");
+                return resultEntity;
+            }
+
+            List<Song> list=songDao.queryRandom(num);
+
+            for(Song item:list)
+                item.setIconFile_Song(null);
+            resultEntity.setObject(list);
+            resultEntity.setState(true);
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("随机获得歌曲失败！");
+            return resultEntity;
+        }
+    }
+
+
+
 
     @Override
     @Deprecated
@@ -103,6 +133,8 @@ public class Service_Song implements Interface_Song_service {
 
             List<Song> list=songDao.queryByName(song);
 
+//            for(Song item:list)
+//                item.setIconFile_Song(null);
             resultEntity.setState(true);
             resultEntity.setObject(list);
             return resultEntity;
@@ -113,6 +145,32 @@ public class Service_Song implements Interface_Song_service {
             return resultEntity;
         }
 
+    }
+
+    @Override
+    public ResultEntity search_noMedia(Song song) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        try{
+            if(song.getName_Song()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> name_Song is NULL");
+                return resultEntity;
+            }
+
+            List<Song> list=songDao.queryByName(song);
+
+            for(Song item:list)
+                item.setIconFile_Song(null);
+            resultEntity.setState(true);
+            resultEntity.setObject(list);
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("搜索歌曲信息失败！");
+            return resultEntity;
+        }
     }
 
     @Override
@@ -260,7 +318,7 @@ public class Service_Song implements Interface_Song_service {
     }
 
     @Override
-    public ResultEntity getSongInSongList(SongList songList) {
+    public ResultEntity getSongInSongList_noMeida(SongList songList) {
         ResultEntity resultEntity=new ResultEntity();
 
         try{
@@ -275,6 +333,8 @@ public class Service_Song implements Interface_Song_service {
             for(Song item:list)
                 item.setIconFile_Song(null);
             resultEntity.setState(true);
+            resultEntity.setObject(list);
+
 
             return resultEntity;
         }catch (Exception e){
@@ -284,6 +344,61 @@ public class Service_Song implements Interface_Song_service {
             return resultEntity;
         }
 
+    }
+
+    @Override
+    public ResultEntity getSongInSongList(SongList songList) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        try{
+            if(songList.getId_SL()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_SL is NULL");
+                return resultEntity;
+            }
+
+            List<Song> list=songListDao.queryAllSongBySL(songList);
+
+//            for(Song item:list)
+//                item.setIconFile_Song(null);
+            resultEntity.setState(true);
+            resultEntity.setObject(list);
+
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("根据歌单获取歌曲信息失败！");
+            return resultEntity;
+        }
+    }
+
+    @Override
+    public ResultEntity getSongUnderTag(Tag tag) {
+        ResultEntity resultEntity=new ResultEntity();
+
+        try{
+            if(tag.getId_Tag()==null)
+            {
+                resultEntity.setInfo_error("<ERROR> id_Tag is NULL");
+                return resultEntity;
+            }
+
+//            List<Song> list=songListDao.queryAllSongBySL(songList);
+            List<Song> list=tagDao.querySongsByTag(tag);
+
+//            for(Song item:list)
+//                item.setIconFile_Song(null);
+            resultEntity.setState(true);
+            resultEntity.setObject(list);
+
+            return resultEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            resultEntity.setState(false);
+            resultEntity.setInfo_error("根据歌单获取歌曲信息失败！");
+            return resultEntity;
+        }
     }
 
 

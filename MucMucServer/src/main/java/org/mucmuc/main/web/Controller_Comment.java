@@ -122,7 +122,7 @@ public class Controller_Comment {
      * 修改评论score接口
      * @param comment
      * @return ResultEntity
-     * 废弃了!!!!!!!不要使用
+     * 废弃了!!!!!!!不要使用!!!!!!!!!!!
      */
     @Deprecated
     @RequestMapping(value = "/modifyscore",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
@@ -135,6 +135,7 @@ public class Controller_Comment {
      * 删除评论(管理员),更新歌曲score接口
      * @param comment
      * @return ResultEntity
+     * 存在回复时无法删除, 注意
      */
     @RequestMapping(value = "/delete",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity delete(@RequestBody Comment comment)

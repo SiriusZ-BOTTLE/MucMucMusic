@@ -47,7 +47,7 @@ public class DAO_Song implements Interface_Song_DAO {
 //        List<Object> list = song.objectList_notNull();//获取非空项
 
         if(song.getName_Song()!=null)
-            sql=sql+" Name_Song like ? and";
+            sql=sql+" Name_Song like ? ";
         else
             return null;
 

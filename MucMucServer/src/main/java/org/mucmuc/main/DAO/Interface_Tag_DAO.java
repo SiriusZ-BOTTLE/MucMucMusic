@@ -64,6 +64,6 @@ public interface Interface_Tag_DAO {
     /**
      * 找到此标签下的所有歌曲
      */
-    List<Song> querySongsbyTag(Tag tag);
+    List<Song> querySongsByTag(Tag tag);
 
 }

@@ -113,7 +113,6 @@ public class Controller_SongList {
         Song song= JSON.parseObject(JSON.toJSONString(map.get("song")), Song.class);
         SongList songList=JSON.parseObject(JSON.toJSONString(map.get("songList")), SongList.class);
 
-
         return songListService.removeSongFromSongList(song,songList);
     }
 
