@@ -4,6 +4,7 @@ package org.mucmuc.main.web;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.implement.Service_Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,14 @@ public class Controller_Song {
     public ResultEntity search(@RequestBody Song song)
     {
         return songService.search(song);
+    }
+
+
+
+    @RequestMapping(value = "/search_noMedia",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search_noMedia(@RequestBody Song song)
+    {
+        return songService.search_noMedia(song);
     }
 
 
@@ -103,7 +112,6 @@ public class Controller_Song {
      * @param song
      * @return
      */
-
     @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity update(@RequestBody Song song)
     {
@@ -122,7 +130,7 @@ public class Controller_Song {
     }
 
     /**
-     * 获取歌单下的歌曲(无图)
+     * 获取歌单下的歌曲(有图)
      * @param songList
      * @return
      */
@@ -130,6 +138,18 @@ public class Controller_Song {
     public ResultEntity getSongInSongList(@RequestBody SongList songList)
     {
         return songService.getSongInSongList(songList);
+    }
+
+    /**
+     * 获取Tag下的歌曲(有图)
+     * @param tag
+     * @return
+     */
+    @RequestMapping(value = "/getSongUnderTag",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getSongUnderTag(@RequestBody Tag tag)
+    {
+//        return songService.getSongInSongList(songList);
+        return songService.getSongUnderTag(tag);
     }
 
 

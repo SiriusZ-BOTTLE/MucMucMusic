@@ -4,6 +4,7 @@ import org.mucmuc.main.entity.InteractionEntity.RequestEntity;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.Tag;
 
 /**
  * @Author: Mjj
@@ -40,6 +41,13 @@ public interface Interface_Song_service {
      * @return
      */
     ResultEntity search(Song song);
+
+    /**
+     * 搜索歌曲无媒体(按名称)
+     * @param song
+     * @return
+     */
+    ResultEntity search_noMedia(Song song);
 
 
     /**
@@ -81,6 +89,14 @@ public interface Interface_Song_service {
      * @return
      */
     ResultEntity getSongInSongList(SongList songList);
+
+
+    /**
+     * 获取标签下的歌曲
+     * @param tag
+     * @return
+     */
+    ResultEntity getSongUnderTag(Tag tag);
 
 
 

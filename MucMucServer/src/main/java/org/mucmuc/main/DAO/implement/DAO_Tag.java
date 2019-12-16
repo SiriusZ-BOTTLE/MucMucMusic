@@ -130,20 +130,32 @@ public class DAO_Tag implements Interface_Tag_DAO {
     }
 
     @Override
-    public List<Song> querySongsbyTag(Tag tag){
+    public List<Song> querySongsByTag(Tag tag){
 
         List<Song> songList = new ArrayList<Song>();
 
         String sql="select * from "+ Set_StringConstants.view_tag_song;
 
-        if(tag.getName_Tag()!=null)
-            sql=sql+"where Name_Tag like ?";
+        List<Tag_Song> tag_songList=null;
+
+        if(tag.getId_Tag()!=null)
+        {
+            sql=sql+" where id_Tag = ?";
+            tag_songList=jdbc.query(sql,new Object[]{tag.getId_Tag()}, new BeanPropertyRowMapper(Tag_Song.class));
+        }
+        else if(tag.getName_Tag()!=null)
+        {
+            sql=sql+" where Name_Tag like ?";
+            tag_songList=jdbc.query(sql,new Object[]{"%"+tag.getName_Tag()+"%"}, new BeanPropertyRowMapper(Tag_Song.class));
+        }
         else
             return null;
 
+        System.out.println(sql);
         //查询
-        List<Tag_Song> tag_songList=jdbc.query(sql,new Object[]{"%"+tag.getName_Tag()+"%"}, new BeanPropertyRowMapper(Tag_Song.class));
 
+
+        System.out.println(tag_songList.size());
 
         for(Tag_Song tag_song:tag_songList){
             Song s = new Song();
@@ -158,8 +170,6 @@ public class DAO_Tag implements Interface_Tag_DAO {
 
             songList.add(s);
         }
-
-
         return songList;
 
     }
