@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @SpringBootApplication
 public class DAO_Comment implements Interface_Comment_DAO {
 
@@ -73,7 +75,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment1.getId_User());
         }
 
-        if(comment1.getLikes_Comment()!=null){
+        if(comment1.getLikes_Comment()!=null&&comment2!=null&&comment2.getLikes_Comment()!=null){
             sql=sql+" Likes_Comment >= ? and Likes_Comment < ? and";
             list.add(comment1.getLikes_Comment());
             list.add(comment2.getLikes_Comment());
@@ -84,7 +86,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
             list.add(comment1.getReleaseTime_Comment());
         }
 
-        if(comment1.getScore_Comment()!=null){
+        if(comment1.getScore_Comment()!=null&&comment2!=null&&comment2.getScore_Comment()!=null){
             sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
@@ -99,7 +101,6 @@ public class DAO_Comment implements Interface_Comment_DAO {
         if(sql.endsWith("and"))
         {
             sql=sql.substring(0,sql.length()-3) + " order by ReleaseTime_Comment DESC";//缩减
-            System.out.println(sql);
         }
         //查询
         List<Comment> commentList=jdbc.query(sql,new Object[]{comment1.getId_Song()}, new BeanPropertyRowMapper(Comment.class));
@@ -184,9 +185,6 @@ public class DAO_Comment implements Interface_Comment_DAO {
         {
             sql=sql.substring(0,sql.length()-3) + " order by Likes_Comment DESC";//缩减
         }
-
-        System.out.println("Likes");
-        System.out.println(sql);
         //查询
         List<Comment> commentList=jdbc.query(sql,new Object[]{list.toArray()}, new BeanPropertyRowMapper(Comment.class));
 
@@ -214,7 +212,7 @@ public class DAO_Comment implements Interface_Comment_DAO {
         if(commentList==null||commentList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_comment+"where ID_Comment = "+comment.getId_Comment();
+        String sql_d="delete from "+Set_StringConstants.table_comment+" where ID_Comment = "+comment.getId_Comment();
         return jdbc.update(sql_d);
     }
 
@@ -266,6 +264,11 @@ public class DAO_Comment implements Interface_Comment_DAO {
             sql=sql+" Score_Comment >= ? and Score_Comment < ? and";
             list.add(comment1.getScore_Comment());
             list.add(comment2.getScore_Comment());
+        }
+
+        if(comment1.getMood()!=null){
+            sql=sql+" mood = ? and";
+            list.add(comment1.getMood());
         }
 
 
@@ -328,6 +331,9 @@ public class DAO_Comment implements Interface_Comment_DAO {
         if(comment.getScore_Comment()!=null) {
             sql += "Score_Comment = ? ,";
         }
+        if(comment.getMood()!=null) {
+            sql += "mood = ? ,";
+        }
 
         if(sql.endsWith(","))
         {
@@ -337,18 +343,15 @@ public class DAO_Comment implements Interface_Comment_DAO {
         list.add(comment.getId_Comment());
         //查询
 //            List<User> userList=jdbc.query(sql,new Object[]{}, new BeanPropertyRowMapper(User.class));
-        System.out.println(sql);
-        System.out.println(list.get(0));
-        System.out.println(list.get(2));
         return jdbc.update(sql,list.toArray());//执行更新
     }
 
     @Override
     public int insertNew(Comment comment) {
 
-        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?,?) ";
+        String sql="insert into "+Set_StringConstants.table_comment+" values (null,?,?,?,CURRENT_TIME,?,?,?,?,?) ";
 
-        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_Reply(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment());//这个简洁点
+        return jdbc.update(sql,comment.getId_Song(),comment.getId_User(),comment.getId_Reply(),comment.getContent_Comment(),comment.getLikes_Comment(),comment.getDislikes_Comment(),comment.getScore_Comment(),comment.getMood());//这个简洁点
 
     }
 }

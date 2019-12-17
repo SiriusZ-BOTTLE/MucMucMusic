@@ -15,6 +15,7 @@ public class Comment {
     private Integer likes_Comment;//点赞数
     private Integer dislikes_Comment;//踩数
     private Integer score_Comment;//打分
+    private Integer mood;
 
     //转换为Object列表,方便DAO层实现的同时也方便打印
     public List<Object> objectList()
@@ -29,6 +30,8 @@ public class Comment {
         list.add(likes_Comment);
         list.add(dislikes_Comment);
         list.add(score_Comment);
+        list.add(mood);
+
         return list;
     }
 
@@ -56,7 +59,8 @@ public class Comment {
             list.add(dislikes_Comment);
         if(score_Comment!=null)
             list.add(score_Comment);
-
+        if(mood!=null)
+            list.add(mood);
 
         return list;
     }
@@ -74,6 +78,7 @@ public class Comment {
         array[6]=likes_Comment;
         array[7]=dislikes_Comment;
         array[8]=score_Comment;
+        array[9]=mood;
         return array;
     }
 
@@ -150,5 +155,11 @@ public class Comment {
         this.score_Comment = score_Comment;
     }
 
+    public Integer getMood() {
+        return mood;
+    }
 
+    public void setMood(Integer mood) {
+        this.mood = mood;
+    }
 }
