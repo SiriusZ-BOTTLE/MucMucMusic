@@ -144,7 +144,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
         if(slList==null||slList.size()==0)
             return 0;
         //删除
-        String sql_d="delete from "+Set_StringConstants.table_songlist+"where ID_SL = "+sl.getId_SL();
+        String sql_d="delete from "+Set_StringConstants.table_songlist+" where ID_SL = "+sl.getId_SL();
         return jdbc.update(sql_d);
     }
 
@@ -201,7 +201,7 @@ public class DAO_SongList implements Interface_SongList_DAO {
         String sql="select * from "+ Set_StringConstants.view_sl_s;
 
         if(sl.getId_SL()!=null)
-            sql=sql+"where ID_SL like ?";
+            sql=sql+" where ID_SL like ?";
         else
             return null;
 
@@ -218,10 +218,9 @@ public class DAO_SongList implements Interface_SongList_DAO {
             s.setSinger_Song(sl_s.getSinger_Song());
             s.setFile_Song(sl_s.getFile_Song());
             s.setScore(sl_s.getScore_Song());
-
+            s.setIconFile_Song(sl_s.getIconFile_Song());
             songList.add(s);
         }
-
 
         return songList;
     }

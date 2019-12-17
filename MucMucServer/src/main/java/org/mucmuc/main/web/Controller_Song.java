@@ -4,6 +4,7 @@ package org.mucmuc.main.web;
 import org.mucmuc.main.entity.InteractionEntity.ResultEntity;
 import org.mucmuc.main.entity.Song;
 import org.mucmuc.main.entity.SongList;
+import org.mucmuc.main.entity.Tag;
 import org.mucmuc.main.service.implement.Service_Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,14 @@ public class Controller_Song {
     }
 
 
+
+    @RequestMapping(value = "/search_noMedia",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity search_noMedia(@RequestBody Song song)
+    {
+        return songService.search_noMedia(song);
+    }
+
+
     /**
      * 随机获取,获取指定数量的记录
      * @param num
@@ -48,6 +57,17 @@ public class Controller_Song {
     public ResultEntity getRandom(@RequestBody int num)
     {
         return songService.getRandom(num);
+    }
+
+    /**
+     * 随机获取,获取指定数量的记录
+     * @param num
+     * @return
+     */
+    @RequestMapping(value = "/getRandom_noMedia",method= RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getRandom_noMeida(@RequestBody int num)
+    {
+        return songService.getRandom_noMedia(num);
     }
 
 
@@ -92,7 +112,6 @@ public class Controller_Song {
      * @param song
      * @return
      */
-
     @RequestMapping(value = "/update",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity update(@RequestBody Song song)
     {
@@ -100,15 +119,37 @@ public class Controller_Song {
     }
 
     /**
-     * 获取歌单下的歌曲
+     * 获取歌单下的歌曲(无图)
      * @param songList
      * @return
      */
+    @RequestMapping(value = "/getSongInSongList_noMedia",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getSongInSongList_noMedia(@RequestBody SongList songList)
+    {
+        return songService.getSongInSongList_noMeida(songList);
+    }
 
+    /**
+     * 获取歌单下的歌曲(有图)
+     * @param songList
+     * @return
+     */
     @RequestMapping(value = "/getSongInSongList",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
-    public ResultEntity getSongInSongList(SongList songList)
+    public ResultEntity getSongInSongList(@RequestBody SongList songList)
     {
         return songService.getSongInSongList(songList);
+    }
+
+    /**
+     * 获取Tag下的歌曲(有图)
+     * @param tag
+     * @return
+     */
+    @RequestMapping(value = "/getSongUnderTag",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
+    public ResultEntity getSongUnderTag(@RequestBody Tag tag)
+    {
+//        return songService.getSongInSongList(songList);
+        return songService.getSongUnderTag(tag);
     }
 
 
