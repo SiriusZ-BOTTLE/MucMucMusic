@@ -1,36 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/search_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textSize="25dp"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-    <TextView
-        android:id="@+id/search_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="歌名"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintTop_toBottomOf="@id/search_num"
-        app:layout_constraintBottom_toTopOf="@id/search_num"
-        app:layout_constraintLeft_toRightOf="@id/search_num"/>
-    <TextView
-        android:id="@+id/search_singer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="歌手"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toTopOf="@id/search_num"
-        app:layout_constraintTop_toBottomOf="@id/search_num"
-        app:layout_constraintLeft_toRightOf="@id/search_name"/>
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent" android:layout_width="match_parent" android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintBottom_toTopOf="@id/search_image" app:layout_constraintTop_toBottomOf="@id/search_image" android:layout_margin="10dp" android:textSize="25dp" android:text="1" android:id="@+id/search_num"/>
+
+    <ImageView android:layout_height="60dp" android:layout_width="60dp" android:id="@+id/search_image" app:layout_constraintTop_toTopOf="parent" app:layout_constraintLeft_toRightOf="@id/search_num" android:scaleType="centerCrop" android:layout_marginLeft="10dp" android:layout_marginTop="10dp"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" app:layout_constraintBottom_toTopOf="@id/search_image" app:layout_constraintTop_toBottomOf="@id/search_image" android:textSize="20dp" android:text="歌名" android:id="@+id/search_name" app:layout_constraintLeft_toRightOf="@id/search_image" android:layout_marginLeft="20dp"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" app:layout_constraintBottom_toTopOf="@id/search_image" app:layout_constraintTop_toBottomOf="@id/search_image" android:textSize="20dp" android:text="歌手" android:id="@+id/search_singer" app:layout_constraintLeft_toRightOf="@id/search_name" android:layout_marginLeft="20dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

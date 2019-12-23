@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{ //评论（安利墙）适配器
     private List<Comment> mCommentList;
-    private CommentAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
+    private OnRecycleItemClickListener onRecycleItemClickListener=null;
 
     static class  ViewHolder extends RecyclerView.ViewHolder{
         ImageView musicImage;
@@ -57,14 +57,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     @Override
-    public CommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment,parent,false);
-        final CommentAdapter.ViewHolder holder = new CommentAdapter.ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
         return  holder;
     }
 
     @Override
-    public void onBindViewHolder(CommentAdapter.ViewHolder holder, final int position){
+    public void onBindViewHolder(ViewHolder holder, final int position){
         final Comment comment = mCommentList.get(position);
         comment.getSong().setIconFile_Song(comment.getSong().getIconFile_Song().substring(comment.getSong().getIconFile_Song().indexOf(',')+1));
         byte[] data= Base64Util.decode(comment.getSong().getIconFile_Song());
@@ -102,7 +102,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return mCommentList.size();
     }
 
-    public  void  OnRecycleItemClickListener(CommentAdapter.OnRecycleItemClickListener v){
+    public  void  OnRecycleItemClickListener(OnRecycleItemClickListener v){
         onRecycleItemClickListener = v;
     }
 

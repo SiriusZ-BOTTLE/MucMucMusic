@@ -126,6 +126,8 @@ public class CommentActivity extends AppCompatActivity {
                     Comment comment = new Comment();
                     comment.setScore(score);
                     comment.setDetails(detail);
+                    Date date = new Date();
+                    comment.setReleaseTime_Comment(date);
                     final User user = new User();
                     sp = getSharedPreferences("test",Context.MODE_PRIVATE);
                     user.setNickname_User(sp.getString("nickname",""));
@@ -271,7 +273,7 @@ public class CommentActivity extends AppCompatActivity {
 
 class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHolder>{
     private List<Comment> commentList;
-    private CommentshowAdapter.OnRecycleItemClickListener onRecycleItemClickListener=null;
+    private OnRecycleItemClickListener onRecycleItemClickListener=null;
     static class  ViewHolder extends RecyclerView.ViewHolder{
         ImageView userIcon;
         TextView userName;
@@ -333,7 +335,7 @@ class CommentshowAdapter extends RecyclerView.Adapter<CommentshowAdapter.ViewHol
         return commentList.size();
     }
 
-    public  void  OnRecycleItemClickListener(CommentshowAdapter.OnRecycleItemClickListener v){
+    public  void  OnRecycleItemClickListener(OnRecycleItemClickListener v){
         onRecycleItemClickListener = v;
     }
 

@@ -153,7 +153,8 @@ class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHolder> {
                                     new Thread(new Runnable(){
                                         @Override
                                         public void run() {
-                                            try{
+                                            String res=new String();
+//                                            try{
                                                 int position = holder.getAdapterPosition();
                                                 sp = v.getContext().getSharedPreferences("test",Context.MODE_PRIVATE);
                                                 User user=new User();
@@ -164,7 +165,7 @@ class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHolder> {
                                                 map.put("song",song);
                                                 map.put("songList",addsongList.get(position));
                                                 String body= JSON.toJSONString(map);
-                                                String res= HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/addSongToSL",body,"UTF-8");
+                                                res= HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/addSongToSL",body,"UTF-8");
                                                 ResultEntity result = JSON.parseObject(res, ResultEntity.class);
                                                 if(result.getState()==true){
                                                     Looper.prepare();
@@ -176,11 +177,11 @@ class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHolder> {
                                                     Toast.makeText(v.getContext(), "失败", Toast.LENGTH_SHORT).show();
                                                     Looper.loop();
                                                 }
-                                            }catch(Exception e){
-                                                Looper.prepare();
-                                                Toast.makeText(v.getContext(), "连接失败1", Toast.LENGTH_SHORT).show();
-                                                Looper.loop();
-                                            }
+//                                            }catch(Exception e){
+//                                                Looper.prepare();
+//                                                Toast.makeText(v.getContext(), "连接失败1"+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                                                Looper.loop();
+//                                            }
                                         }
                                     }).start();
 
