@@ -1,10 +1,11 @@
 package com.example.myapplication.bean_new;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Song {
+public class Song implements Serializable {
     private Integer id_Song;
     private String name_Song;
     private String singer_Song;

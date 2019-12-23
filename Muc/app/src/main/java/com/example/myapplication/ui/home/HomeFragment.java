@@ -123,40 +123,7 @@ public class HomeFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query)){
                     Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    SearchView search=getActivity().findViewById(R.id.title_sousuo);
-                    Search=search.getQuery().toString();
-
                     intent.putExtra("Search",query);
-                    new Thread(new Runnable(){
-                        @Override
-                        public void run() {
-                            try {
-                                sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
-                                editor =  sp.edit();
-                                Song song=new Song();
-                                song.setName_Song(Search);
-                                String body=JSON.toJSONString(song);
-                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
-                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-                                if(result.getState()==true){
-                                    editor.putString("search_result",res);
-                                    editor.commit();
-//                                    Looper.prepare();
-//                                    Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
-//                                    Looper.loop();
-                                }
-                                else{
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-                                }
-                            }catch (Exception e){
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                            }
-                        }
-                    }).start();
                     startActivity(intent);
                 }else{
                     return false;
@@ -169,40 +136,40 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-        TextView tv = null;
-        TabWidget tabWidget = tabHost.getTabWidget();
-        for (int i = 0, count = tabWidget.getChildCount(); i < count; i++) {
-            View v = tabWidget.getChildAt(i);
-            v.setBackgroundResource(R.drawable.tab_selector);
-            tv = ((TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title));
-            tv.setTextColor(Color.rgb(255,255,255));
-        }
-
-        initMusic();
-
-        initMusicList();
-
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        MusicAdapter adapter = new MusicAdapter(musiclist,getActivity());
-        recyclerView.setAdapter(adapter);
-
-
-        RecyclerView recyclerView1 =root.findViewById(R.id.recycler_view_musiclist);
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(),2);
-        recyclerView1.setLayoutManager(layoutManager1);
-        MusicListAdapter adapter1 = new MusicListAdapter(songlist);
-        recyclerView1.setAdapter(adapter1);
-
-        ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
-        play.setOnClickListener(new View.OnClickListener() {//跳转到播放音乐界面
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ListplayActivity.class);
-                startActivity(intent);
-            }
-        });
+//        TextView tv = null;
+//        TabWidget tabWidget = tabHost.getTabWidget();
+//        for (int i = 0, count = tabWidget.getChildCount(); i < count; i++) {
+//            View v = tabWidget.getChildAt(i);
+//            v.setBackgroundResource(R.drawable.tab_selector);
+//            tv = ((TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title));
+//            tv.setTextColor(Color.rgb(255,255,255));
+//        }
+//
+//        initMusic();
+//
+//        initMusicList();
+//
+//        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_music);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(layoutManager);
+//        MusicAdapter adapter = new MusicAdapter(musiclist,getActivity());
+//        recyclerView.setAdapter(adapter);
+//
+//
+//        RecyclerView recyclerView1 =root.findViewById(R.id.recycler_view_musiclist);
+//        GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(),2);
+//        recyclerView1.setLayoutManager(layoutManager1);
+//        MusicListAdapter adapter1 = new MusicListAdapter(songlist);
+//        recyclerView1.setAdapter(adapter1);
+//
+//        ImageView play = (ImageView) root.findViewById(R.id.title_bofang);
+//        play.setOnClickListener(new View.OnClickListener() {//跳转到播放音乐界面
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), ListplayActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return root;
     }

@@ -1,14 +1,18 @@
 package com.example.myapplication.ui.music;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -33,19 +37,21 @@ import com.example.myapplication.bean_new.User;
 import com.example.myapplication.ui.home.SearchActivity;
 import com.example.myapplication.ui.music.play.ListplayActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MusicFragment extends Fragment {         //音乐（中间那颗按钮）的碎片
     private List<SongList> musicLists1 = new ArrayList<>();
     private List<SongList> musicLists2 = new ArrayList<>();
+    private List<Song> songList = new ArrayList<>();
     private MusicViewModel musicViewModel;
 
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
 	private String Search = new String();
 
-	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         musicViewModel = ViewModelProviders.of(this).get(MusicViewModel.class);
         View root = inflater.inflate(R.layout.fragment_music, container, false);
 
@@ -64,53 +70,7 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
                 startActivity(intent);
             }
         });
-        SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            // 当点击搜索按钮时触发该方法
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-                if (!TextUtils.isEmpty(query)){
-                    Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    intent.putExtra("Search",query);
-                    new Thread(new Runnable(){
-                        @Override
-                        public void run() {
-                            try {
-                                sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
-                                editor =  sp.edit();
-                                Song song=new Song();
-                                song.setName_Song(query);
-                                String body= JSON.toJSONString(song);
-                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
-                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-                                if(result.getState()==true){
-                                    editor.putString("search_result",res);
-                                    editor.commit();
-                                }
-                                else{
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-                                }
-                            }catch (Exception e){
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                            }
-                        }
-                    }).start();
-                    startActivity(intent);
-                }else{
-                    return false;
-                }
-                return false;
-            }
-            // 当搜索内容改变时触发该方法
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+
 
         initList1();
         RecyclerView recyclerView1 = (RecyclerView) root.findViewById(R.id.My_create_recycler);
@@ -121,37 +81,42 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
         adapter1.OnRecycleItemClickListener(new ListAdapter.OnRecycleItemClickListener() {//从 我的歌单 里的歌单跳转到 查看歌单所有歌曲里
             @Override
             public void OnRecycleItemClickListener(final int position) {
-				sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
-				editor =  sp.edit();
-				new Thread(new Runnable(){
-					@Override
-					public void run() {
-						try{
-							String body = JSON.toJSONString(musicLists1.get(position));
-							String res = new String();
-							res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getSongInSongList_noMedia", body, "UTF-8");
-							ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-
-							if (result.getState() == true) {
-								editor.putString("SongList'sSong",res);
-								editor.commit();
-							} else {
-								Looper.prepare();
-								Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
-								Looper.loop();
-								editor.putString("SongList'sSong",res);
-								editor.commit();
-							}
-						}catch (Exception e){
-							Looper.prepare();
-							Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-							Looper.loop();
-						}
-
-					}
-				}).start();
-
+//				sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+//				editor =  sp.edit();
+//				new Thread(new Runnable(){
+//					@Override
+//					public void run() {
+//						try{
+//							String body = JSON.toJSONString(musicLists1.get(position));
+//							String res = new String();
+//							res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/getSongInSongList", body, "UTF-8");
+//							ResultEntity result = JSON.parseObject(res, ResultEntity.class);
+//							if (result.getState() == true) {
+//								editor.putString("SongList'sSong",res);
+//								editor.commit();
+//								for(int i=0;i<((JSONArray)(result.getObject())).size();i++){
+//									songList.add(((JSONObject)(((JSONArray)(result.getObject())).get(i))).toJavaObject(Song.class));
+//								}
+//							} else {
+//								Looper.prepare();
+//								Toast.makeText(getActivity(), "获得歌曲失败", Toast.LENGTH_SHORT).show();
+//								Looper.loop();
+//								editor.putString("SongList'sSong",res);
+//								editor.commit();
+//							}
+//						}catch (Exception e){
+//							Looper.prepare();
+//							Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
+//							Looper.loop();
+//						}
+//					}
+//				}).start();
                 Intent intent=new Intent(getActivity(),SonglistActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("songlist", musicLists1.get(position));
+				intent.putExtras(bundle);
+//                intent.putExtra("Song_list",(Serializable)musicLists1.get(position));
+//                intent.putExtra("Song_List",(Serializable) songList);
                 startActivity(intent);
             }
         });
@@ -184,42 +149,7 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 			public boolean onQueryTextSubmit(String query) {
 				if (!TextUtils.isEmpty(query)){
 					Intent intent = new Intent(getActivity(), SearchActivity.class);
-					SearchView search=getActivity().findViewById(R.id.title_sousuo);
-					Search=search.getQuery().toString();
-
-					new Thread(new Runnable(){
-						@Override
-						public void run() {
-							try {
-								sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
-								editor =  sp.edit();
-								Song song=new Song();
-								song.setName_Song(Search);
-								String body=JSON.toJSONString(song);
-								String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
-								ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-								if(result.getState()==true){
-									editor.putString("search_result",res);
-									editor.commit();
-//                                    Looper.prepare();
-//                                    Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
-//                                    Looper.loop();
-								}
-								else{
-									Looper.prepare();
-									Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
-									Looper.loop();
-								}
-							}catch (Exception e){
-								Looper.prepare();
-								Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-								Looper.loop();
-							}
-
-						}
-					}).start();
-
-
+					intent.putExtra("Search",query);
 					startActivity(intent);
 				}else{
 					return false;
@@ -249,15 +179,15 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 						String inputText=editText.getText().toString();
 						sp = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);//初始化
 						EditText songlistname=layout.findViewById(R.id.etname);
-						SongList songlist=new SongList();
+						final SongList songlist=new SongList();
 						songlist.setName_SL(songlistname.getText().toString());
 						songlist.setId_User(sp.getString("name",""));
 						musicLists1.add(songlist);
-						final String body=JSON.toJSONString(songlist);
 						new Thread(new Runnable(){
 							@Override
 							public void run() {
 								try {
+									String body=JSON.toJSONString(songlist);
 
 									String res=new String();
 									res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/songList/create",body,"UTF-8");
@@ -282,7 +212,7 @@ public class MusicFragment extends Fragment {         //音乐（中间那颗按
 						}).start();
 
 					}
-				} ).show();
+				}).show();
 
 	}
 

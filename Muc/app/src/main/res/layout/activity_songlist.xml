@@ -78,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorRed"
+                    android:maxLength="50"
                     android:text="歌单描述"
                     app:layout_constraintTop_toBottomOf="@id/usericon"
                     app:layout_constraintLeft_toLeftOf="@id/usericon"/>

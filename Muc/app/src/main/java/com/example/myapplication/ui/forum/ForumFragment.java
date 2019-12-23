@@ -45,7 +45,6 @@ public class ForumFragment extends Fragment {
     private List<com.example.myapplication.bean_new.Comment> mCommentList = new ArrayList<>();
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private String Search = new String();
     private ResultEntity result;
     private CommentAdapter adapter;
     public View onCreateView(@NonNull  LayoutInflater inflater,
@@ -53,7 +52,6 @@ public class ForumFragment extends Fragment {
         forumViewModel =
                 ViewModelProviders.of( this).get(ForumViewModel.class);
         View root = inflater.inflate(R.layout.fragment_forum, container, false);
-        
         final SearchView mSearchView = (SearchView) root.findViewById(R.id.title_sousuo);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
@@ -61,39 +59,7 @@ public class ForumFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query)){
                     Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    SearchView search=getActivity().findViewById(R.id.title_sousuo);
-                    Search=search.getQuery().toString();
-
-                    new Thread(new Runnable(){
-                        @Override
-                        public void run() {
-                            try {
-                                sp = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
-                                editor =  sp.edit();
-                                Song song=new Song();
-                                song.setName_Song(Search);
-                                String body=JSON.toJSONString(song);
-                                String res = HttpUtil.sendPostUrl("http://47.97.202.142:8082/song/search",body,"UTF-8");
-                                ResultEntity result = JSON.parseObject(res, ResultEntity.class);
-                                if(result.getState()==true){
-                                    editor.putString("search_result",res);
-                                    editor.commit();
-//                                    Looper.prepare();
-//                                    Toast.makeText(getActivity(), res, Toast.LENGTH_SHORT).show();
-//                                    Looper.loop();
-                                }
-                                else{
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "搜索失败", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-                                }
-                            }catch (Exception e){
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), "连接失败", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                            }
-                        }
-                    }).start();
+                    intent.putExtra("Search",query);
                     startActivity(intent);
                 }else{
                     return false;

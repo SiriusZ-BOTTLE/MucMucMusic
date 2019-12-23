@@ -223,7 +223,7 @@ public class ListplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListplayActivity.this, AddSongActivity.class);
-                intent.putExtra("song_id_c",list.get(currentposition).getId_Song());
+                intent.putExtra("song_id_c",list.get(currentposition).getId_Song()+"");
 
 
                 new Thread(new Runnable(){

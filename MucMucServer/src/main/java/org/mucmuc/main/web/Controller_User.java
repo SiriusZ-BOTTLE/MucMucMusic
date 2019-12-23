@@ -38,7 +38,6 @@ public class Controller_User {
     @RequestMapping(value = "/login",method=RequestMethod.POST,produces ="application/json;charset=UTF-8")
     public ResultEntity login(@RequestBody User user)
     {
-
         return userService.login(user);
     }
 
@@ -107,7 +106,6 @@ public class Controller_User {
     {
         return userService.search(user);
     }
-
 
 
 
