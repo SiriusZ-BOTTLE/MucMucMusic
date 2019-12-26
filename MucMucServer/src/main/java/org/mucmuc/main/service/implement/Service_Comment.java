@@ -275,7 +275,6 @@ public class Service_Comment implements Interface_Comment_service {
                         }
 
                     }
-                    System.out.println(count);
                     Song song = new Song();
                     if(count == 0){
                         song.setScore(0.0);
@@ -322,8 +321,6 @@ public class Service_Comment implements Interface_Comment_service {
             } else if (comment.getId_Comment() == null){
                 errorMsg = "评论编号不能为空";
             }else{
-                Comment comment2 = new Comment();
-                comment2.setId_Reply(comment.getId_Reply());
 //                List<Comment> commentList = dao_Comment.queryOrderbyLikes(comment2, null);
                 List<Comment> commentList = dao_Comment.queryReply(comment);
                 if(commentList.size()>0){
@@ -346,7 +343,7 @@ public class Service_Comment implements Interface_Comment_service {
                         Double sum =0.0;
                         for(Comment c :commentList2){
 
-                            if(c.getScore_Comment()!=null && (c.getScore_Comment() >=0 || c.getScore_Comment() <=100)){
+                            if(c.getScore_Comment()!=null && (c.getScore_Comment() >=0 && c.getScore_Comment() <=100)){
                                 count ++;
                                 sum += c.getScore_Comment();
                             }

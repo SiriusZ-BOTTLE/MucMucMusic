@@ -99,7 +99,6 @@ public class Service_User implements Interface_User_service {
             String c=user.getGender_User();
             if(c==null||(c.equals("M")&&c.equals("F")))
             {
-                System.out.println(c);
                 resultEntity.setInfo_error("<ERROR> Gender_User illegal");
                 return resultEntity;
             }
