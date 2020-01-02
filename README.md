@@ -1,14 +1,13 @@
 ﻿# **MucMucMusic Project**
+
 ## ***Catalog***
-<!-- TOC -->
-<!-- autoauto- [**MucMucMusic Project**](#mucmucmusic-project)auto     -->
-- [**MucMucMusic Project**](#mucmucmusic-project)
-  - [***Catalog***](#catalog)
-  - [Description](#description)
-  - [Directory structure](#directory-structure)
-  - [介绍](#%e4%bb%8b%e7%bb%8d)
-  - [目录结构](#%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
- 
+- ~~废弃~~
+
+---
+## 相关链接
+- [原型界面设计链接](https://www.cnblogs.com/Sirius-Z/p/11973794.html)
+- [UML设计链接](https://www.cnblogs.com/Sirius-Z/p/11885955.html)
+- [github项目链接](https://github.com/SiriusZ-BOTTLE/MucMucMusic)
 ---
 (英文暂时不更新)
 ## Description
